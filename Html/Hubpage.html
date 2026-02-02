@@ -1,0 +1,70 @@
+<!-- index.html -->
+<!doctype html><html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>HawkerHub – Project Hub</title>
+<link rel="stylesheet" href="assets/css/base.css">
+<style>
+.section{margin:18px 0}
+.section h2{margin-bottom:8px}
+ul.linklist{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+ul.linklist li{list-style:none}
+</style>
+</head>
+<body>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>renderHeader('hub');</script>
+
+<main class="container">
+  <h1>HawkerHub – Team 04</h1>
+  <p>This hub links to all pages and shows role‑restricted sections for Owner/Operator.</p>
+
+  <div class="section card">
+    <h2>Customer – Ordering Flow</h2>
+    <ul class="linklist">
+      <li><a href="menu.html" class="btn">Menu</a></li>
+      <li><a href="customize.html" class="btn secondary">Customize Order</a></li>
+      <li><a href="order.html" class="btn">Order (Cart)</a></li>
+      <li><a href="saved-orders.html" class="btn">Save Order</a></li>
+      <li><a href="order-later.html" class="btn">Order Later (Pickup)</a></li>
+      <li><a href="checkout.html" class="btn accent">Checkout</a></li>
+      <li><a href="success.html" class="btn success">Success</a></li>
+    </ul>
+  </div>
+
+  <div class="section card">
+    <h2>Customer & Stall Owner – Shared Customer Experience</h2>
+    <ul class="linklist">
+      <li><a href="stalls.html" class="btn">Stalls</a></li>
+      <li><a href="crowd.html" class="btn">Crowd Level</a></li>
+      <li><a href="promotions.html" class="btn">Promotion Page</a></li>
+      <li><a href="promo-auto.html" class="btn">Auto‑applied Promotion</a></li>
+      <li><a href="rating.html" class="btn">Rating</a></li>
+      <li><a href="feedback.html" class="btn">Feedback</a></li>
+      <li><a href="hygiene.html" class="btn">Hygiene History</a></li>
+    </ul>
+  </div>
+
+  <div class="section card">
+    <h2>Owner / Operator – Restricted</h2>
+    <ul class="linklist">
+      <li><a href="analytics.html" class="btn">Sales Analytics</a> <span class="badge">owner</span></li>
+      <li><a href="rental.html" class="btn">Rental Agreement</a> <span class="badge">owner/operator</span></li>
+    </ul>
+  </div>
+
+  <div class="section card">
+    <h2>General</h2>
+    <ul class="linklist">
+      <li><a href="home.html" class="btn">Home</a></li>
+      <li><a href="about.html" class="btn">About</a></li>
+      <li><a href="contact.html" class="btn">Contact</a></li>
+      <li><a href="history.html" class="btn">Order History</a></li>
+    </ul>
+  </div>
+
+  <footer>© 2026 HawkerHub — FED Team 04</footer>
+</main>
+</body></html>

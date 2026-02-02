@@ -1,0 +1,18 @@
+<!-- success.html -->
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Payment Result – HawkerHub</title>
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/success.css">
+</head><body>
+<script src="assets/js/utils.js"></script><script src="assets/js/auth.js"></script>
+<script>renderHeader('success');</script>
+
+<main class="container card" id="root"></main>
+<script>
+  const ok = qs('ok')==='1'; const total = qs('total');
+  $('#root').innerHTML = ok
+    ? `<h2 style="color:var(--success)">Payment Success</h2><p>Amount: ${total? '$'+total:''}</p><a class="btn" href="history.html">View Order History</a>`
+    : `<h2 style="color:var(--danger)">Payment Failed</h2><p>Please try again.</p><a class="btn" href="checkout.html">Back to Checkout</a>`;
+</script>
+</body></html>

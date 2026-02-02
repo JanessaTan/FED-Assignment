@@ -1,0 +1,33 @@
+<!-- rating.html -->
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Rating – HawkerHub</title>
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/rating.css">
+</head><body>
+<script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script><script src="assets/js/auth.js"></script>
+<script>renderHeader('rating');</script>
+
+<main class="container card">
+  <h2>Rate Your Experience</h2>
+  <form id="rf" class="row">
+    <div style="flex:1"><label>Stall</label>
+      <select id="stallSel"></select>
+    </div>
+    <div><label>Rating</label>
+      <select id="stars"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select>
+    </div>
+    <div style="flex-basis:100%"><label>Comment</label><textarea id="rc" rows="3"></textarea></div>
+    <button class="btn">Submit</button>
+  </form>
+</main>
+
+<script>
+  const sel=$('#stallSel'); STALLS.forEach(s=>sel.insertAdjacentHTML('beforeend',`<option value="${s.id}">${s.name}</option>`));
+  $('#rf').addEventListener('submit', e=>{
+    e.preventDefault(); alert('Thanks for your rating!');
+    location.href='feedback.html';
+  });
+</script>
+</body></html>
+``

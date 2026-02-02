@@ -1,0 +1,38 @@
+<!-- order-later.html -->
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Order Later – HawkerHub</title>
+<link rel="stylesheet" href="assets/css/base.css">
+</head><body>
+<script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script>
+<script src="assets/js/cart.js"></script><script src="assets/js/auth.js"></script>
+<script>renderHeader('order');</script>
+
+<main class="container card">
+  <h2>Order for Later (Pickup)</h2>
+  <form id="ol">
+    <div class="row">
+      <div style="flex:1">
+        <label>Pickup Time</label>
+        <input type="datetime-local" id="pick">
+      </div>
+    </div>
+    <p>We will notify the stall of your scheduled pickup.</p>
+    <button class="btn">Schedule</button>
+  </form>
+</main>
+
+<script>
+  $('#ol').addEventListener('submit', e=>{
+    e.preventDefault();
+    const {cart, subtotal} = cartTotals();
+    if(cart.length===0){ alert('Cart is empty'); return; }
+    const t = $('#pick').value;
+    addHistory({status:'scheduled', total:subtotal, items:cart, scheduledAt:t});
+    clearCart();
+    alert('Order scheduled for pickup at: '+t);
+    location.href='history.html';
+  });
+</script>
+</body></html>
+``

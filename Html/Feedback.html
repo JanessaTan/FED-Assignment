@@ -1,0 +1,18 @@
+<!-- feedback.html -->
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Feedback – HawkerHub</title>
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/feedback.css">
+</head><body>
+<script src="assets/js/utils.js"></script><script src="assets/js/auth.js"></script>
+<script>renderHeader('feedback');</script>
+<main class="container card">
+  <h2>Feedback</h2>
+  <form onsubmit="event.preventDefault(); alert('Feedback sent!'); location.href='home.html'">
+    <label>Your message</label>
+    <textarea rows="4" required></textarea>
+    <button class="btn" style="margin-top:8px">Send</button>
+  </form>
+</main>
+</body></html>

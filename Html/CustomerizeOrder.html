@@ -1,0 +1,37 @@
+<!-- customize.html -->
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Customize – HawkerHub</title>
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/customize.css">
+</head><body>
+<script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script>
+<script src="assets/js/cart.js"></script><script src="assets/js/auth.js"></script>
+<script>renderHeader('customize');</script>
+
+<main class="container card">
+  <h2>Customize Item</h2>
+  <form id="cf">
+    <div class="row">
+      <div style="flex:1">
+        <label>Item</label>
+        <input id="itemName" readonly>
+      </div>
+      <div>
+        <label>Qty</label>
+        <input id="qty" type="number" min="1" value="1">
+      </div>
+    </div>
+    <div class="row">
+      <div style="flex:1">
+        <label>Less spicy / No peanuts / Extra chicken (example)</label>
+        <textarea id="notes" rows="3" placeholder="e.g., less spicy, extra sauce"></textarea>
+      </div>
+    </div>
+    <button class="btn">Add to Cart</button>
+    <a class="btn muted" href="menu.html">Back</a>
+  </form>
+</main>
+
+<script src="assets/js/customize.js"></script>
+</body></html>

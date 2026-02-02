@@ -1,0 +1,58 @@
+<!-- about.html -->
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>About – HawkerHub</title>
+<link rel="stylesheet" href="assets/css/base.css"></head><body>
+<script src="assets/js/utils.js"></script><script src="assets/js/auth.js"></script>
+<script>renderHeader('about');</script>
+<main class="container card">
+  <h2>About</h2>
+  <p>Our hawker centre celebrates Singapore’s diverse food heritage with easy ordering, scheduled pickup, and clear hygiene transparency.</p>
+</main>
+</body></html>
+<!-- contact.html -->
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Contact – HawkerHub</title>
+<link rel="stylesheet" href="assets/css/base.css"></head><body>
+<script src="assets/js/utils.js"></script><script src="assets/js/auth.js"></script>
+<script>renderHeader('contact');</script>
+<main class="container card">
+  <h2>Contact Us</h2>
+  <form onsubmit="event.preventDefault(); alert('We will get back to you!'); location.href='home.html'">
+    <div class="row"><input placeholder="Your email" required></div>
+    <div class="row"><textarea rows="3" placeholder="Message" required></textarea></div>
+    <button class="btn">Send</button>
+  </form>
+</main>
+</body></html>
+<!-- hygiene.html -->
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Hygiene History – HawkerHub</title>
+<link rel="stylesheet" href="assets/css/base.css"></head><body>
+<script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script><script src="assets/js/auth.js"></script>
+<script>renderHeader('hygiene');</script>
+<main class="container card" id="root"></main>
+<script>
+  const stallId = qs('stall') || STALLS[0].id;
+  const stall = STALLS.find(s=>s.id===stallId);
+  const list = HYGIENE.filter(h=>h.stallId===stallId);
+  $('#root').innerHTML = `<h2>Hygiene – ${stall.name}</h2>` + (list.length?`
+    <table><thead><tr><th>Date</th><th>Grade</th><th>Remarks</th></tr></thead>
+    <tbody>${list.map(h=>`<tr><td>${h.date}</td><td>${h.grade}</td><td>${h.remarks}</td></tr>`).join('')}</tbody></table>
+  `:'<p>No records.</p>');
+</script>
+</body></html><!-- history.html -->
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Order History – HawkerHub</title>
+<link rel="stylesheet" href="assets/css/base.css"></head><body>
+<script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script><script src="assets/js/auth.js"></script>
+<script>renderHeader('history');</script>
+<main class="container card" id="root"></main>
+<script>
+  const hist = store.get(KEYS.ordersHistory,[]);
+  $('#root').innerHTML = '<h2>Order History</h2>' + (hist.length? hist.map(o=>`
+    <div class="row" style="justify-content:space-between;border-bottom:1px solid #eee;padding:8px 0">
+      <div>#${o.id} • ${new Date(o.createdAt).toLocaleString()} • ${o.status}${o.scheduledAt? ' • Pickup: '+new Date(o.scheduledAt).toLocaleString():''}</div>
+      <div><strong>${fmt(o.total)}</strong></div>
+    </div>`).join('') : '<p>No orders yet.</p>');
+</script>
+</body></html>

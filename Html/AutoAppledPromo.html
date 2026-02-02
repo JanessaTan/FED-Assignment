@@ -1,0 +1,25 @@
+<!-- promo-auto.html -->
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Auto-applied Promotion – HawkerHub</title>
+<link rel="stylesheet" href="assets/css/base.css">
+</head><body>
+<script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script>
+<script src="assets/js/cart.js"></script><script src="assets/js/promo.js"></script><script src="assets/js/auth.js"></script>
+<script>renderHeader('promotions');</script>
+
+<main class="container card" id="root"></main>
+<script>
+  const {cart, subtotal} = cartTotals();
+  const picked = getPickedPromo();
+  const r = computeDiscount(cart, subtotal);
+  $('#root').innerHTML = `
+    <h2>Auto‑applied Promotions</h2>
+    <p>Selected: <strong>${picked?PROMOTIONS.find(x=>x.id===picked.id).title:'None'}</strong></p>
+    <p>Eligibility: ${r.reason}</p>
+    <p>Subtotal: ${fmt(subtotal)} | Discount: -${fmt(r.discount)} | New total: ${fmt(Math.max(0, subtotal-r.discount))}</p>
+    <a class="btn" href="checkout.html">Proceed to Checkout</a>
+  `;
+</script>
+</body></html>
+``

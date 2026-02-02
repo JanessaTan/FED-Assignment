@@ -1,0 +1,23 @@
+<!-- order.html -->
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Order (Cart) – HawkerHub</title>
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/order.css">
+</head><body>
+<script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script>
+<script src="assets/js/cart.js"></script><script src="assets/js/auth.js"></script>
+<script>renderHeader('order');</script>
+
+<main class="container card">
+  <h2>Your Cart</h2>
+  <div id="cart"></div>
+  <div class="row" style="justify-content:flex-end;margin-top:10px">
+    <button id="save" class="btn">Save Order</button>
+    <a class="btn secondary" href="order-later.html">Order for Later</a>
+    <a class="btn" href="checkout.html">Proceed to Checkout</a>
+  </div>
+</main>
+
+<script src="assets/js/order.js"></script>
+</body></html>

@@ -1,0 +1,27 @@
+<!-- checkout.html -->
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Checkout – HawkerHub</title>
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/checkout.css">
+</head><body>
+<script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script>
+<script src="assets/js/cart.js"></script><script src="assets/js/promo.js"></script><script src="assets/js/auth.js"></script>
+<script>renderHeader('checkout');</script>
+
+<main class="container card">
+  <h2>Checkout</h2>
+  <div id="summary"></div>
+  <form id="pay" class="row" style="margin-top:12px">
+    <div style="flex:1">
+      <label>Card Number</label><input placeholder="4111 1111 1111 1111" required>
+    </div>
+    <div><label>Expiry</label><input placeholder="MM/YY" required></div>
+    <div><label>CVC</label><input placeholder="123" required></div>
+    <button class="btn">Pay</button>
+  </form>
+  <p><a href="promo-auto.html">Change or review selected promotion</a></p>
+</main>
+
+<script src="assets/js/checkout.js"></script>
+</body></html>
