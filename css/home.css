@@ -1,0 +1,33 @@
+.hero {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 16px;
+}
+
+.hero > div {
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+}
+
+@media (max-width: 800px) {
+    .hero {
+        grid-template-columns: 1fr;
+    }
+}
+
+.home-actions a {
+    display: inline-block;
+    padding: 10px 14px;
+    background: #eef6f5;
+    border-radius: 10px;
+}
+
+.home-actions a:hover {
+    background: #dff0ee;
+    text-decoration: none;
+}
+.home-actions a + a {
+    margin-left: 10px;
+}

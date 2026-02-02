@@ -1,0 +1,26 @@
+.center-card h3 {
+    margin: 0;
+}
+
+.center-card p {
+    margin: 0.25rem 0 1rem;
+}
+
+.stall-card h3 {
+    margin: 0.2rem 0;
+}
+
+.stall-card .row a {
+    background: #eef6f5;
+    padding: 8px 10px;
+    border-radius: 10px;
+}
+
+.stall-card .row a:hover {
+    background: #dff0ee;
+    text-decoration: none;
+}
+.stall-card .price {
+    color: #0f766e;
+    font-weight: 600;
+}   

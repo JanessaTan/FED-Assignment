@@ -1,0 +1,11 @@
+#promoList .card h3 {
+    margin: 0.3rem 0;
+}
+
+#promoList .card button {
+    margin-top: 6px;
+}
+#promoList .card .price {
+    color: #0f766e;
+    font-weight: 600;
+}

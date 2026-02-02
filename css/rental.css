@@ -1,0 +1,13 @@
+#root table {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+#root th {
+    width: 180px;
+    color: #374151;
+}
+#root h2 {
+    margin-top: 0;
+}

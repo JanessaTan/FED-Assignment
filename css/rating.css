@@ -1,0 +1,12 @@
+#rf {
+    display: grid;
+    gap: 12px;
+    max-width: 680px;
+}
+
+#rf select {
+    min-width: 120px;
+}
+#rf .row {
+    align-items: flex-start;
+}   

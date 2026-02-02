@@ -1,0 +1,25 @@
+#summary {
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: var(--shadow);
+}
+
+#pay {
+    align-items: flex-end;
+}
+
+#pay input {
+    width: 220px;
+}
+
+#pay input[placeholder="MM/YY"],
+#pay input[placeholder="123"] {
+    width: 100px;
+}
+#pay .btn-pay {
+    background: var(--brand-2);
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 1rem;
+}

@@ -1,0 +1,12 @@
+#cf {
+    display: grid;
+    gap: 12px;
+}
+
+#cf .row {
+    align-items: flex-start;
+}
+
+#cf textarea {
+    min-height: 90px;
+}

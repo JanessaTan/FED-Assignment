@@ -1,0 +1,15 @@
+#list .card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#list h3 {
+    margin: 0.2rem 0;
+}
+#list .card img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}

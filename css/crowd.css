@@ -1,0 +1,25 @@
+.crowd-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+}
+
+.crowd-busy {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.crowd-mod {
+    background: #fef9c3;
+    color: #92400e;
+}
+
+.crowd-quiet {
+    background: #dcfce7;
+    color: #166534;
+}
+.crowd-row:last-child {
+    border-bottom: none;
+}

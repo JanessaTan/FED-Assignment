@@ -1,0 +1,13 @@
+#root table {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+#root h2 {
+    margin-top: 0;
+}
+#root a {
+    display: inline-block;
+    margin-top: 10px;
+}

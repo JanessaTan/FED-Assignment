@@ -1,0 +1,19 @@
+.menu-card h3 {
+    margin: 0.3rem 0;
+}
+
+.menu-card .price {
+    color: #0f766e;
+    font-weight: 600;
+}
+
+.menu-card .row a,
+.menu-card .row button {
+    padding: 8px 12px;
+    border-radius: 10px;
+}
+.menu-card .row a:hover,
+.menu-card .row button:hover {
+    background: #dff0ee;
+    text-decoration: none;
+}   

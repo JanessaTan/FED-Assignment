@@ -1,0 +1,42 @@
+#cart table {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+#cart input[type="number"] {
+    width: 80px;
+}
+
+#cart p strong {
+    font-size: 1.05rem;
+}
+
+#cart .total {
+    font-size: 1.2rem;
+    color: var(--brand-2);
+    font-weight: 600;
+}
+
+#cart .btn-checkout {
+    background: var(--brand-2);
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 1rem;
+}
+
+#cart .btn-checkout:hover {
+    background: var(--brand-3);
+    text-decoration: none;
+}
+
+#order-summary {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: var(--shadow);
+}
+
+#order-summary h3 {
+    margin-top: 0;
+}

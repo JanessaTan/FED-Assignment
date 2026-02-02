@@ -1,0 +1,14 @@
+.about p {
+    line-height: 1.6;
+}
+
+.quote {
+    border-left: 4px solid var(--brand-2);
+    padding-left: 12px;
+    background: #f3faf9;
+    border-radius: 8px;
+}
+.quote p {
+    font-style: italic;
+    margin: 0;
+}

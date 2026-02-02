@@ -1,0 +1,12 @@
+#ol {
+    display: grid;
+    gap: 12px;
+    max-width: 520px;
+}
+
+#ol input[type="datetime-local"] {
+    max-width: 260px;
+}
+#ol .row {
+    align-items: flex-start;
+}

@@ -1,0 +1,10 @@
+#cards .card {
+    text-align: center;
+}
+
+#cards h3 {
+    margin: 0.2rem 0 0.4rem;
+}
+#cards button {
+    margin-top: 8px;
+}

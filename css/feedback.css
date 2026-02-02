@@ -1,0 +1,8 @@
+form .row {
+    align-items: flex-start;
+}
+
+form textarea {
+    min-height: 120px;
+}
+

@@ -1,0 +1,11 @@
+#root p {
+    margin: 0.4rem 0;
+}
+
+#root a {
+    display: inline-block;
+    margin-top: 10px;
+}
+#root h3 {
+    margin: 0;
+}
