@@ -16,20 +16,28 @@ ul.linklist {
 
 ul.linklist li {
     list-style: none;
+    margin: 0;
 }
 
-ul.linklist a {
+ul.linklist a.btn {
     display: block;
     padding: 12px;
     border: 1px solid #e5e7eb;
     border-radius: 10px;
     background: #fff;
     text-decoration: none;
+    color: var(--text);
+    text-align: center;
+    transition: background 0.3s, transform 0.2s;
 }
 
-ul.linklist a:hover {
+ul.linklist a.btn:hover {
     background: #f3faf9;
+    transform: translateY(-1px);
 }
-ul.linklist a h3 {
-    margin: 0 0 6px;
+
+ul.linklist li .badge {
+    margin-left: 6px;
+    vertical-align: middle;
+    font-size: 12px;
 }
