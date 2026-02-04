@@ -1,0 +1,16 @@
+<!-- contact.html -->
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Contact – HawkerHub</title>
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/contact.css"></head><body>
+<script src="assets/js/utils.js"></script><script src="assets/js/auth.js"></script>
+<script>renderHeader('contact');</script>
+<main class="container card">
+  <h2>Contact Us</h2>
+  <form onsubmit="event.preventDefault(); alert('We will get back to you!'); location.href='home.html'">
+    <div class="row"><input placeholder="Your email" required></div>
+    <div class="row"><textarea rows="3" placeholder="Message" required></textarea></div>
+    <button class="btn">Send</button>
+  </form>
+</main>
+</body></html>

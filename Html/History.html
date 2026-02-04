@@ -1,0 +1,18 @@
+<!-- history.html -->
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Order History – HawkerHub</title>
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/history.css">
+</head><body>
+<script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script><script src="assets/js/auth.js"></script>
+<script>renderHeader('history');</script>
+<main class="container card" id="root"></main>
+<script>
+  const hist = store.get(KEYS.ordersHistory,[]);
+  $('#root').innerHTML = '<h2>Order History</h2>' + (hist.length? hist.map(o=>`
+    <div class="row" style="justify-content:space-between;border-bottom:1px solid #eee;padding:8px 0">
+      <div>#${o.id} • ${new Date(o.createdAt).toLocaleString()} • ${o.status}${o.scheduledAt? ' • Pickup: '+new Date(o.scheduledAt).toLocaleString():''}</div>
+      <div><strong>${fmt(o.total)}</strong></div>
+    </div>`).join('') : '<p>No orders yet.</p>');
+</script>
+</body></html>

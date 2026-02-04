@@ -1,15 +1,151 @@
-<!-- analytics.html -->
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Sales Analytics – HawkerHub</title>
-<link rel="stylesheet" href="assets/css/base.css">
-<link rel="stylesheet" href="assets/css/analytics.css">
-</head><body>
-<script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script><script src="assets/js/auth.js"></script>
-<script>renderHeader('analytics'); requireRole(['owner']);</script>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hawker Centre — Vendor Dashboard</title>
+  <link rel="stylesheet" href ="../css/analytics.css"/>
+  <link rel="stylesheet" href="../css/base.css"/>
+</head>
+<body>
+  <!-- Top Header -->
+  <header class="topbar" role="banner" aria-label="Top bar with contact">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">🍜</span>
+      <span class="brand-name">Hawker Centre</span>
+    </div>
+    <div class="contact">
+      <a class="contact-item" href="tel:12345678" aria-label="Phone number">📞 1234 5678</a>
+      <a class="contact-item" href="mailto:HawkerCentre@gmail.com" aria-label="Email address">
+        ✉️ HawkerCentre@gmail.com
+      </a>
+    </div>
+  </header>
 
-<main class="container card" id="root">
-  <h2>Sales Analytics (Demo)</h2>
-  <div id="cards" class="grid grid-3"></div>
-</main>
-<script src="assets/js/analytics.js"></script>
-</body></html>
+  <!-- App Layout -->
+  <div class="app">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" role="navigation" aria-label="Primary">
+      <nav>
+        <ul class="menu">
+          <li class="menu-item active">
+            <a href="#" aria-current="page">Sale Analytics</a>
+          </li>
+          <li class="menu-item"><a href="#">Hygiene</a></li>
+          <li class="menu-item"><a href="#">Feedback</a></li>
+          <li class="menu-item"><a href="#">Welcome Vendors</a></li>
+          <li class="menu-item logout"><a href="#">LOG OUT</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content" role="main">
+      <!-- Balances -->
+      <section class="card balances" aria-labelledby="balances-title">
+        <div class="card-header">
+          <h2 id="balances-title">Balances</h2>
+          <div class="currency-toggle" role="group" aria-label="Currency filter">
+            <button class="chip active" type="button">All</button>
+            <button class="chip" type="button">SGD</button>
+            <button class="chip" type="button">EUR</button>
+            <button class="chip" type="button">USD</button>
+          </div>
+        </div>
+
+        <div class="balance-grid">
+          <article class="balance-tile sgd" aria-labelledby="sgd-label">
+            <div class="tile-top">
+              <span class="currency">SGD</span>
+              <span class="badge good">✔</span>
+            </div>
+            <div class="amount" id="sgd-amount" aria-describedby="sgd-label">9,500.00</div>
+            <div class="label" id="sgd-label">Singapore Dollar</div>
+          </article>
+
+          <article class="balance-tile eur" aria-labelledby="eur-label">
+            <div class="tile-top">
+              <span class="currency">EUR</span>
+              <span class="badge neutral">•</span>
+            </div>
+            <div class="amount" id="eur-amount" aria-describedby="eur-label">2,500.00</div>
+            <div class="label" id="eur-label">Euro</div>
+          </article>
+
+          <article class="balance-tile usd" aria-labelledby="usd-label">
+            <div class="tile-top">
+              <span class="currency">USD</span>
+              <span class="badge good">✔</span>
+            </div>
+            <div class="amount" id="usd-amount" aria-describedby="usd-label">10,000.00</div>
+            <div class="label" id="usd-label">US Dollar</div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Rating -->
+      <section class="card" aria-labelledby="rating-title">
+        <div class="card-header">
+          <h2 id="rating-title">Rating</h2>
+        </div>
+        <div class="rating">
+          <div class="stars" aria-label="4.5 out of 5 stars" role="img">
+            ★★★★☆ <span class="rating-score">4.5</span>
+          </div>
+          <div class="rating-subtext">Based on recent vendor feedback</div>
+          <progress class="rating-progress" value="90" max="100" aria-label="Rating progress"></progress>
+        </div>
+      </section>
+
+      <!-- Rental Agreement -->
+      <section class="card" aria-labelledby="rental-title">
+        <div class="card-header">
+          <h2 id="rental-title">Rental Agreement</h2>
+        </div>
+        <div class="rental">
+          <ul class="rental-list">
+            <li><strong>Status:</strong> Active</li>
+            <li><strong>Start Date:</strong> 01 Jan 2026</li>
+            <li><strong>End Date:</strong> 31 Dec 2026</li>
+            <li><strong>Stall:</strong> #B1-12</li>
+          </ul>
+          <div class="rental-actions">
+            <button class="btn primary" type="button">View Agreement</button>
+            <button class="btn" type="button">Download PDF</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section class="card" aria-labelledby="about-title">
+        <div class="card-header">
+          <h2 id="about-title">About</h2>
+        </div>
+        <p class="about-text">
+          Welcome to the Hawker Centre vendor portal. Manage balances, view hygiene and feedback,
+          and keep track of your rental agreement—all in one place.
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <!-- (Optional) Tiny enhancement: activate menu item on click, filter chips UI only -->
+  <script>
+    // Menu active state
+    document.querySelectorAll('.menu-item a').forEach(a => {
+      a.addEventListener('click', (e) => {
+        document.querySelectorAll('.menu-item').forEach(li => li.classList.remove('active'));
+        e.target.closest('.menu-item').classList.add('active');
+      });
+    });
+
+    // Currency chips—UI demo only (no data filtering wired)
+    document.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
