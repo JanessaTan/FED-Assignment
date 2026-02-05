@@ -15,7 +15,7 @@
   <header class="topbar" role="banner" aria-label="Top bar with contact">
     <div class="brand">
       <span class="logo" aria-hidden="true">🍜</span>
-      <span class="brand-name">Hawker Centre</span>
+      <span class="brand-name">Tian Tian Hainanese Chicken Rice</span>
     </div>
     <div class="contact">
       <a class="contact-item" href="tel:12345678" aria-label="Call 1234 5678">📞 1234 5678</a>
@@ -30,8 +30,8 @@
       <nav>
         <ul class="menu">
           <li class="menu-item active"><a href="#sales-analytics">Sale Analytics</a></li>
-          <li class="menu-item"><a href="#hygiene">Hygiene</a></li>
-          <li class="menu-item"><a href="#feedback">Feedback</a></li>
+          <li class="menu-item"><a href="Hygiene.html">Hygiene</a></li>
+          <li class="menu-item"><a href="Feedback.html">Feedback</a></li>
           <li class="menu-item"><a href="#welcome">Welcome Vendors</a></li>
           <li class="menu-item logout"><a href="#logout">LOG OUT</a></li>
         </ul>
@@ -56,48 +56,35 @@
         <p class="chart-hint">Daily gross sales across all currencies (normalized).</p>
       </section>
 
-      <!-- Balances -->
-      <section class="card balances" aria-labelledby="balances-title">
+      <!-- Today's Sales Summary -->
+      <section class="card sales-summary" aria-labelledby="sales-summary-title">
         <div class="card-header">
-          <h2 id="balances-title">Balances</h2>
-          <div class="currency-toggle" role="group" aria-label="Currency filter">
-            <button class="chip active" type="button">All</button>
-            <button class="chip" type="button">SGD</button>
-            <button class="chip" type="button">EUR</button>
-            <button class="chip" type="button">USD</button>
-          </div>
+          <h2 id="sales-summary-title">Today's Sales Summary</h2>
         </div>
 
-        <div class="balance-grid">
-          <article class="balance-tile sgd" aria-labelledby="sgd-label">
-            <div class="tile-top">
-              <span class="currency">SGD</span>
-              <span class="badge good">✔</span>
-            </div>
-            <div class="amount" id="sgd-amount" aria-describedby="sgd-label">9,500.00</div>
-            <div class="label" id="sgd-label">Singapore Dollar</div>
+        <div class="summary-grid">
+          <article class="summary-tile">
+            <div class="label">Total Revenue</div>
+            <div class="value">$1,250.00</div>
           </article>
 
-          <article class="balance-tile eur" aria-labelledby="eur-label">
-            <div class="tile-top">
-              <span class="currency">EUR</span>
-              <span class="badge neutral">•</span>
-            </div>
-            <div class="amount" id="eur-amount" aria-describedby="eur-label">2,500.00</div>
-            <div class="label" id="eur-label">Euro</div>
+          <article class="summary-tile">
+            <div class="label">Total Orders</div>
+            <div class="value">184</div>
           </article>
 
-          <article class="balance-tile usd" aria-labelledby="usd-label">
-            <div class="tile-top">
-              <span class="currency">USD</span>
-              <span class="badge good">✔</span>
-            </div>
-            <div class="amount" id="usd-amount" aria-describedby="usd-label">10,000.00</div>
-            <div class="label" id="usd-label">US Dollar</div>
+          <article class="summary-tile">
+            <div class="label">Avg. Order Value</div>
+            <div class="value">$6.79</div>
+          </article>
+
+          <article class="summary-tile">
+            <div class="label">Peak Hour</div>
+            <div class="value">12 PM – 1 PM</div>
           </article>
         </div>
       </section>
-
+            
       <!-- Rating -->
       <section class="card" aria-labelledby="rating-title">
         <div class="card-header">

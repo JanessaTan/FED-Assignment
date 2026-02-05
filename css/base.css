@@ -1,14 +1,14 @@
 :root {
-    --brand: #006d77;
+    --brand: #850606;
     --brand-2: #83c5be;
     --accent: #ffb703;
-    --text: #1f2937;
-    --muted: #6b7280;
-    --bg: #f5daeb;
+    --text: #135cc2;
+    --muted: #5f6a81;
+    --bg: #0a0a0a;
     --card: #ffffff;
-    --danger: #ef4444;
+    --danger: rgba(226, 18, 28, 0.5);
     --success: #16a34a;
-    --warn: #f59e0b;
+    --warn: #cb8204;
     --radius: 12px;
     --shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
