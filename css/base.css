@@ -4,7 +4,7 @@
     --accent: #ffb703;
     --text: #1f2937;
     --muted: #6b7280;
-    --bg: #f8fafc;
+    --bg: #eca8d1;
     --card: #ffffff;
     --danger: #ef4444;
     --success: #16a34a;
@@ -141,7 +141,7 @@ textarea {
     padding: 10px;
     border: 1px solid #e5e7eb;
     border-radius: 10px;
-    background: #fff;
+    background: #915b5b;
 }
 
 label {
