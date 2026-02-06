@@ -1,14 +1,115 @@
-.about p {
-    line-height: 1.6;
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif
 }
-
-.quote {
-    border-left: 4px solid var(--brand-2);
-    padding-left: 12px;
-    background: #f3faf9;
-    border-radius: 8px;
+body {
+    background: lightpink;
+    color: black;
 }
-.quote p {
-    font-style: italic;
+.container {
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+}
+.About {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: whitesmoke;
+}
+.About img {
+    width: 350px;
+    border-radius: 10px;
+    margin-right: 50px;
+}
+.About-text {
+    text-align: center;
+}
+.About-explore {
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+}
+.features{
+    display: flex;
+    justify-content: space-around;
+    padding: 25px;
+    background-color: white;
+    text-align: center;
+}
+.feature-item {
+    font-weight: bold;
+}
+.info {
+    background-color: whitesmoke;
+    padding: 20px;
+    
+}
+.info-flex {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-direction: row-reverse;
+}
+.info img {
+    width: 350px;
+    border-radius: 10px
+}
+.info-content {
+    flex: 1;
+    text-align: center;
+}
+.info-grid {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  
+}
+.info-box {
+    background-color: white;
+    padding: 10px;
+    border-radius: 15px;
+    flex: 1;
+    min-width: 150px;
+} 
+.feedback {
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+}
+.feedback-boxes {
+    display: flex;
+    justify-content: space-between;
+    background-color: whitesmoke;
+    gap: 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+.feedback-box {
+    padding: 20px;
+}
+.footer {
+    background-color: whitesmoke;
+    color: black;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
     margin: 0;
+}
+.footer-images {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+}
+.footer img {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+}
+.footer li {
+    margin-bottom: 10px;
 }
