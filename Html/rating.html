@@ -4,13 +4,22 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Hawker Centre — Menu Rating</title>
+
+  <!-- CSS Files linking-->
   <link rel="stylesheet" href="../css/rating.css" />
   <link rel="stylesheet" href="../css/base.css" />
 </head>
+
 <body class="hc-body">
+
+  <!-- === Header === -->
   <header class="hc-header" role="banner">
     <div class="hc-top">
+
+      <!-- Back button to previous page -->
       <a href="Home.html" class="hc-back">&lt; About</a>
+
+      <!-- Hawker Center Logo-->
       <div class="hc-brand">
         <div class="hc-logo" aria-hidden="true">🍜</div>
         <div class="hc-title">
@@ -19,6 +28,7 @@
       </div>
     </div>
 
+    <!-- Navigation Tabs -->
     <nav class="hc-tabs" aria-label="Sections">
       <a href="Hygiene.html" class="hc-tab">Hygiene</a>
       <a href="Ratings.html" class="hc-tab is-active" aria-current="page">Rating</a>
@@ -27,14 +37,17 @@
     </nav>
   </header>
 
+  <!-- === Main Content === -->
   <main class="hc-main" id="main">
-    <!-- Grid is injected by JS -->
+
+    <!-- Menu grid injected by Rating.js -->
     <section class="hc-grid" id="menuGrid" aria-label="Menu items (ratings)"></section>
   </main>
 
   <!-- Sticky CTA -->
   <footer class="hc-cta" role="contentinfo">
     <button class="hc-btn-cta" type="button" id="viewMenuBtn">View Menu</button>
+    <!-- Dots for visual feedback-->
     <div class="hc-dots" aria-hidden="true">
       <span class="dot is-active"></span>
       <span class="dot"></span>
@@ -42,9 +55,10 @@
     </div>
   </footer>
 
-  <!-- Screen reader live region (non-visual) -->
+  <!-- Screen reader live region  -->
   <div id="cartLiveRegion" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
+  <!-- === JavaScript === -->
   <script src="../js/Rating.js"></script>
 </body>
 </html>

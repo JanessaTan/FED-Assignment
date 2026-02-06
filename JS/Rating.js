@@ -1,19 +1,6 @@
-/* ===========================
-   Rating grid + Add-to-Cart icon
-   - Data-driven cards
-   - LocalStorage cart
-   - Animated icon + sparkle + +1 bubble
-   - Accessible (aria-live)
-   =========================== */
+/* ===== Hawker Center - Rating JS ===== */
 
-/**
- * Put your own images into /img/ and adjust the paths.
- * id        : used by the cart
- * img       : your photo path (PNG/JPG/WebP)
- * rating    : decimals supported (e.g., 4.5)
- * bestseller: true shows the ribbon
- * price     : optional (for future totals)
- */
+// Demo menu items
 const menuItems = [
   { id: "chicken-rice",      name: "Hainanese chicken rice", img: "../img/chicken rice.jpg",      rating: 4.7, bestseller: true,  price: 4.5 },
   { id: "laksa",             name: "Laksa",                   img: "../img/laksa.jpg",             rating: 4.4, bestseller: false, price: 5.0 },
@@ -33,10 +20,13 @@ const menuItems = [
 const Cart = (() => {
   const KEY = "hc_cart_v1";
 
+  // read cart from storge
   function _read() {
     try { return JSON.parse(localStorage.getItem(KEY)) || []; }
     catch { return []; }
   }
+
+  // write cart to storage
   function _write(cart) {
     localStorage.setItem(KEY, JSON.stringify(cart));
     document.dispatchEvent(new CustomEvent("cart:updated", { detail: { cart } }));
@@ -52,24 +42,27 @@ const Cart = (() => {
     }
     _write(cart);
   }
+
+
   function get() { return _read(); }
   function clear() { _write([]); }
 
   return { add, get, clear };
 })();
 
+
 /* ===== Render grid ===== */
 const grid = document.getElementById("menuGrid");
 
 function renderGrid(items) {
-  grid.innerHTML = "";
+  grid.innerHTML = ""; // clear first
   items.forEach(item => {
     const card = document.createElement("article");
     card.className = "hc-card";
     card.dataset.itemId = item.id;
     card.dataset.itemName = item.name;
 
-    // Bestseller ribbon (if any)
+    // Bestseller ribbon 
     if (item.bestseller) {
       const ribbon = document.createElement("div");
       ribbon.className = "hc-ribbon";
@@ -164,7 +157,7 @@ function starSVG(isHalf = false){
 </svg>`;
 }
 
-/* Add-to-cart SVG icon (cart with plus) */
+/* === Cart Icon === */
 function cartPlusSVG(){
   return `
 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
@@ -179,12 +172,12 @@ document.getElementById("viewMenuBtn")?.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-/* ===== Add-to-Cart: click handler with animation ===== */
+/* ===== Add-to-Cart Handler ===== */
 document.addEventListener("click", (e) => {
   const btn = e.target.closest('[data-action="add-to-cart"]');
   if (!btn) return;
 
-  // Debounce rapid double-clicks during animation (still adds once per click)
+  
   if (btn.dataset.busy === "1") return;
   btn.dataset.busy = "1";
 
@@ -192,7 +185,7 @@ document.addEventListener("click", (e) => {
   const item = menuItems.find(m => m.id === id);
   if (!item) { btn.dataset.busy = "0"; return; }
 
-  // 1) Add to cart immediately
+  // 1) Add to cart 
   Cart.add(item, 1);
 
   // 2) Announce for screen readers
@@ -209,26 +202,24 @@ document.addEventListener("click", (e) => {
   setTimeout(() => { btn.dataset.busy = "0"; }, 420);
 });
 
-/* Animation routine */
+/* Animation */
 function animateAddIcon(btn){
-  // pop
   btn.classList.add("is-animating");
   setTimeout(() => btn.classList.remove("is-animating"), 280);
 
-  // sparkle overlay
+  
   const spark = document.createElement("div");
   spark.className = "hc-sparkle";
   btn.parentElement.appendChild(spark);
   setTimeout(() => spark.remove(), 420);
 
-  // +1 bubble
+  
   const bubble = document.createElement("div");
   bubble.className = "hc-bubble";
   bubble.textContent = "+1";
-  // position the bubble centered over the button using absolute coords
-  // since .hc-card__media is relative, appending there keeps it aligned
   btn.parentElement.appendChild(bubble);
-  // place bubble at button center
+  
+
   const btnRect = btn.getBoundingClientRect();
   const mediaRect = btn.parentElement.getBoundingClientRect();
   const centerLeft = (btnRect.left - mediaRect.left) + btnRect.width/2;
@@ -236,7 +227,7 @@ function animateAddIcon(btn){
   setTimeout(() => bubble.remove(), 540);
 }
 
-/* ===== Expose minimal API (optional) ===== */
+/* ===== Optional Global Cart API ===== */
 window.HC_Cart = {
   add: (id, qty = 1) => {
     const item = menuItems.find(m => m.id === id);
