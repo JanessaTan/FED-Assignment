@@ -1,36 +1,84 @@
 <!-- customize.html -->
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Customize – HawkerHub</title>
-<link rel="stylesheet" href="../css/base.css">
-<link rel="stylesheet" href="../css/customize.css">
-</head><body>
-<script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script>
-<script src="assets/js/cart.js"></script><script src="assets/js/auth.js"></script>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Customize – HawkerHub</title>
+    <link rel="stylesheet" href="..\css\base.css">
+    <link rel="stylesheet" href="..\css\customize.css">
+</head>
+<body>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/auth.js"></script>
 <script>renderHeader('customize');</script>
 
-<main class="container card">
-  <h2>Customize Item</h2>
+<main class="container">
+  <div class="card">
+    <h2>Customize Your Order</h2>
+    <p class="muted">Make your dish exactly how you like it!</p>
+
   <form id="cf">
-    <div class="row">
-      <div style="flex:1">
-        <label>Item</label>
-        <input id="itemName" readonly>
-      </div>
+    <div class="customize-section">
+      <div class="row">
+        <div style="flex:1">
+          <label>Selected Item</label>
+          <input id="itemName" readonly>
+        </div>
       <div>
-        <label>Qty</label>
-        <input id="qty" type="number" min="1" value="1">
+        <label>Quantity</label>
+        <input id="qty" type="number" min="1" value="1" max="10">
       </div>
     </div>
+      
+      <div class="row">
+      <div style="flex:1">
+        <label>Price per item</label>
+        <input id="itemPrice" readonly>
+      </div>
+      <div style="flex:1">
+        <label>Total Price</label>
+        <input id="totalprice" readonly>
+      </div>
+    </div>
+  </div> 
+
+  <div class="customize-section">
+    <h3>Customization Options</h3>
+
     <div class="row">
       <div style="flex:1">
-        <label>Less spicy / No peanuts / Extra chicken (example)</label>
-        <textarea id="notes" rows="3" placeholder="e.g., less spicy, extra sauce"></textarea>
+        <label>Spice Level</label>
+        <select id="spiceLevel">
+          <option value="normal">Normal</option>
+          <option value="mild">Mild (Less Spicy)</option>
+          <option value="extra">Extra Spicy</option>
+          <option value="none">No Spicy</option>
+        </select>
       </div>
     </div>
-    <button class="btn">Add to Cart</button>
-    <a class="btn muted" href="menu.html">Back</a>
-  </form>
+
+
+    <div class="row">
+      <div style="flex:1">
+        <label>Special Instructions (Optional)</label>
+        <textarea 
+        id="notes"
+        rows="3" 
+        placeholder="e.g., extra vegetables, less spicy, extra sauce, separate sauce, etc."
+        maxlength="200"></textarea>
+        <small class="muted" id="charCount">0/200 characters</small>
+                   </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn">Add to Cart</button>
+                <a class="btn secondary" href="menu.html">Back to Menu</a>
+            </div>
+        </form>
+    </div>
 </main>
 
 <script src="assets/js/customize.js"></script>
