@@ -2,11 +2,10 @@
 if(!store.get(KEYS.role)) store.set(KEYS.role,'guest');
 ``
 //click social icons
-document.querySelector('.social-icons a').forEach(icon => {
-    icon.addEventListerner('click', function(e)
-{
+document.querySelectorAll('.social-icons a').forEach(icon => {
+    icon.addEventListener('click', function(e) {
     e.preventDefault();
-    window.open(this.href, '_blank');
+    window.location.href = 'Dummy.html';
 })})
 
 document.querySelectorAll('.top-bar .contact span').forEach(item => {
