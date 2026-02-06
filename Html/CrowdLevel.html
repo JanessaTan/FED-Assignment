@@ -1,124 +1,111 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hawker Centre – Stalls</title>
-
-  <!-- External CSS -->
- <link rel="stylesheet" href="../css/crowd.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hawker Centre — Stalls Overview</title>
   <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/crowd.css">
 </head>
+<body class="hc-body">
 
-<body class="hc-section">
+  <section class="hc-section">
+    <div class="hc-wrap">
 
-<div class="hc-wrap">
+      <!-- Top row: breadcrumb + Overview small button -->
+      <div class="hc-topbar">
+        <nav aria-label="Breadcrumb" class="hc-breadcrumb">
+          <a href="Stalls.html" class="hc-breadcrumb__back" title="Back to Stalls">&lt; Stall</a>
+        </nav>
 
-  <!-- Top Bar -->
-  <div class="hc-topbar">
+        <button class="hc-btn-sm hc-btn-sm--primary" type="button">
+          Overview
+        </button>
+      </div>
 
-    <div class="hc-breadcrumb">
-      <a href="#">← Stall</a>
+      <!-- Optional section caption -->
+      <div class="hc-caption">
+        <span class="hc-caption__pill">Overview</span>
+      </div>
+
+      <!-- Grid of stall cards -->
+      <div class="hc-grid" role="list" aria-label="Hawker Centre Stalls">
+
+        <!-- Each card: data-stall attribute added for JS -->
+        <article class="hc-card" role="listitem" data-stall="chinese">
+          <figure class="hc-card__media">
+            <img src="../img/chinese.jpg" alt="Chinese Cuisine" />
+          </figure>
+          <div class="hc-card__body">
+            <h3 class="hc-card__title clickable">Chinese Cuisine</h3>
+            <span class="hc-card__hours">Operating hours: 7:00am – 3:00pm</span>
+          </div>
+        </article>
+
+        <article class="hc-card" role="listitem" data-stall="indian">
+          <figure class="hc-card__media">
+            <img src="../img/indian.jpg" alt="Indian Cuisine" />
+          </figure>
+          <div class="hc-card__body">
+            <h3 class="hc-card__title clickable">Indian Cuisine</h3>
+            <span class="hc-card__hours">Operating hours: 8:00am – 9:00pm</span>
+          </div>
+        </article>
+
+        <article class="hc-card" role="listitem" data-stall="malay">
+          <figure class="hc-card__media">
+            <img src="../img/malay.jpg" alt="Malay Cuisine" />
+          </figure>
+          <div class="hc-card__body">
+            <h3 class="hc-card__title clickable">Malay Cuisine</h3>
+            <span class="hc-card__hours">Operating hours: 10:00am – 9:00pm</span>
+          </div>
+        </article>
+
+        <article class="hc-card" role="listitem" data-stall="thai">
+          <figure class="hc-card__media">
+            <img src="../img/thai.jpg" alt="Thai Cuisine" />
+          </figure>
+          <div class="hc-card__body">
+            <h3 class="hc-card__title clickable">Thai Cuisine</h3>
+            <span class="hc-card__hours">Operating hours: 11:00am – 10:00pm</span>
+          </div>
+        </article>
+
+        <article class="hc-card" role="listitem" data-stall="drink">
+          <figure class="hc-card__media">
+            <img src="../img/drink.jpg" alt="Drink Store" />
+          </figure>
+          <div class="hc-card__body">
+            <h3 class="hc-card__title clickable">Drink Store</h3>
+            <span class="hc-card__hours">Operating hours: 8:00am – 10:00pm</span>
+          </div>
+        </article>
+
+        <article class="hc-card" role="listitem" data-stall="western">
+          <figure class="hc-card__media">
+            <img src="../img/western.jpg" alt="Western Cuisine" />
+          </figure>
+          <div class="hc-card__body">
+            <h3 class="hc-card__title clickable">Western Cuisine</h3>
+            <span class="hc-card__hours">Operating hours: 8:00am – 10:00pm</span>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- SINGLE Peak Hours Bar Chart -->
+      <div id="chart" class="hc-chart" role="img">
+        <div class="hc-chart__head">
+            <h4 id="chart-title" class="hc-chart__title">Average Crowd Level</h4>
+            <span class="hc-legend">Scale: 0–10</span>
+        </div>
+        <div id="chart-bars" class="hc-chart__grid"></div>
+      </div>
+
     </div>
+  </section>
 
-    <button class="hc-btn-sm hc-btn-sm--primary">
-      Overview
-    </button>
-
-  </div>
-
-  <!-- Section Caption -->
-  <div style="margin: 10px 0 16px;">
-    <span class="hc-section-cap">Explore Stalls</span>
-  </div>
-
-  <!-- Stall Grid -->
-  <div class="hc-grid">
-
-    <!-- Stall Card 1 -->
-    <article class="hc-card">
-
-      <div class="hc-card__media">
-        <span>🍜</span>
-      </div>
-
-      <div class="hc-card__body">
-        <h3 class="hc-card__title">China Cuisine</h3>
-        <span class="hc-card__hours">
-          Operating hours: 7:00am – 3:00pm
-        </span>
-      </div>
-
-      <div class="hc-card__footer">
-
-        <span class="hc-pill">Stall</span>
-
-        <div>
-          <button class="hc-btn-icon hc-btn-icon--red">❤</button>
-          <button class="hc-btn-icon">🛒</button>
-        </div>
-
-      </div>
-
-    </article>
-
-    <!-- Stall Card 2 -->
-    <article class="hc-card">
-
-      <div class="hc-card__media">
-        <span>🍛</span>
-      </div>
-
-      <div class="hc-card__body">
-        <h3 class="hc-card__title">Indian Cuisine</h3>
-        <span class="hc-card__hours">
-          Operating hours: 8:00am – 9:00pm
-        </span>
-      </div>
-
-      <div class="hc-card__footer">
-
-        <span class="hc-pill">Stall</span>
-
-        <div>
-          <button class="hc-btn-icon hc-btn-icon--red">❤</button>
-          <button class="hc-btn-icon">🛒</button>
-        </div>
-
-      </div>
-
-    </article>
-
-    <!-- Stall Card 3 -->
-    <article class="hc-card">
-
-      <div class="hc-card__media">
-        <span>🍔</span>
-      </div>
-
-      <div class="hc-card__body">
-        <h3 class="hc-card__title">Western Delight</h3>
-        <span class="hc-card__hours">
-          Operating hours: 10:00am – 8:00pm
-        </span>
-      </div>
-
-      <div class="hc-card__footer">
-
-        <span class="hc-pill">Stall</span>
-
-        <div>
-          <button class="hc-btn-icon hc-btn-icon--red">❤</button>
-          <button class="hc-btn-icon">🛒</button>
-        </div>
-
-      </div>
-
-    </article>
-
-  </div>
-
-</div>
-
+  <script src="../js/CrowdLevel.js"></script>
 </body>
 </html>

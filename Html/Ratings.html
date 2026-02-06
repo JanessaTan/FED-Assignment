@@ -1,33 +1,50 @@
-<!-- rating.html -->
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Rating – HawkerHub</title>
-<link rel="stylesheet" href="../css/base.css">
-<link rel="stylesheet" href="../css/rating.css">
-</head><body>
-<script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script><script src="assets/js/auth.js"></script>
-<script>renderHeader('rating');</script>
-
-<main class="container card">
-  <h2>Rate Your Experience</h2>
-  <form id="rf" class="row">
-    <div style="flex:1"><label>Stall</label>
-      <select id="stallSel"></select>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hawker Centre — Menu Rating</title>
+  <link rel="stylesheet" href="../css/rating.css" />
+  <link rel="stylesheet" href="../css/base.css" />
+</head>
+<body class="hc-body">
+  <header class="hc-header" role="banner">
+    <div class="hc-top">
+      <a href="Home.html" class="hc-back">&lt; About</a>
+      <div class="hc-brand">
+        <div class="hc-logo" aria-hidden="true">🍜</div>
+        <div class="hc-title">
+          <div class="hc-name">Hawker Centre</div>
+        </div>
+      </div>
     </div>
-    <div><label>Rating</label>
-      <select id="stars"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select>
-    </div>
-    <div style="flex-basis:100%"><label>Comment</label><textarea id="rc" rows="3"></textarea></div>
-    <button class="btn">Submit</button>
-  </form>
-</main>
 
-<script>
-  const sel=$('#stallSel'); STALLS.forEach(s=>sel.insertAdjacentHTML('beforeend',`<option value="${s.id}">${s.name}</option>`));
-  $('#rf').addEventListener('submit', e=>{
-    e.preventDefault(); alert('Thanks for your rating!');
-    location.href='feedback.html';
-  });
-</script>
-</body></html>
-``
+    <nav class="hc-tabs" aria-label="Sections">
+      <a href="Hygiene.html" class="hc-tab">Hygiene</a>
+      <a href="Ratings.html" class="hc-tab is-active" aria-current="page">Rating</a>
+      <a href="Feedback.html" class="hc-tab">Feedback</a>
+      <a href="SaveOrder.html" class="hc-tab">AddToCart</a>
+    </nav>
+  </header>
+
+  <main class="hc-main" id="main">
+    <!-- Grid is injected by JS -->
+    <section class="hc-grid" id="menuGrid" aria-label="Menu items (ratings)"></section>
+  </main>
+
+  <!-- Sticky CTA -->
+  <footer class="hc-cta" role="contentinfo">
+    <button class="hc-btn-cta" type="button" id="viewMenuBtn">View Menu</button>
+    <div class="hc-dots" aria-hidden="true">
+      <span class="dot is-active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </footer>
+
+  <!-- Screen reader live region (non-visual) -->
+  <div id="cartLiveRegion" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="../js/Rating.js"></script>
+</body>
+</html>
