@@ -1,18 +1,158 @@
 <!-- feedback.html -->
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Feedback – HawkerHub</title>
-<link rel="stylesheet" href="../css/base.css">
-<link rel="stylesheet" href="../css/feedback.css">
-</head><body>
-<script src="assets/js/utils.js"></script><script src="assets/js/auth.js"></script>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Feedback – HawkerHub</title>
+    <link rel="stylesheet" href="..\css\base.css">
+    <link rel="stylesheet" href="..\css\feedback.css">
+</head>
+<body>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/auth.js"></script>
 <script>renderHeader('feedback');</script>
-<main class="container card">
-  <h2>Feedback</h2>
-  <form onsubmit="event.preventDefault(); alert('Feedback sent!'); location.href='home.html'">
-    <label>Your message</label>
-    <textarea rows="4" required></textarea>
-    <button class="btn" style="margin-top:8px">Send</button>
-  </form>
+
+<main class="container">
+    <div class="card">
+        <h2>Share Your Feedback</h2>
+        <p class="muted">We value your opinion and use your feedback to improve our hawker centre</p>
+        
+        <form id="feedbackForm">
+
+          <div class="feedback-section">
+                <label>What would you like to share?</label>
+                <div class="feedback-type-grid">
+                    <label class="feedback-type-card">
+                        <input type="radio" name="feedbackType" value="compliment" checked>
+                        <div class="type-content">
+                            <span class="type-icon">😊</span>
+                            <span class="type-label">Compliment</span>
+                        </div>
+                    </label>
+
+                    <label class="feedback-type-card">
+                        <input type="radio" name="feedbackType" value="suggestion">
+                        <div class="type-content">
+                            <span class="type-icon">💡</span>
+                            <span class="type-label">Suggestion</span>
+                        </div>
+                    </label>
+                    
+                    <label class="feedback-type-card">
+                        <input type="radio" name="feedbackType" value="complaint">
+                        <div class="type-content">
+                            <span class="type-icon">😟</span>
+                            <span class="type-label">Complaint</span>
+                        </div>
+                    </label>
+                    
+                    <label class="feedback-type-card">
+                        <input type="radio" name="feedbackType" value="general">
+                        <div class="type-content">
+                            <span class="type-icon">💬</span>
+                            <span class="type-label">General</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+                        <div class="feedback-section">
+                <h3>Your Information (Optional)</h3>
+                <div class="row">
+                    <div style="flex:1">
+                        <label>Name</label>
+                        <input type="text" id="userName" placeholder="Your name">
+                    </div>
+                    <div style="flex:1">
+                        <label>Email</label>
+                        <input type="email" id="userEmail" placeholder="your.email@example.com">
+                    </div>
+                </div>
+            </div>
+
+                        <div class="feedback-section">
+                <div class="row">
+                    <div style="flex:1">
+                        <label>Related to a specific stall? (Optional)</label>
+                        <select id="stallSelect">
+                          <option value="">-- Select a stall (optional) --</option>
+                        <option value="Chinese">Golden Wok</option>
+                        <option value="Malay">Mak Cik Delights</option>
+                        <option value="Indian">Little India Express</option>
+                        <option value="Thai">Tom Yum House</option>
+                        <option value="Western">Western Bites</option>
+                        <option value="Drinks">Kopi & Teh Corner</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+                        <div class="feedback-section">
+                <label>Your Feedback <span class="required">*</span></label>
+                <textarea 
+                    id="feedbackMessage" 
+                    rows="6" 
+                    placeholder="Please share your thoughts with us..."
+                    required
+                    maxlength="500"></textarea>
+            </div>
+
+            <div class="feedback-section">
+
+                       <div class="button-group">
+                <button type="submit" class="btn">Submit Feedback</button>
+                <a class="btn secondary" href="home.html">Cancel</a>
+            </div>
+        </form>
+    </div>
 </main>
-</body></html>
+
+<script>
+    (function() {
+    const stallSelect = $('#stallSelect');
+    STALLS.forEach(stall => {
+      const option = document.createElement('option');
+      option.value = stall.id;
+      option.textContent = stall.name;
+      stallSelect.appendChild(option);
+    });
+    
+    
+    $('#feedbackForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const feedbackType = document.querySelector('input[name="feedbackType"]:checked').value;
+      const name = $('#userName').value.trim();
+      const email = $('#userEmail').value.trim();
+      const stall = $('#stallSelect').value;
+      const message = feedbackMessage.value.trim();
+      
+      if (!message) {
+        alert('Please enter your feedback message.');
+        feedbackMessage.focus();
+        return;
+      }
+      
+      const feedback = {
+        type: feedbackType,
+        name: name || 'Anonymous',
+        email: email || 'Not provided',
+        stallId: stall || 'General',
+        message: message,
+        timestamp: new Date().toISOString()
+      };
+      
+      const feedbackList = store.get('feedbackList', []);
+      feedbackList.push(feedback);
+      store.set('feedbackList', feedbackList);
+      
+      alert('✓ Thank you for your feedback! We appreciate your input and will use it to improve our service.');
+      
+      location.href = 'home.html';
+    });
+  })();
+</script>
+
+</body>
+</html>
