@@ -1,22 +1,46 @@
 <!-- home.html -->
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Home – HawkerHub</title>
+
 <link rel="stylesheet" href="../css/base.css">
 <link rel="stylesheet" href="../css/home.css">
-</head><body>
-<script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script><script src="assets/js/auth.js"></script>
+</head>
+
+<body>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/auth.js"></script>
 <script>renderHeader('home');</script>
 
-<main class="container">
-  <div class="card">
-    <h1>Welcome to HawkerHub</h1>
-    <p>Discover stalls, check crowd levels, and order ahead for pickup.</p>
-    <div class="row" style="margin-top:10px">
-      <a class="btn" href="stalls.html">Browse Hawker Centres → Stalls</a>
-      <a class="btn secondary" href="CrowdLevel.html">Check Crowd Levels</a>
-      <a class="btn" href="promotions.html">Promotions</a>
+<!-- HERO SECTION -->
+<section class="hero">
+    <h1>A World of Flavor Awaits</h1>
+    <p>Discover affordable and delicious cuisines right near your home.</p>
+
+    <div>
+        <a class="btn" href="stalls.html">Order Now</a>
+        <a class="btn secondary" href="stalls.html">View Stalls</a>
     </div>
-  </div>
-</main>
-</body></html>
+</section>
+
+<!-- LOCATIONS SECTION -->
+<section class="locations home-footer-space">
+    <h2>Our Locations</h2>
+
+    <div class="map-card">
+        <div class="map-placeholder"></div>
+    </div>
+
+    <p class="muted">Worried about queues?</p>
+    <a class="btn" href="crowd.html">Check Crowd Levels</a>
+</section>
+
+<script src="assets/js/home.js"></script>
+
+</body>
+</html>
