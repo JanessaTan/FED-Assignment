@@ -60,13 +60,6 @@
     font-weight: 600;
 }
 
-#charCount {
-    display: block;
-    text-align: right;
-    margin-top: 4px;
-    font-size: 0.85rem;
-}
-
 .button-group {
     display: flex;
     gap: 12px;

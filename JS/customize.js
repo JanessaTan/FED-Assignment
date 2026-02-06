@@ -57,6 +57,20 @@
     if (specialNotes) {
       customizations.push(specialNotes);
     }
+
+    const notesField = $('#notes');
+    const charCount = $('#charCount');
+    
+    notesField.addEventListener('input', function() {
+      const length = this.value.length;
+      charCount.textContent = `${length}/200 characters`;
+      
+      if (length > 180) {
+        charCount.style.color = 'var(--warn)';
+      } else {
+        charCount.style.color = 'var(--muted)';
+  }
+});
     
     const notes = customizations.length > 0 
       ? customizations.join('; ') 
