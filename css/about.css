@@ -11,6 +11,53 @@ body {
     margin: auto;
     padding: 20px;
 }
+#site-header {
+    width: 100%;
+    background-color: lightpink;
+    border-bottom: 1px solid white;
+}
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: whitesmoke;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.contact-info span {
+    margin-right: 15px;
+}
+.social-icons img{
+    width: 20px;
+    margin-left: 10px;
+}
+.nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background-color: white;
+}
+
+.nav-links a {
+    font-weight: bold;
+    margin: 10px;
+    color: black;
+}
+.nav-links a.active {
+    color: red
+}
+.order-btn button{
+    background-color: black;
+    color: red;
+    padding: 10px;
+    padding-right: 25px;
+    padding-left: 25px;
+    border-radius: 10px;
+}
 .About {
     display: flex;
     align-items: center;
