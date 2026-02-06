@@ -1,24 +1,30 @@
-<!-- stalls.html -->
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Stalls – HawkerHub</title>
-<link rel="stylesheet" href="../css/base.css">
-<link rel="stylesheet" href="../css/stalls.css">
-</head><body>
-<script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script><script src="assets/js/auth.js"></script>
-<script>renderHeader('stalls');</script>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Stalls – HawkerHub</title>
 
-<main class="container">
-  <section class="card">
-    <h2>Choose a Hawker Centre</h2>
-    <div class="grid grid-3" id="centres"></div>
-  </section>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/stalls.css">
+</head>
 
-  <section class="card">
-    <h2>Food Stalls (same list regardless of centre)</h2>
-    <div id="stallList" class="grid grid-3"></div>
-  </section>
-</main>
+<body>
 
-<script src="assets/js/stalls.js"></script>
-</body></html>
+  <script src="../JS/shared.js"></script>
+  <script src="../JS/utilities.js"></script>
+  <script src="../JS/auth.js"></script>
+  <script>
+    renderHeader('stalls');
+  </script>
+
+  <main class="stalls-wrapper">
+  <h2 class="stalls-title">Food Stalls</h2>
+  <div id="stallList"></div>
+  </main>
+
+
+  <script src="../JS/stalls.js"></script>
+
+</body>
+</html>
