@@ -121,10 +121,27 @@ body {
     flex: 1;
     min-width: 150px;
 } 
+.info-link {
+    display: block;
+    color:black;
+}
 .feedback {
     text-align: center;
     background-color: red;
     padding: 20px;
+}
+.more-btn {
+    font-size: 14px;
+    margin-left: 50px;
+    font-weight: bold;
+}
+.more-btn button {
+    border-radius: 5px;
+    background-color: black;
+    color: red;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .feedback-boxes {
     display: flex;
