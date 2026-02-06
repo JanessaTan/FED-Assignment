@@ -4,20 +4,25 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Hawker Centre — Stalls Overview</title>
+
+  <!-- CSS files -->
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/crowd.css">
 </head>
 <body class="hc-body">
 
+  <!-- Main Section -->
   <section class="hc-section">
     <div class="hc-wrap">
 
-      <!-- Top row: breadcrumb + Overview small button -->
+      <!-- Top row with breadcrumb and Overview button -->
       <div class="hc-topbar">
         <nav aria-label="Breadcrumb" class="hc-breadcrumb">
+          <!-- Go back to stalls page -->
           <a href="Stalls.html" class="hc-breadcrumb__back" title="Back to Stalls">&lt; Stall</a>
         </nav>
 
+        <!-- Small overview button-->
         <button class="hc-btn-sm hc-btn-sm--primary" type="button">
           Overview
         </button>
@@ -31,7 +36,7 @@
       <!-- Grid of stall cards -->
       <div class="hc-grid" role="list" aria-label="Hawker Centre Stalls">
 
-        <!-- Each card: data-stall attribute added for JS -->
+        <!-- CHINESE STALL -->
         <article class="hc-card" role="listitem" data-stall="chinese">
           <figure class="hc-card__media">
             <img src="../img/chinese.jpg" alt="Chinese Cuisine" />
@@ -42,6 +47,7 @@
           </div>
         </article>
 
+        <!-- INDIAN STALL -->
         <article class="hc-card" role="listitem" data-stall="indian">
           <figure class="hc-card__media">
             <img src="../img/indian.jpg" alt="Indian Cuisine" />
@@ -52,6 +58,7 @@
           </div>
         </article>
 
+        <!-- MALAY STALL-->
         <article class="hc-card" role="listitem" data-stall="malay">
           <figure class="hc-card__media">
             <img src="../img/malay.jpg" alt="Malay Cuisine" />
@@ -62,6 +69,7 @@
           </div>
         </article>
 
+        <!-- THAI STALL -->
         <article class="hc-card" role="listitem" data-stall="thai">
           <figure class="hc-card__media">
             <img src="../img/thai.jpg" alt="Thai Cuisine" />
@@ -72,6 +80,7 @@
           </div>
         </article>
 
+        <!-- DRINK STALL -->
         <article class="hc-card" role="listitem" data-stall="drink">
           <figure class="hc-card__media">
             <img src="../img/drink.jpg" alt="Drink Store" />
@@ -82,6 +91,7 @@
           </div>
         </article>
 
+        <!-- WESTERN STALL -->
         <article class="hc-card" role="listitem" data-stall="western">
           <figure class="hc-card__media">
             <img src="../img/western.jpg" alt="Western Cuisine" />
@@ -94,7 +104,7 @@
 
       </div>
 
-      <!-- SINGLE Peak Hours Bar Chart -->
+      <!-- Peak Hours Bar Chart -->
       <div id="chart" class="hc-chart" role="img">
         <div class="hc-chart__head">
             <h4 id="chart-title" class="hc-chart__title">Average Crowd Level</h4>

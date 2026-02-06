@@ -5,156 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Hawker Centre — Rental Agreement</title>
 
-  <!-- ====== Fonts & Icons (optional) ====== -->
+  <!-- ====== Fonts (optional) ====== -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- ====== Minimal Reset & Theme ====== -->
-  <style>
-    :root{
-      --bg:#e9e9eb;
-      --card:#ffffff;
-      --ink:#2a2f36;
-      --muted:#6b7280;
-      --accent:#6c8cff;      /* primary */
-      --accent-2:#a3b5ff;    /* hover */
-      --chip:#f1f2f6;
-      --chip-ink:#3a3f47;
-      --border:#d8dbe2;
-      --ok:#17a34a;
-      --warn:#f59e0b;
-      --danger:#ef4444;
-      --shadow: 0 1px 2px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.08);
-      --radius:14px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
-      color:var(--ink);
-      background:var(--bg);
-      line-height:1.5;
-    }
-    .container{
-      max-width:1100px;
-      margin:20px auto 80px;
-      padding:0 16px;
-    }
-    /* ====== Top Bar ====== */
-    header.topbar{
-      position:sticky; top:0; z-index:20;
-      background:linear-gradient(0deg, rgba(233,233,235,0.6), rgba(233,233,235,0.95));
-      backdrop-filter: blur(6px);
-      border-bottom:1px solid var(--border);
-    }
-    .bar{
-      max-width:1100px; margin:0 auto; padding:10px 16px; display:flex; align-items:center; gap:12px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:10px; margin-left:auto; margin-right:auto;
-      font-weight:700; letter-spacing:.2px;
-    }
-    .brand .dot{width:28px; height:28px; border-radius:8px; background:#b8bdc9; display:inline-block}
-    .logout{
-      margin-left:auto;
-      background:#c9cedb; border:none; color:#1e293b; padding:8px 12px; border-radius:10px; cursor:pointer;
-    }
-    /* Left corner controls */
-    .left-controls{display:flex; gap:8px; align-items:center}
-    select, input[type="text"], input[type="date"], input[type="number"], input[type="email"]{
-      border:1px solid var(--border); background:#fff; color:var(--ink);
-      border-radius:10px; padding:8px 10px; outline:0; min-height:40px;
-    }
-    select:focus, input:focus{border-color:var(--accent); box-shadow:0 0 0 3px rgba(108,140,255,.16)}
-    .pill{
-      background:#cfd3df; color:#1f2937; border:none; padding:8px 12px; border-radius:999px; font-size:.9rem; cursor:pointer;
-    }
-    .tag{background:#e5e7eb; padding:4px 8px; border-radius:999px; font-size:.8rem; color:#334155}
-
-    /* ====== Cards ====== */
-    .card{
-      background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);
-      padding:18px; margin:14px 0;
-    }
-    .card h2{
-      font-size:1rem; margin:0 0 12px 0; color:#394150; font-weight:700;
-      display:inline-flex; align-items:center; gap:8px;
-    }
-    .grid{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-    .row{display:grid; grid-template-columns:220px 1fr; gap:10px; align-items:center}
-    .row label{color:var(--muted)}
-    .muted{color:var(--muted); font-size:.92rem}
-    .hr{height:1px; background:var(--border); margin:10px 0 14px}
-
-    /* ====== Cuisine info ====== */
-    .cuisine-card .title{display:flex; align-items:center; justify-content:space-between; gap:10px}
-    .cuisine-badges{display:flex; flex-wrap:wrap; gap:8px}
-    .cuisine-body{display:grid; grid-template-columns:1fr 1fr; gap:14px}
-    .box{background:var(--chip); border:1px solid var(--border); border-radius:12px; padding:12px}
-    .box h3{margin:0 0 8px 0; font-size:.95rem}
-    .box ul{margin:0; padding-left:18px}
-    .box li{margin:4px 0}
-
-    /* ====== Terms & Conditions ====== */
-    .chipbar{
-      display:flex; gap:8px; overflow:auto; padding-bottom:8px; -webkit-overflow-scrolling:touch;
-    }
-    .chip{
-      background:var(--chip); border:1px solid var(--border); color:var(--chip-ink);
-      padding:8px 12px; border-radius:999px; cursor:pointer; white-space:nowrap; user-select:none;
-    }
-    .chip.active{background:var(--accent); color:#fff; border-color:transparent}
-    .term-content{min-height:120px; background:#fcfcfe; border:1px dashed var(--border); border-radius:12px; padding:14px}
-    .term-content h3{margin:0 0 6px 0}
-    .term-content p{margin:6px 0}
-
-    /* ====== Agreement ====== */
-    .agree-row{display:flex; gap:10px; align-items:center; margin-bottom:10px}
-    .signature-wrap{display:grid; grid-template-columns:1fr auto; gap:10px; align-items:start}
-    canvas#signature{
-      width:100%; height:160px; border:1px solid var(--border); border-radius:12px; background:white; touch-action:none;
-    }
-    .sig-tools{display:flex; gap:8px}
-    .btn{
-      border:none; border-radius:12px; padding:10px 14px; cursor:pointer; font-weight:600;
-    }
-    .btn.primary{background:var(--accent); color:white}
-    .btn.ghost{background:#eef2ff; color:#2b3a67}
-    .btn.warn{background:#ffe9cc; color:#8a5600}
-    .btn.danger{background:#ffe4e6; color:#9f1239}
-    .btn:disabled{opacity:.6; cursor:not-allowed}
-    .actions{display:flex; gap:10px; flex-wrap:wrap}
-
-    /* ====== Responsive ====== */
-    @media (max-width: 860px){
-      .grid{grid-template-columns:1fr}
-      .cuisine-body{grid-template-columns:1fr}
-      .row{grid-template-columns:1fr; align-items:stretch}
-      .brand{margin-left:0; margin-right:0}
-      .bar{flex-wrap:wrap}
-    }
-  </style>
+  <!-- ====== App Styles ====== -->
+  <link rel="stylesheet" href="../css/rental.css">
+  <link rel="stylesheet" href="../css/base.css">
 </head>
 <body>
 
-  <!-- ====== Top Bar ====== -->
-  <header class="topbar" aria-label="Top navigation">
-    <div class="bar">
-      <div class="left-controls" role="group" aria-label="Cuisine controls">
-        <select id="cuisineSelect" aria-label="Choose cuisine">
-          <!-- Options are filled by JS to keep in one place -->
-        </select>
-        <input id="cuisineSearch" list="cuisineList" type="text" placeholder="Type a cuisine… (e.g., Western)" aria-label="Type a cuisine name">
-        <datalist id="cuisineList"></datalist>
-      </div>
-
-      <div class="brand" aria-label="Brand">
-        <span class="dot" aria-hidden="true"></span>
-        <span>Hawker Centre</span>
-      </div>
-
-      <button class="logout" type="button">LOG OUT</button>
+  <header class="topbar" role="banner" aria-label="Top bar with contact">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">🍜</span>
+      <span class="brand-name">Tian Tian Hainanese Chicken Rice</span>
+    </div>
+    <div class="contact">
+      <a class="contact-item" href="tel:12345678" aria-label="Call 1234 5678">📞 1234 5678</a>
+      <a class="contact-item" href="mailto:HawkerCentre@gmail.com" aria-label="Email HawkerCentre@gmail.com">✉️ HawkerCentre@gmail.com</a>
     </div>
   </header>
 
@@ -220,7 +88,7 @@
         <h2 id="cuisine-title">Cuisine Information</h2>
         <div class="cuisine-badges" id="cuisineBadges" aria-live="polite"></div>
       </div>
-      <div id="cuisineOverview" class="muted" style="margin-bottom:10px"></div>
+      <div id="cuisineOverview" class="muted"></div>
       <div class="cuisine-body">
         <div class="box">
           <h3>Popular Dishes</h3>
@@ -253,7 +121,7 @@
 
       <div class="signature-wrap">
         <div>
-          <div class="muted" style="margin-bottom:6px">Signature (draw below)</div>
+          <div class="muted">Signature (draw below)</div>
           <canvas id="signature" aria-label="Signature pad"></canvas>
         </div>
         <div class="sig-tools">
@@ -262,7 +130,7 @@
         </div>
       </div>
 
-      <div class="grid" style="margin-top:10px">
+      <div class="grid">
         <div class="row">
           <label for="signDate">Date</label>
           <input id="signDate" type="date" />
@@ -280,7 +148,8 @@
         <button class="btn primary" id="acceptBtn" type="button" disabled>Accept Agreement</button>
         <button class="btn danger" id="cancelBtn" type="button">Cancel</button>
       </div>
-      <div id="toast" class="muted" role="status" aria-live="polite" style="margin-top:8px"></div>
+
+      <div id="toast" class="muted" role="status" aria-live="polite"></div>
     </section>
   </main>
 
@@ -289,122 +158,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNa5rU6w+gB3oZQ3JcX6w9WJgHieVq+6+Jm6V3E3Q8sXoGgG5P1JbF6oH2s1hYpGvHa5J4Xl3s1QXjzYb3iH9w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <!-- ====== App Script ====== -->
-  <script>
-    /*************************************************
-     * DATA: add/update cuisines & terms here
-     *************************************************/
-    const CUISINES = {
-      "Western": {
-        overview: "Western cuisine features grilled meats, pasta, baked goods, salads and sauces like béchamel or demi-glace. Expect dairy usage and oven-based cooking.",
-        badges: ["Grill", "Baked", "Dairy"],
-        popularDishes: ["Grilled steak with fries", "Spaghetti Bolognese", "Roast chicken", "Fish & chips", "Caesar salad"],
-        hygieneTips: [
-          "Hold chilled items at ≤ 5°C; hot foods ≥ 60°C.",
-          "Separate raw and cooked areas to avoid cross-contamination.",
-          "Sanitise cutting boards and knives between meat and vegetables."
-        ]
-      },
-      "Chinese": {
-        overview: "Chinese cuisine spans stir-fry, steaming and braising with soy, ginger and garlic. Rice and noodles are staples.",
-        badges: ["Wok", "Steam", "Rice"],
-        popularDishes: ["Hainanese chicken rice", "Char kway teow", "Sweet & sour pork", "Mapo tofu", "Dumplings"],
-        hygieneTips: [
-          "Keep raw poultry separate and use dedicated chopping boards.",
-          "Regularly skim oil and clean woks/hoods to reduce grease build-up.",
-          "Rapidly cool broths; store in shallow containers."
-        ]
-      },
-      "Malay": {
-        overview: "Malay cuisine highlights coconut milk, spices and sambal. Common techniques include stewing and grilling (bakar).",
-        badges: ["Spiced", "Coconut", "Halal-friendly"],
-        popularDishes: ["Nasi lemak", "Satay", "Rendang", "Mee rebus", "Ikan bakar"],
-        hygieneTips: [
-          "Use food thermometers for curries/stews to ensure safe core temperatures.",
-          "Store sambal and coconut-based gravies chilled when not in service.",
-          "Label prep dates for perishable rempah (spice pastes)."
-        ]
-      },
-      "Indian": {
-        overview: "Indian cuisine uses layered spices, tandoor baking and curries with lentils or dairy. Vegetarian options are common.",
-        badges: ["Spices", "Tandoor", "Veg options"],
-        popularDishes: ["Butter chicken", "Biryani", "Masala dosa", "Paneer tikka", "Chana masala"],
-        hygieneTips: [
-          "Cool rice quickly to prevent Bacillus cereus growth; avoid keeping rice warm for long periods.",
-          "Dedicate ladles for veg and non-veg gravies.",
-          "Manage allergen info for nuts, milk and gluten."
-        ]
-      },
-      "Thai": {
-        overview: "Thai cuisine balances sweet, sour, salty and spicy with herbs like lemongrass and basil. Quick stir-fries and salads are common.",
-        badges: ["Herbal", "Spicy-sour", "Seafood"],
-        popularDishes: ["Pad Thai", "Green curry", "Tom yum", "Som tam", "Mango sticky rice"],
-        hygieneTips: [
-          "Keep raw seafood under strict cold chain; thaw in chiller, not at room temp.",
-          "Rinse herbs thoroughly to remove soil and pests.",
-          "Use gloves for ready-to-eat salads; change regularly."
-        ]
-      }
-    };
-
-    const TERMS = {
-      "Lease duration": `
-        <p><strong>Term:</strong> The lease commences on the Start Date and ends on the End Date stated in Rental Details.</p>
-        <p><strong>Renewal:</strong> Renewal is subject to performance, compliance, and written approval by the management at least 60 days before expiry.</p>
-        <p><strong>Early termination:</strong> See <em>Termination</em> for rules and fees.</p>
-      `,
-      "Hygiene Rules": `
-        <p><strong>Compliance:</strong> Tenant must comply with NEA food hygiene regulations and maintain A-grade cleanliness during inspections.</p>
-        <p><strong>Segregation:</strong> Raw and cooked food handling must be strictly separated. Provide dedicated tools and colour-coded boards.</p>
-        <p><strong>Waste:</strong> Dispose waste daily; oil and grease to be collected and handled via approved contractors.</p>
-      `,
-      "Termination": `
-        <p><strong>By Landlord:</strong> Landlord may terminate for material breach, unpaid rent (≥14 days), or repeated hygiene failures.</p>
-        <p><strong>By Tenant:</strong> Tenant may terminate with 60 days' written notice subject to settlement of outstanding charges.</p>
-        <p><strong>Vacant Possession:</strong> Stall must be returned clean with fixtures in good condition, fair wear and tear excepted.</p>
-      `,
-      "Rental Fees": `
-        <p><strong>Due Date:</strong> Rent is payable monthly in advance by the 1st business day via the Payment Method stated.</p>
-        <p><strong>Late Charges:</strong> Late payment attracts a <em>1.5% monthly</em> interest or as permitted by law.</p>
-        <p><strong>Adjustments:</strong> Utilities and cleaning fees may be separately billed based on usage.</p>
-      `,
-      "Insurance": `
-        <p><strong>Coverage:</strong> Tenant shall maintain public liability insurance of at least SGD 1,000,000 and provide certificate upon request.</p>
-        <p><strong>Food Safety:</strong> Recommend product liability coverage for foodborne incidents.</p>
-      `,
-      "Inspections": `
-        <p><strong>Access:</strong> Landlord and authorities may conduct inspections during operating hours with reasonable notice, or without notice in emergencies.</p>
-        <p><strong>Rectification:</strong> Non-compliances must be rectified within the stipulated timeline from written notice.</p>
-      `
-    };
-
-    /*************************************************
-     * Helper: DOM references
-     *************************************************/
-    const cuisineSelect   = document.getElementById('cuisineSelect');
-    const cuisineSearch   = document.getElementById('cuisineSearch');
-    const cuisineList     = document.getElementById('cuisineList');
-    const cuisineBadges   = document.getElementById('cuisineBadges');
-    const cuisineOverview = document.getElementById('cuisineOverview');
-    const popularDishes   = document.getElementById('popularDishes');
-    const hygieneTips     = document.getElementById('hygieneTips');
-
-    const tcChips      = document.getElementById('tcChips');
-    const termContent  = document.getElementById('termContent');
-
-    const agreeCheck   = document.getElementById('agreeCheck');
-    const signature    = document.getElementById('signature');
-    const clearSigBtn  = document.getElementById('clearSig');
-    const invertSigBtn = document.getElementById('invertSig');
-    const signDate     = document.getElementById('signDate');
-    const notes        = document.getElementById('notes');
-
-    const acceptBtn    = document.getElementById('acceptBtn');
-    const cancelBtn    = document.getElementById('cancelBtn');
-    const downloadBtn  = document.getElementById('downloadPdf');
-    const toast        = document.getElementById('toast');
-
-    // Tenant/Rental fields used in PDF
-    const tenantName   = document.getElementById('tenantName');
-    const stallNumber  = document.getElementById('stallNumber');
-    const hawkerCenter = document.getElementById('hawkerCenter');
-    const agreementId  = document.getElementById('agreementId');
+  <script src="app.js" defer></script>
+</body>
+</html>
