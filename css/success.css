@@ -9,3 +9,40 @@
 #root .row h3 {
     margin: 0;
 }
+
+h2{
+    color:crimson;
+    font-size: 30px;
+    text-align: center;
+}
+
+.receipt{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: 500;
+    width: 500px;
+    border-radius: 10px;
+    padding: 20px;
+    padding-left: 70px;
+    margin: 30px auto;
+}
+
+.receipt-items{
+    font-size: 16px;
+    color:#850606;
+}
+
+ul{
+    color:dimgray;
+    list-style: none;
+    padding-bottom: 20px;
+    white-space: nowrap;
+}
+
+.price{
+    text-align: right;
+    padding-right: 70px;
+}
