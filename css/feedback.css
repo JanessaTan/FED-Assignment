@@ -4,5 +4,162 @@ form .row {
 
 form textarea {
     min-height: 120px;
+    resize: vertical;
+    background: #fff;
+}
+.feedback-section {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.feedback-section:last-of-type {
+    border-bottom: none;
+}
+
+.feedback-section h3 {
+    margin: 0 0 12px 0;
+    color: var(--brand);
+    font-size: 1rem;
+}
+
+.feedback-type-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.feedback-type-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.feedback-type-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.type-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 12px;
+    background: #fff;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.feedback-type-card:hover .type-content {
+    border-color: var(--brand-2);
+    background: #f8fafc;
+}
+
+.feedback-type-card input[type="radio"]:checked + .type-content {
+    border-color: var(--brand);
+    background: #e6f4f4;
+}
+
+.type-icon {
+    font-size: 2rem;
+}
+
+.type-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.rating-stars {
+    display: flex;
+    gap: 8px;
+    font-size: 2rem;
+    margin-top: 8px;
+}
+
+.star {
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #d1d5db;
+    user-select: none;
+}
+
+.star:hover {
+    transform: scale(1.1);
+    color: #fbbf24;
+}
+
+.star:active {
+    transform: scale(1.1);
+}
+
+#feedbackCharCount {
+    display: block;
+    text-align: right;
+    margin-top: 4px;
+    font-size: 0.85rem;
+}
+
+.required {
+    color: var(--danger);
+}
+
+.button-group {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+form input,
+form select,
+form textarea {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: var(--brand);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 109, 119, 0.1);
+}
+
+@media (max-width: 768px) {
+    .feedback-type-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+    
+    .button-group .btn {
+        width: 100%;
+    }
+    
+    form .row {
+        flex-direction: column;
+    }
+    
+    form .row > div {
+        width: 100%;
+    }
+    
+    .rating-stars {
+        font-size: 1.5rem;
+    }
+}
+
+.feedback-type-card:focus-within .type-content {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
 }
 
