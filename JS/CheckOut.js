@@ -1,29 +1,4 @@
 /* assets/js/checkout.js */
-(function(){
-  const s = $('#summary');
-  const {cart, subtotal} = cartTotals();
-  if(cart.length===0){ s.innerHTML='<p>Cart empty.</p>'; }
-
-  const {discount, applied, reason} = computeDiscount(cart, subtotal);
-  const total = Math.max(0, subtotal - discount);
-
-  s.innerHTML = `
-    <p>Items: ${cart.length}</p>
-    <p>Subtotal: <strong>${fmt(subtotal)}</strong></p>
-    <p>Promotion: <strong>${applied?applied.title:'None'}</strong> <span class="muted">(${reason})</span></p>
-    <p>Discount: <strong>-${fmt(discount)}</strong></p>
-    <p>Total: <strong>${fmt(total)}</strong></p>
-  `;
-
-  $('#pay').addEventListener('submit', e=>{
-    e.preventDefault();
-    // Mock payment: success if total>0
-    const ok = total >= 0;
-    if(ok){ addHistory({status:'paid', total, items:cart}); clearCart(); }
-    location.href = `success.html?ok=${ok?'1':'0'}&total=${total}`;
-  });
-})();
-
 document.addEventListener("DOMContentLoaded", function() {
   displayCheckout();
   //submit payment
@@ -37,7 +12,52 @@ document.addEventListener("DOMContentLoaded", function() {
   })
 })
 function displayCheckout() {
-  let cartDiv = document.querySelector('.cart-list')
-  let totalDiv = document.querySelector('.cart-total')
-  let orderDiv = document.querySelector('order-info')
+  const cartDiv = document.querySelector('.cart-list')
+  const totalDiv = document.querySelector('.cart-total')
+  const orderDiv = document.querySelector('.order-info')
+
+  const { cart, subtotal} = cartTotals();
+  const order = getOrder();
+
+//order info
+if (order.type === "later" && order.pickupTime) {
+  let d = new Date(order.pickupTime);
+  orderDiv.innerHTML =  "<p><strong>Pickup Time:</strong> " + d.toLocaleString() + "</p>"
+} else {
+  orderDiv.innerHTML = "<p><strong>Pickup:</strong> ASAP</p>"
+}
+//cart is empty
+if (cart.length ===0) {
+  cartDiv.innerHTML ="<p>Your cart is empty.</p>"
+  totalDiv.innerHTML = ""
+  return;
+}
+//cart items
+let html = "";
+
+for (let i = 0; i < cart.length; i++) {
+  let item = cart[i];
+  html += "<div class='cart-item'>" + 
+    "<div class='item-info'>" + "<h4>" + item.name + "</h4>" +
+    "<p>$" + item.price + " x " + item.qty + "</p>" +
+    "</div>" + 
+    "<div class='item-actions'>" + 
+    "<span class='item-price'>$" + (item.price * item.qty).toFixed(2) + "</span>" +
+
+    "<button class='delete-btn' onclick='removeItem(" + i + ")'>" +
+      "Remove" +
+    "</button>" +
+    "</div>" +
+    "</div>";
+}
+cartDiv.innerHTML = html;
+
+totalDiv.innerHTML ="<h3>Total: $" + subtotal.toFixed(2) + "</h3>"
+}
+//remove item
+function removeItem(index) {
+  let cart = getCart();
+  cart.splice(index, 1);
+  setCart(cart);
+  displayCheckout();
 }
