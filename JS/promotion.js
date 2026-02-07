@@ -1,8 +1,6 @@
-// assets/js/promo.js
 function pickPromo(id){ store.set(KEYS.selectedPromo,{id}); }
 function getPickedPromo(){ return store.get(KEYS.selectedPromo,null); }
 
-// Compute discount based on cart and chosen promo; also auto-apply eligibility.
 function computeDiscount(cart, subtotal){
   const chosen = getPickedPromo();
   if(!chosen) return { discount:0, applied:null, reason:'No promotion selected' };
@@ -25,7 +23,7 @@ function computeDiscount(cart, subtotal){
     if(qty>=promo.thresholdQty){ discount = promo.amount; reason = `Applied: ${promo.title}`; }
     else reason = `Add ${promo.thresholdQty} of the bundle item`;
   }
-  discount = Math.min(discount, subtotal); // guard
+  discount = Math.min(discount, subtotal);
   return { discount, applied: promo, reason };
 }
 ``
