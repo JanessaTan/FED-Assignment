@@ -2,91 +2,144 @@
 
   const menuList = document.getElementById("menuList");
 
-  const MENU_DATA = [
-    {
-      id: "chicken-rice",
-      name: "Hainanese Chicken Rice",
-      description: "Tender poached chicken served with fragrant rice.",
-      price: 5.50,
-      img: "../img/chicken rice.jpg"
-    },
-    {
-      id: "laksa",
-      name: "Laksa",
-      description: "Rich and spicy coconut noodle soup.",
-      price: 6.50,
-      img: "../img/laksa.jpg"
-    },
-    {
-      id: "char-kway-teow",
-      name: "Char Kway Teow",
-      description: "Stir-fried flat noodles with egg and prawns.",
-      price: 5.00,
-      img: "../img/charkwayteow.jpg"
-    },
-    {
-      id: "satay",
-      name: "Satay",
-      description: "Grilled skewered meat served with peanut sauce.",
-      price: 0.90,
-      img: "../img/satay.jpg"
-    },
-    {
-      id: "sambal",
-      name: "Sambal Stingray",
-      description: "Grilled stingray topped with spicy sambal.",
-      price: 12.00,
-      img: "../img/sambal.jpg"
-    },
-    {
-      id: "kaya-toast",
-      name: "Kaya Toast",
-      description: "Traditional toast with kaya and butter.",
-      price: 2.20,
-      img: "../img/kaya-toast.jpg"
-    }
-  ];
+  const stallId = new URLSearchParams(window.location.search).get("stall");
 
+  let menuItems = [];
+
+  // Golden Wok
+  if (stallId === "golden-wok") {
+    menuItems = [
+      {
+        name: "Egg Fried Rice",
+        description: "Classic wok fried rice with egg.",
+        price: 5.00,
+        img: "../img/chinese.jpg"
+      },
+      {
+        name: "Char Kway Teow",
+        description: "Flat noodles stir fried with prawns.",
+        price: 5.50,
+        img: "../img/charkwayteow.jpg"
+      }
+    ];
+  }
+
+  // Mak Cik Delights
+  else if (stallId === "mak-cik-delights") {
+    menuItems = [
+      {
+        name: "Nasi Lemak",
+        description: "Coconut rice with sambal and egg.",
+        price: 4.50,
+        img: "../img/malay.jpg"
+      },
+      {
+        name: "Beef Rendang",
+        description: "Spicy slow cooked beef.",
+        price: 6.00,
+        img: "../img/sambal.jpg"
+      }
+    ];
+  }
+
+  // Little India Express
+  else if (stallId === "little-india-express") {
+    menuItems = [
+      {
+        name: "Chicken Biryani",
+        description: "Fragrant basmati rice with chicken.",
+        price: 6.50,
+        img: "../img/indian.jpg"
+      },
+      {
+        name: "Roti Prata",
+        description: "Crispy prata served with curry.",
+        price: 2.00,
+        img: "../img/roti.jpg"
+      }
+    ];
+  }
+
+  // Tom Yum House
+  else if (stallId === "tom-yum-house") {
+    menuItems = [
+      {
+        name: "Tom Yum Soup",
+        description: "Spicy and sour Thai soup.",
+        price: 6.00,
+        img: "../img/thai.jpg"
+      },
+      {
+        name: "Pad Thai",
+        description: "Stir fried Thai noodles.",
+        price: 5.50,
+        img: "../img/thai.jpg"
+      }
+    ];
+  }
+
+  // Western Bites
+  else if (stallId === "western-bites") {
+    menuItems = [
+      {
+        name: "Grilled Chicken Chop",
+        description: "Juicy grilled chicken with fries.",
+        price: 8.00,
+        img: "../img/western.jpg"
+      },
+      {
+        name: "Fish & Chips",
+        description: "Crispy battered fish with fries.",
+        price: 7.50,
+        img: "../img/western.jpg"
+      }
+    ];
+  }
+
+  // Kopi & Teh Corner
+  else if (stallId === "kopi-teh-corner") {
+    menuItems = [
+      {
+        name: "Kopi O",
+        description: "Traditional black coffee.",
+        price: 1.50,
+        img: "../img/drink.jpg"
+      },
+      {
+        name: "Teh Tarik",
+        description: "Pulled milk tea.",
+        price: 1.80,
+        img: "../img/drink.jpg"
+      }
+    ];
+  }
+
+  // Render
   function renderMenu(){
     menuList.innerHTML = "";
 
-    MENU_DATA.forEach(item => {
+    menuItems.forEach(item => {
 
       const card = document.createElement("div");
       card.className = "menu-card";
 
       card.innerHTML = `
         <img src="${item.img}" class="menu-img" alt="${item.name}">
-
         <div class="menu-content">
           <div class="menu-item-title">${item.name}</div>
           <div class="menu-description">${item.description}</div>
           <div class="menu-price">$${item.price.toFixed(2)}</div>
-          <button class="menu-btn" data-id="${item.id}">
-            Add to Cart
-          </button>
+          <button class="menu-btn">Add to Cart</button>
         </div>
       `;
+
+      card.querySelector(".menu-btn").addEventListener("click", function(){
+        window.location.href = "Checkout.html";
+      });
 
       menuList.appendChild(card);
     });
   }
-
-  menuList.addEventListener("click", function(e){
-    if(e.target.classList.contains("menu-btn")){
-
-      const id = e.target.dataset.id;
-      const selectedItem = MENU_DATA.find(i => i.id === id);
-      if(!selectedItem) return;
-
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
-      cart.push(selectedItem);
-      localStorage.setItem("cart", JSON.stringify(cart));
-
-      // Redirect to Checkout
-      window.location.href = "Checkout.html";
-    }
-  });
 
   renderMenu();
 
