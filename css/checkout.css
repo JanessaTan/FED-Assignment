@@ -1,27 +1,25 @@
-#summary {
-    background: #fff;
-    border-radius: 12px;
+.payment-form {
+    background-color: red;
     padding: 12px;
-    box-shadow: var(--shadow);
+    border-radius: 12px;
+    margin-top: 25px;
 }
-
-#pay {
-    align-items: flex-end;
+.payment-form input {
+    width: 50%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid rgb(173, 163, 163);
 }
-
-#pay input {
-    width: 220px;
-}
-
-#pay input[placeholder="MM/YY"],
-#pay input[placeholder="123"] {
+.payment-form input[placeholder = "MM/YY"], .payment-form input [placeholder="123"] {
     width: 100px;
 }
-#pay .btn-pay {
-    background: var(--brand-2);
-    color: #fff;
-    padding: 12px 20px;
-    font-size: 1rem;
+.payment-form .payment-btn {
+    background-color: black ;
+    color: white;
+    border-radius: 5px;
+    width: 90px;
+    padding: 3px;
+    margin-left: 15px;
 }
 #site-header {
     width: 100%;
