@@ -9,7 +9,6 @@ body {
 .container {
     width: 100%;
     margin: auto;
-    padding: 20px;
 }
 #site-header {
     width: 100%;
@@ -24,7 +23,7 @@ body {
     font-size: 14px;
 }
 
-.contact a {
+.contact span{
     margin-right: 15px;
 }
 .social-icons img{
@@ -60,22 +59,27 @@ body {
 .About {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     padding: 15px;
     background-color: whitesmoke;
 }
 .About img {
     width: 350px;
     border-radius: 10px;
-    margin-right: 50px;
+    margin-right: 20px;
+    border: 2px solid red;
 }
 .About-text {
+    margin: 10px;
     text-align: center;
 }
 .About-explore {
     background-color: red;
     border-radius: 10px;
     padding: 10px;
+    width: 400px;
+    margin: 20px auto;
+    text-align: center;
+    border: 1px solid black;
 }
 .features{
     display: flex;
@@ -84,8 +88,18 @@ body {
     background-color: red;
     text-align: center;
 }
-.feature-item {
+.feature-item p{
+    display: flex;
+    align-items: center;
     font-weight: bold;
+    justify-content: center;
+}
+.feature-item img {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    margin-right: 10px;
+    border: 1px solid black;
 }
 .info {
     background-color: whitesmoke;
@@ -96,11 +110,13 @@ body {
     display: flex;
     justify-content: space-between;
     gap: 40px;
+    align-items: center;
     flex-direction: row-reverse;
 }
 .info img {
     width: 350px;
-    border-radius: 10px
+    border-radius: 10px;
+    border: 2px solid red;
 }
 .info-content {
     flex: 1;
@@ -120,6 +136,7 @@ body {
     border-radius: 15px;
     flex: 1;
     min-width: 150px;
+    border: 1px solid black;
 } 
 .info-link {
     display: block;
@@ -129,6 +146,7 @@ body {
     text-align: center;
     background-color: red;
     padding: 20px;
+    border: 1px solid rgb(63, 45, 45);
 }
 .more-btn {
     font-size: 14px;
@@ -172,4 +190,5 @@ body {
     width: 80px;
     height: 80px;
     border-radius: 10px;
+    border: 1px solid black;
 }
