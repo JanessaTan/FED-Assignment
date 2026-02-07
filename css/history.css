@@ -9,3 +9,13 @@
 #root .row h3 {
     margin: 0;
 }
+
+.history-card {
+  background: #111;
+  border: 1px solid;
+  border-color: #2a2a2a;
+  border-radius: 14px;
+  border-color: #3a3a3a;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+  overflow: hidden;
+}

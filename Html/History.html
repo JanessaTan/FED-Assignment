@@ -6,40 +6,36 @@
 </head><body>
 <script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script><script src="assets/js/auth.js"></script>
 <script>renderHeader('history');</script>
-<main class="container card" id="root"></main>
-
-<header>
-    <h2>Hawker Centre</h2>
-</header>
-
-<div class="container">
-
-    <h1>Order History</h1>
-
-    <div class="card">
+<main class="container" id="root">
+  <section class="card">
+    <h2>Order History</h2>
+  </section>
+  <div class="container">
+    <div class="history-card">
         <h3>Ordered on: 16 Jan 2026</h3>
         <p><b>Chinese Cuisine</b></p>
         <p>Order: Item #1, Item #2</p>
         <p>Customised: Less spicy, add egg</p>
-        <button onclick="saveOrder()">Save Order</button>
+        <button class="btn" onclick="saveOrder()">Save Order</button>
     </div>
 
-    <div class="card">
+    <div class="history-card">
         <h3>Ordered on: 5 Jan 2026</h3>
         <p><b>Drink Store</b></p>
         <p>Order: Item #1</p>
         <p>Customised: Add chili, hard-boiled egg</p>
-        <button onclick="saveOrder()">Save Order</button>
+        <button class="btn" onclick="saveOrder()">Save Order</button>
     </div>
 
-    <div class="card">
+    <div class="history-card">
         <h3>Ordered on: 1 Jan 2026</h3>
         <p><b>Indian Cuisine</b></p>
         <p>Order: Item #1, Item #2, Item #3</p>
-        <button onclick="saveOrder()">Save Order</button>
+        <button class="btn" onclick="saveOrder()">Save Order</button>
     </div>
 
 </div>
+</main>
 
 <script src="script.js"></script>
 
