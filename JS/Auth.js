@@ -1,3 +1,4 @@
+//abput js
 document.addEventListener('DOMContentLoaded', function () {
     //click social icons
     document.querySelectorAll('.social-icons img').forEach(icon => {
@@ -82,3 +83,35 @@ document.addEventListener('DOMContentLoaded', function () {
         })
 
 })
+
+// order-later js
+    document.addEventListener('DOMContentLoaded', function() {
+        let orderForm = document.getElementById('ol')
+        let pickupInput = document.getElementById('pickupTime')
+        let scheduleBtn = document.querySelector('.scheduleBtn')
+
+        //form submission
+        if (orderForm) {
+            orderForm.addEventListener('submit', function(e) {
+                e.preventDefault()
+
+                let time= pickupInput.value
+
+                if (!time) {
+                alert("Please select a pickup time!")
+                return }
+                //save to localstorage
+                setOrder({
+                type: "later",
+                pickupTime: time    })
+                window.location.href = 'Stalls.html'
+            })
+        }
+        // click schedule to stalls
+        if (scheduleBtn) {
+        scheduleBtn.style.cursor = 'pointer'
+        scheduleBtn.addEventListener('click', function(e) {
+            e.preventDefault()
+            window.location.href = 'Stalls.html'
+        })}
+    })
