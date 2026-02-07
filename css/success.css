@@ -10,10 +10,6 @@
     margin: 0;
 }
 
-body{
-    
-}
-
 h2{
     color:crimson;
     font-size: 30px;
@@ -23,6 +19,7 @@ h2{
 .btn{
     position: relative;
     right: 30px;
+    top: 5px;
     margin: auto;
 }
 
