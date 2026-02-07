@@ -23,48 +23,55 @@
     western: "Western Cuisine"
   };
 
-  //Get chart DOM elements
-  const chartTitle = document.getElementById("chart-title");
-  const chartBars = document.getElementById("chart-bars");
+  /*Get chart DOM elements*/
+  document.addEventListener("DOMContentLoaded", () =>{
+    const chartTitle = document.getElementById("chart-title");
+    const chartBars = document.getElementById("chart-bars");
+  
+    if(!chartTitle || !chartBars){
+      console.warn("Chart elements NOT found.");
+      return;
+    }
+
 
   // ===== 2. Function to render chart =====
-  function renderChart(stall){
-    // Update chart title
-    chartTitle.textContent = "Average Crowd Level of " + stallNames[stall];
+    function renderChart(stall){
+      // Update chart title
+      chartTitle.textContent = "Average Crowd Level of " + stallNames[stall];
 
-    // Clear previous bars
-    chartBars.innerHTML = "";
+      // Clear previous bars
+      chartBars.innerHTML = "";
 
-    // Time labels for bars
-    const hours = ["10am","12pm","2pm","4pm","6pm","8pm","10pm"];
+      // Time labels for bars
+      const hours = ["10am","12pm","2pm","4pm","6pm","8pm","10pm"];
 
-    // Loop through each crowd value
-    crowdData[stall].forEach((value, index) => {
+      // Loop through each crowd value
+      crowdData[stall].forEach((value, index) => {
 
-      // Create Bar
-      const bar = document.createElement("div");
-      bar.classList.add("hc-bar");
-      bar.style.setProperty("--v", value);
-      bar.setAttribute("aria-label", `${hours[index]} crowd level ${value}`);
-      
-      // Add Hour Lable
-      const label = document.createElement("span");
-      label.classList.add("hc-bar__label");
-      label.textContent = hours[index];
-      
-      // Add Value Label
-      const val = document.createElement("span");
-      val.classList.add("hc-bar__value");
-      val.textContent = value;
+        // Create Bar
+        const bar = document.createElement("div");
+        bar.classList.add("hc-bar");
+        bar.style.setProperty("--v", value);
+        bar.setAttribute("aria-label", `${hours[index]} crowd level ${value}`);
+        
+        // Add Hour Lable
+        const label = document.createElement("span");
+        label.classList.add("hc-bar__label");
+        label.textContent = hours[index];
+        
+        // Add Value Label
+        const val = document.createElement("span");
+        val.classList.add("hc-bar__value");
+        val.textContent = value;
 
-      // Append lables to bar
-      bar.appendChild(label);
-      bar.appendChild(val);
+        // Append lables to bar
+        bar.appendChild(label);
+        bar.appendChild(val);
 
-      // Append bar to chart
-      chartBars.appendChild(bar);
-    });
-  }
+        // Append bar to chart
+        chartBars.appendChild(bar);
+      });
+    }
 
   // ===== 3. Click Event on Stall Titles =====
   const stallElements = document.querySelectorAll(".hc-card__title.clickable");
@@ -80,5 +87,7 @@
 
   // ===== 4. Load default chart =====
   renderChart("chinese");
+
+  });
 
 })();
