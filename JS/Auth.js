@@ -1,4 +1,4 @@
-//abput js
+//about js
 document.addEventListener('DOMContentLoaded', function () {
     //click social icons
     document.querySelectorAll('.social-icons img').forEach(icon => {
@@ -16,15 +16,16 @@ document.addEventListener('DOMContentLoaded', function () {
     })
   })
   /*explore section clickable*/
-    document.querySelectorAll('.About-explore h3').forEach(a => {
-        a.style.cursor ='pointer'
+    document.querySelectorAll('.About-explore h3').forEach(h3 => {
+        h3.style.cursor ='pointer'
+        h3.addEventListener('click', function() {
+            window.location.href = 'Stalls.html'
+        })
     })
-    document.querySelector('.About-explore h3').addEventListener('click', () => {
-        window.location.href = 'Stalls.html'
-})
-    document.querySelectorAll('.About-explore p').forEach(item => {
-        item.style.cursor = 'pointer'
-        item.addEventListener('click', () => {
+
+    document.querySelectorAll('.About-explore p').forEach(p=> {
+        p.style.cursor = 'pointer'
+        p.addEventListener('click', () => {
             window.location.href = 'Contact.html'})
 
     })
@@ -36,10 +37,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 window.location.href = 'Stalls.html'})
             }})
     //more btn
-    document.querySelector('.more-btn button').style.cursor ='pointer'
-    document.querySelector('.more-btn button').addEventListener('click', function() {
-        window.location.href = 'feedback.html'
-    });
+    let moreBtn = document.querySelector('.more-btn button')
+    if (moreBtn) {
+        moreBtn.style.cursor ='pointer'
+        moreBtn.addEventListener('click', function() {
+            window.location.href = 'Feedback.html'
+        })
+    }
     //click fllw insta
     document.querySelectorAll('.footer-brand h3').forEach(f => {
         f.style.cursor='pointer'
@@ -54,11 +58,6 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.href = 'Dummy.html'
         })
     })
-    //order btn
-    let orderbtn = document.querySelector('.order-btn button')
-    orderbtn.style.cursor ='pointer'
-    orderbtn.addEventListener('click', function() {
-        window.location.href = 'Order.html'})
     //nav bar
     let navLinks = document.querySelectorAll('.nav-links a')
     let pages = ["Home.html", "About.html", "Stalls.html", "Promotion.html", "Contact.html"]
@@ -67,20 +66,26 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault()
             window.location.href = pages[i]
         })})
-    let pageMap = ["Home.html",
+        //footer pages
+        let footerPages =document.querySelectorAll('.footerPage p')
+        let pageMap = ["Home.html",
                     "About.html",
                     "Stalls.html",
                     "Menu.html",
                     "feedback.html",
                     "Promotion.html",
                     "Contact.html"]
-        let footerPages =document.querySelectorAll('.footerPage p')
         footerPages.forEach((p, i) =>{
             p.style.cursor ='pointer'
             p.addEventListener('click', function() {
                 window.location.href = pageMap[i]
             })
         })
+        //order btn
+        let orderbtn = document.querySelector('.order-btn button')
+        orderbtn.style.cursor ='pointer'
+        orderbtn.addEventListener('click', function() {
+            window.location.href = 'Order.html'})
 
 })
 

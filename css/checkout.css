@@ -8,7 +8,7 @@
     width: 50%;
     margin-bottom: 10px;
     padding: 10px;
-    border: 1px solid rgb(173, 163, 163);
+    border: 3px solid rgb(173, 163, 163);
 }
 .payment-form input[placeholder = "MM/YY"], .payment-form input [placeholder="123"] {
     width: 100px;
@@ -16,7 +16,7 @@
 .payment-form .payment-btn {
     background-color: black ;
     color: white;
-    border-radius: 5px;
+    border-radius: 8px;
     width: 90px;
     padding: 3px;
     margin-left: 15px;
@@ -64,6 +64,31 @@
     padding-right: 25px;
     padding-left: 25px;
     border-radius: 10px;
+    font-weight: bold;
+}
+.back-btn {
+    background-color: red;
+    color: black;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 7px 10px;
+    margin: 15px;
+}
+.checkout h2 {
+    color: red;
+    margin-left: 15px;
+    font-size: 40px;
+}
+.checkout p {
+    color: black;
+    background-color: red;
+    margin: 0;
+    border: 1px solid black;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 5px;
+
 }
 .footer {
     background-color: red;

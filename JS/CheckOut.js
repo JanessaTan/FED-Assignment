@@ -1,4 +1,48 @@
 /* assets/js/checkout.js */
+//click fllw insta
+    document.querySelectorAll('.footer-brand h3').forEach(f => {
+        f.style.cursor='pointer'
+        f.addEventListener('click', function() {
+            window.location.href = 'Dummy.html'
+        })
+    })
+    //utility
+    document.querySelectorAll('.FooterUtility p').forEach(p => {
+        p.style.cursor = 'pointer'
+        p.addEventListener('click', () => {
+            window.location.href = 'Dummy.html'
+        })
+    })
+    //order btn
+    let orderbtn = document.querySelector('.order-btn button')
+    orderbtn.style.cursor ='pointer'
+    orderbtn.addEventListener('click', function() {
+        window.location.href = 'Order.html'})
+    //nav bar
+    let navLinks = document.querySelectorAll('.nav-links a')
+    let pages = ["Home.html", "About.html", "Stalls.html", "Promotion.html", "Contact.html"]
+    navLinks.forEach((link, i) => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault()
+            window.location.href = pages[i]
+        })})
+    let pageMap = ["Home.html",
+                    "About.html",
+                    "Stalls.html",
+                    "Menu.html",
+                    "feedback.html",
+                    "Promotion.html",
+                    "Contact.html"]
+        let footerPages =document.querySelectorAll('.footerPage p')
+        footerPages.forEach((p, i) =>{
+            p.style.cursor ='pointer'
+            p.addEventListener('click', function() {
+                window.location.href = pageMap[i]
+            })
+        })
+
+
+        
 document.addEventListener("DOMContentLoaded", function() {
   displayCheckout();
   //submit payment
@@ -10,6 +54,13 @@ document.addEventListener("DOMContentLoaded", function() {
     alert('Payment successful!');
     window.location.href ='Home.html'
   })
+  let backbtn = document.querySelector('.back-btn');
+  if (backbtn) {
+    backbtn.style.cursor ='pointer'
+    backbtn.addEventListener('click', function() {
+      window.location.href = 'Menu.html'
+  })
+}
 })
 function displayCheckout() {
   const cartDiv = document.querySelector('.cart-list')
