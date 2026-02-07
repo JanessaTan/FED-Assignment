@@ -16,11 +16,13 @@ h2{
     text-align: center;
 }
 
+.buttons{
+    display: flex;
+    justify-content: center;
+}
+
 .btn{
-    position: relative;
-    right: 30px;
-    top: 5px;
-    margin: auto;
+    margin: 20px;
 }
 
 .receipt{

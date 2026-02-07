@@ -1,15 +1,95 @@
-#list .card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+body {
+  background-color: #000;
 }
 
-#list h3 {
-    margin: 0.2rem 0;
+.saved-wrapper {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
 }
-#list .card img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 8px;
+
+.saved-title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 600;
+  color: #1f5fbf;
+  margin-bottom: 30px;
+}
+
+.saved-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.saved-card {
+  background: #d9d9d9;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.saved-card h3 {
+  color: #1f5fbf;
+  margin-bottom: 15px;
+}
+
+.saved-item {
+  background: white;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.saved-item label {
+  font-size: 13px;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.saved-item input {
+  width: 100%;
+  padding: 6px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.saved-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.saved-btn {
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.saved-btn.primary {
+  background-color: #8b0000;
+  color: white;
+}
+
+.saved-btn.secondary {
+  background-color: #444;
+  color: white;
+}
+
+.saved-btn.danger {
+  background-color: #aa0000;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .saved-actions {
+    flex-direction: column;
+  }
+
+  .saved-btn {
+    width: 100%;
+  }
 }
