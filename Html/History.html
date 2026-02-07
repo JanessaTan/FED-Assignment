@@ -7,31 +7,36 @@
 <script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script><script src="assets/js/auth.js"></script>
 <script>renderHeader('history');</script>
 <main class="container" id="root">
-  <section class="card">
+  <section>
     <h2>Order History</h2>
   </section>
   <div class="container">
     <div class="history-card">
-        <h3>Ordered on: 16 Jan 2026</h3>
-        <p><b>Chinese Cuisine</b></p>
-        <p>Order: Item #1, Item #2</p>
-        <p>Customised: Less spicy, add egg</p>
-        <button class="btn" onclick="saveOrder()">Save Order</button>
+      <div class="info">
+        <h3>Golden Wok</h3>
+        <p>Order: Hainanese Chicken Rice (x1)</p>
+        <p>Customised: Less rice, extra chilli</p>
+        <h5>Ordered on: 16 Jan 2026</h5>
+      </div>
+        <a href="saved-order.html" class="btn" onclick="saveOrder()"><img src="../img/bookmark.png" style="width:30px;height:30px;"></img></a>
     </div>
 
     <div class="history-card">
-        <h3>Ordered on: 5 Jan 2026</h3>
-        <p><b>Drink Store</b></p>
-        <p>Order: Item #1</p>
-        <p>Customised: Add chili, hard-boiled egg</p>
-        <button class="btn" onclick="saveOrder()">Save Order</button>
+      <div class="info">
+        <h3>Kopi & Teh Corner</h3>
+        <p>Order: Teh Tarik (x1)</p>
+        <h5>Ordered on: 5 Jan 2026</h5>
+      </div>
+      <a href="saved-order.html" class="btn" onclick="saveOrder()"><img src="../img/bookmark.png" style="width:30px;height:30px;"></img></a>
     </div>
 
     <div class="history-card">
-        <h3>Ordered on: 1 Jan 2026</h3>
-        <p><b>Indian Cuisine</b></p>
-        <p>Order: Item #1, Item #2, Item #3</p>
-        <button class="btn" onclick="saveOrder()">Save Order</button>
+      <div class="info">
+        <h3>Little India Express</h3>
+        <p>Order: Chicken Biryani (x1), Roti Prata (x2)</p>
+        <h5>Ordered on: 1 Jan 2026</h5>
+      </div>
+      <a href="saved-order.html" class="btn" onclick="saveOrder()"><img src="../img/bookmark.png" style="width:30px;height:30px;"></img></a>
     </div>
 
 </div>
