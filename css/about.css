@@ -9,7 +9,6 @@ body {
 .container {
     width: 100%;
     margin: auto;
-    padding: 20px;
 }
 #site-header {
     width: 100%;
@@ -24,7 +23,7 @@ body {
     font-size: 14px;
 }
 
-.contact a {
+.contact span{
     margin-right: 15px;
 }
 .social-icons img{
@@ -78,7 +77,7 @@ body {
     border-radius: 10px;
     padding: 10px;
     width: 400px;
-    margin-left: 150px;
+    margin: 20px auto;
     text-align: center;
     border: 1px solid black;
 }
