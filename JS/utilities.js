@@ -16,11 +16,11 @@ function qs(name, url=window.location.search){
 function renderHeader(active=''){
   const role = store.get(KEYS.role,'guest');
   const links = `
-    <a href="index.html" class="badge">Hub</a>
+    <a href="hub.html" class="badge">Hub</a>
     <a href="home.html" ${active==='home'?'style="text-decoration:underline"':''}>Home</a>
     <a href="stalls.html" ${active==='stalls'?'style="text-decoration:underline"':''}>Stalls</a>
-    <a href="crowd.html" ${active==='crowd'?'style="text-decoration:underline"':''}>Crowd</a>
-    <a href="promotions.html" ${active==='promotions'?'style="text-decoration:underline"':''}>Promotions</a>
+    <a href="crowd-level.html" ${active==='crowd'?'style="text-decoration:underline"':''}>Crowd</a>
+    <a href="promotion.html" ${active==='promotions'?'style="text-decoration:underline"':''}>Promotions</a>
     <a href="order.html" ${active==='order'?'style="text-decoration:underline"':''}>Cart</a>
     <a href="history.html" ${active==='history'?'style="text-decoration:underline"':''}>History</a>
     ${ (role==='owner'||role==='operator') ? `<a href="analytics.html">Analytics</a>`:''}
