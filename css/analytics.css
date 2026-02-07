@@ -189,6 +189,7 @@ body {
 /* Card title area*/
 .card-header {
   display: flex;
+  color : black;
   justify-content: space-between;
   align-items: center;
 
