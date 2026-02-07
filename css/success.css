@@ -10,13 +10,24 @@
     margin: 0;
 }
 
+body{
+    
+}
+
 h2{
     color:crimson;
     font-size: 30px;
     text-align: center;
 }
 
+.btn{
+    position: relative;
+    right: 30px;
+    margin: auto;
+}
+
 .receipt{
+    margin: 30px auto;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -27,7 +38,6 @@ h2{
     border-radius: 10px;
     padding: 20px;
     padding-left: 70px;
-    margin: 30px auto;
 }
 
 .receipt-items{
