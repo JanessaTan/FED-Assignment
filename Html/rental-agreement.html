@@ -1,163 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hawker Centre — Rental Agreement</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hawker Centre — Rental Agreement</title>
 
-  <!-- ====== Fonts (optional) ====== -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- ====== App Styles ====== -->
-  <link rel="stylesheet" href="../css/rental.css">
-  <link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/rental.css">
+<link rel="stylesheet" href="../css/base.css">
 </head>
+
 <body>
 
-  <header class="topbar" role="banner" aria-label="Top bar with contact">
-    <div class="brand">
-      <span class="logo" aria-hidden="true">🍜</span>
-      <span class="brand-name">Tian Tian Hainanese Chicken Rice</span>
-    </div>
-    <div class="contact">
-      <a class="contact-item" href="tel:12345678" aria-label="Call 1234 5678">📞 1234 5678</a>
-      <a class="contact-item" href="mailto:HawkerCentre@gmail.com" aria-label="Email HawkerCentre@gmail.com">✉️ HawkerCentre@gmail.com</a>
-    </div>
-  </header>
+<header class="topbar">
+  <div class="brand">
+    <a href="Home.html" class="hc-back">&lt; About</a>
+    🍜 Tian Tian Hainanese Chicken Rice
+    <a class="contact-item" href="tel:12345678" aria-label="Call 1234 5678">📞 1234 5678</a>
+    <a class="contact-item" href="mailto:HawkerCentre@gmail.com" aria-label="Email HawkerCentre@gmail.com">✉️ HawkerCentre@gmail.com</a>
+  </div>
+</header>
 
-  <main class="container" id="app" role="main">
 
-    <!-- ====== Tenant Information ====== -->
-    <section class="card" aria-labelledby="tenant-title">
-      <h2 id="tenant-title">Tenant Information</h2>
-      <div class="grid">
-        <div class="row">
-          <label for="tenantName">Tenant Name</label>
-          <input id="tenantName" type="text" placeholder="Enter tenant's full name" />
-        </div>
-        <div class="row">
-          <label for="stallNumber">Stall Number</label>
-          <input id="stallNumber" type="text" placeholder="e.g., B12" />
-        </div>
-        <div class="row">
-          <label for="hawkerCenter">Hawker Centre</label>
-          <input id="hawkerCenter" type="text" placeholder="e.g., Tiong Bahru" />
-        </div>
-        <div class="row">
-          <label for="agreementId">Agreement ID</label>
-          <input id="agreementId" type="text" placeholder="Auto / Manual ID" />
-        </div>
-      </div>
-    </section>
 
-    <!-- ====== Rental Details ====== -->
-    <section class="card" aria-labelledby="rental-title">
-      <h2 id="rental-title">Rental Details</h2>
-      <div class="grid">
-        <div class="row">
-          <label for="startDate">Start Date</label>
-          <input id="startDate" type="date" />
-        </div>
-        <div class="row">
-          <label for="endDate">End Date</label>
-          <input id="endDate" type="date" />
-        </div>
-        <div class="row">
-          <label for="monthlyRent">Monthly Rent</label>
-          <input id="monthlyRent" type="number" placeholder="e.g., 2500" min="0" step="0.01" />
-        </div>
-        <div class="row">
-          <label for="deposit">Deposit</label>
-          <input id="deposit" type="number" placeholder="e.g., 2500" min="0" step="0.01" />
-        </div>
-        <div class="row">
-          <label for="paymentMethod">Payment Method</label>
-          <input id="paymentMethod" type="text" placeholder="e.g., GIRO / PayNow / Bank Transfer" />
-        </div>
-        <div class="row">
-          <label for="tenantEmail">Tenant Email</label>
-          <input id="tenantEmail" type="email" placeholder="name@example.com" />
-        </div>
-      </div>
-    </section>
+<main class="container">
 
-    <!-- ====== Cuisine Information (dynamic) ====== -->
-    <section class="card cuisine-card" aria-labelledby="cuisine-title">
-      <div class="title">
-        <h2 id="cuisine-title">Cuisine Information</h2>
-        <div class="cuisine-badges" id="cuisineBadges" aria-live="polite"></div>
-      </div>
-      <div id="cuisineOverview" class="muted"></div>
-      <div class="cuisine-body">
-        <div class="box">
-          <h3>Popular Dishes</h3>
-          <ul id="popularDishes"></ul>
-        </div>
-        <div class="box">
-          <h3>Hygiene Tips</h3>
-          <ul id="hygieneTips"></ul>
-        </div>
-      </div>
-    </section>
+<!-- Tenant Info -->
+<section class="card">
+<h2>Tenant Information</h2>
 
-    <!-- ====== Terms & Conditions ====== -->
-    <section class="card" aria-labelledby="tc-title">
-      <h2 id="tc-title">Terms &amp; Conditions</h2>
-      <div class="chipbar" id="tcChips" role="tablist" aria-label="Terms list"></div>
-      <div class="term-content" id="termContent" role="tabpanel" aria-live="polite" aria-label="Selected term content">
-        <em class="muted">Select a term to view the details.</em>
-      </div>
-    </section>
+<div class="grid">
+<div class="row">
+<label for ="tenantName">Tenant Name</label>
+<input id="tenantName" type="text">
+</div>
 
-    <!-- ====== Agreement Confirmation ====== -->
-    <section class="card" aria-labelledby="agreement-title">
-      <h2 id="agreement-title">Agreement Confirmation</h2>
+<div class="row">
+<label for ="stallNumber">Stall Number</label>
+<input id="stallNumber" type="text">
+</div>
 
-      <label class="agree-row">
-        <input id="agreeCheck" type="checkbox" />
-        <span>I agree to the terms and conditions.</span>
-      </label>
+<div class="row">
+<label for ="hawkerCenter">Hawker Centre</label>
+<input id="hawkerCenter" type="text">
+</div>
 
-      <div class="signature-wrap">
-        <div>
-          <div class="muted">Signature (draw below)</div>
-          <canvas id="signature" aria-label="Signature pad"></canvas>
-        </div>
-        <div class="sig-tools">
-          <button class="btn ghost" id="clearSig" type="button">Clear</button>
-          <button class="btn ghost" id="invertSig" type="button">Invert</button>
-        </div>
-      </div>
+<div class="row">
+<label for ="cuisineType">Cuisine Type</label>
+<select id="cuisineType">
+<option value="Chinese">Chinese</option>
+</select>
+</div>
+</div>
+</section>
 
-      <div class="grid">
-        <div class="row">
-          <label for="signDate">Date</label>
-          <input id="signDate" type="date" />
-        </div>
-        <div class="row">
-          <label for="notes">Notes</label>
-          <input id="notes" type="text" placeholder="Optional notes…" />
-        </div>
-      </div>
+<!-- Rental Details -->
+<section class="card">
+<h2>Rental Details</h2>
 
-      <div class="hr"></div>
+<div class="grid">
+<div class="row">
+<label>Start Date</label>
+<input id="startDate" type="date">
+</div>
 
-      <div class="actions">
-        <button class="btn" id="downloadPdf" type="button" disabled>Download PDF</button>
-        <button class="btn primary" id="acceptBtn" type="button" disabled>Accept Agreement</button>
-        <button class="btn danger" id="cancelBtn" type="button">Cancel</button>
-      </div>
+<div class="row">
+<label>End Date</label>
+<input id="endDate" type="date">
+</div>
 
-      <div id="toast" class="muted" role="status" aria-live="polite"></div>
-    </section>
-  </main>
+<div class="row">
+<label>Monthly Rent</label>
+<input id="monthlyRent" type="number">
+</div>
 
-  <!-- ====== External (client-side only) libs for PDF (no server needed) ====== -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-NaWenbK+E3f3T0n0pD0uKJ3m9W4h1tQVCQW3qQ3TF0+H8ZWgDo3C1lW1zq4mRk5f6pW3W6tqkzspR2jNn2iG8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNa5rU6w+gB3oZQ3JcX6w9WJgHieVq+6+Jm6V3E3Q8sXoGgG5P1JbF6oH2s1hYpGvHa5J4Xl3s1QXjzYb3iH9w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<div class="row">
+<label>Deposit</label>
+<input id="deposit" type="number">
+</div>
 
-  <!-- ====== App Script ====== -->
-  <script src="app.js" defer></script>
+<div class="row">
+<label>Payment Method</label>
+<input id="paymentMethod" type="text">
+</div>
+
+<div class="row">
+<label>Tenant Email</label>
+<input id="tenantEmail" type="email">
+</div>
+</div>
+</section>
+
+<!-- Terms -->
+<section class="card">
+<h2>Terms & Conditions</h2>
+
+<p>
+Key Terms and Conditions for Restaurant Lease Agreements:
+<ul>
+  <li>Approval & Usage: Tenants must obtain all necessary approvals before starting business operations, and adhere to permitted trades. </li>
+  <li>Space & Setup: For HDB premises, only up to 50% of the area can be sub-let, and specific, often full-height, walled-up, central kitchen, and non-partitioned setups are required for food preparation.</li>
+  <li>Infrastructure: Proper installation of exhaust systems and grease traps is mandatory, with all costs borne by the tenant.</li>
+  <li>Operating Restrictions: Common areas cannot be used as outdoor refreshment areas, and there may be limitations on operating hours or changes to the trade.</li>
+  <li>Financial & Legal: Tenants must pay base rent plus additional charges like Common Area Maintenance (CAM), utilities, and insurance.</li>
+  <li>Tenant Obligation: Adherence to safety regulations (fire safety, exit signs) is mandatory. </li>
+</ul>
+</p>
+</section>
+
+<!-- Agreement -->
+<section class="card">
+
+<label>
+  I agree to the terms & conditions stated above. 
+</label>
+<canvas id="signature" style="border:1px solid black"></canvas>
+
+<br>
+
+<button id="clearSignature">Clear Signature</button>
+
+<br><br>
+
+<div class="actions">
+<button id="downloadPdf">Download PDF</button>
+<button id="acceptBtn" >Accept Agreement</button>
+<button id="cancelBtn">Cancel</button>
+</div>
+
+</section>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="app.js"></script>
+
 </body>
 </html>
