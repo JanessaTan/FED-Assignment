@@ -43,7 +43,11 @@ document.addEventListener('DOMContentLoaded', function () {
   if (ordernow){
     ordernow.style.cursor = 'pointer'
     ordernow.addEventListener('click', function()  {
-    window.location.href = 'Stalls.html';
+      setOrder({
+        type: "now",
+        pickupTime: null
+      })
+      window.location.href = 'Stalls.html';
 })}
  if (orderlater){
   orderlater.style.cursor = 'pointer'

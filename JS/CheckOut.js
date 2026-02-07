@@ -23,3 +23,21 @@
     location.href = `success.html?ok=${ok?'1':'0'}&total=${total}`;
   });
 })();
+
+document.addEventListener("DOMContentLoaded", function() {
+  displayCheckout();
+  //submit payment
+  document.querySelector(".payment-form").addEventListener('submit', function(e) {
+    e.preventDefault();
+    clearCart();
+    clearOrder();
+
+    alert('Payment successful!');
+    window.location.href ='Home.html'
+  })
+})
+function displayCheckout() {
+  let cartDiv = document.querySelector('.cart-list')
+  let totalDiv = document.querySelector('.cart-total')
+  let orderDiv = document.querySelector('order-info')
+}
