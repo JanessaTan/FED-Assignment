@@ -60,6 +60,7 @@ body {
     justify-content: center;
     line-height: 60px;
     border-bottom: shadow lightgrey;
+    border-bottom: 2px solid rgb(50, 45, 45);
 }
 .Order {
     background-color: black;
@@ -79,7 +80,7 @@ body {
     width: 500px;
     height: auto;
     border-radius: 10px;
-    border: solid red;
+    border:2px solid red;
 }
 .Image-text{
     position: absolute;
@@ -123,5 +124,5 @@ body {
     width: 80px;
     height: 80px;
     border-radius: 10px;
-    border-color: black;
+    border: 1px solid black;
 }
