@@ -9,7 +9,7 @@ window.addEventListener("load", function() {
         });
     }
 
-    const promoLink = document.querySelector(".checkout p");
+    const promoLink = document.querySelector(".promo-link");
     if (promoLink) {
         promoLink.style.cursor = "pointer";
         promoLink.addEventListener("click", function() {
@@ -36,8 +36,8 @@ function displayCheckout() {
   const totalDiv = document.querySelector('.cart-total')
   const orderDiv = document.querySelector('.order-info')
 
-  const { cart, subtotal } = cartTotals ? cartTotals() : {cart: [], subtotal: 0};
-  const order = getOrder ? getOrder() : { type: "now" };
+  const { cart, subtotal } = typeof cartTotals === "function" ? cartTotals() : {cart: [], subtotal: 0};
+  const order = typeof getOrder === "function" ? getOrder() : { type: "now" };
 
 //order info
 if (order.type === "later" && order.pickupTime) {
@@ -71,7 +71,12 @@ cartDiv.innerHTML = "";
       const removeBtn = itemDiv.querySelector(".delete-btn");
       removeBtn.addEventListener("click", function(){
         const currentCart = getCart();
-        currentCart.splice(index, 1);
+        const item = currentCart[index];
+        if (item.qty > 1) {
+          item.qty -= 1;  //minus 1
+        } else {
+          currentCart.splice(index, 1); //remove if only 1 item
+        }
         setCart(currentCart);
         displayCheckout();
       })

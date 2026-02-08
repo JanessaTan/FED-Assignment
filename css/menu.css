@@ -1,3 +1,16 @@
+.back-btn {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #1f5fbf;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.back-btn:hover {
+  text-decoration: underline;
+}
+
 body {
   background-color: #000; /* standardised black */
 }

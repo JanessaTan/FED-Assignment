@@ -1,4 +1,3 @@
-<!-- home.html -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,39 +7,67 @@
 
 <link rel="stylesheet" href="../css/base.css">
 <link rel="stylesheet" href="../css/home.css">
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 </head>
 
 <body>
 
-<script src="assets/js/data.js"></script>
-<script src="assets/js/utils.js"></script>
-<script src="assets/js/auth.js"></script>
-<script>renderHeader('home');</script>
+<!-- TOP CONTACT BANNER -->
+<div class="top-banner">
+
+  <div class="banner-left">
+    <span class="banner-link" onclick="goContact()">
+      📞 1234 5678
+    </span>
+
+    <span class="banner-link" onclick="goContact()">
+      ✉ HawkerHub@gmail.com
+    </span>
+  </div>
+
+  <div class="banner-right">
+    <img src="../img/instagram.png" alt="Instagram" onclick="goDummy()">
+    <img src="../img/Facebook.png" alt="Facebook" onclick="goDummy()">
+    <img src="../img/whatsapp.png" alt="WhatsApp" onclick="goDummy()">
+  </div>
+
+</div>
 
 <!-- HERO SECTION -->
 <section class="hero">
     <h1>A World of Flavor Awaits</h1>
-    <p>Discover affordable and delicious cuisines right near your home.</p>
+    <p>Discover affordable and delicious cuisines in the heart of Singapore.</p>
 
     <div>
-        <a class="btn" href="stalls.html">Order Now</a>
+        <a class="btn" href="saved-order.html">View Saved Orders</a>
         <a class="btn secondary" href="stalls.html">View Stalls</a>
+        <a class="btn secondary" href="About.html">About Us</a>
     </div>
 </section>
 
-<!-- LOCATIONS SECTION -->
-<section class="locations home-footer-space">
-    <h2>Our Locations</h2>
+<!-- LOCATION SECTION -->
+<section class="locations">
+    <h2>Lau Pa Sat</h2>
 
     <div class="map-card">
-        <div class="map-placeholder"></div>
+        <div id="map"></div>
     </div>
 
-    <p class="muted">Worried about queues?</p>
+    <p class="muted">
+        A historic Victorian market and one of Singapore’s most iconic hawker centres,
+        serving authentic local flavours in the CBD.
+    </p>
+
     <a class="btn" href="crowd-level.html">Check Crowd Levels</a>
 </section>
 
-<script src="assets/js/home.js"></script>
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Your JS -->
+<script src="../JS/home.js"></script>
 
 </body>
 </html>

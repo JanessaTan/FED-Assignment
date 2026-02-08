@@ -4,7 +4,11 @@
 <link rel="stylesheet" href="../css/hygiene.css"></head><body>
 <script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script><script src="assets/js/auth.js"></script>
 <script>renderHeader('hygiene');</script>
-<main class="container card" id="root"></main>
+<main class="container card" id="root">
+  <h2>Hygiene History</h2>
+  
+</main>
+
 <script>
   const stallId = qs('stall') || STALLS[0].id;
   const stall = STALLS.find(s=>s.id===stallId);
