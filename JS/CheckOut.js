@@ -1,15 +1,14 @@
 /* assets/js/checkout.js */
 
-// ===============================
-// INITIAL LOAD
-// ===============================
+// Wait until the page is fully loaded before running anything
 document.addEventListener("DOMContentLoaded", function () {
 
   console.log("Checkout page loaded");
 
+  // Show all cart items when the page opens
   displayCheckout();
 
-  // Back button
+  // If user clicks back, go back to menu page
   const backBtn = document.querySelector(".back-btn");
   if (backBtn) {
     backBtn.addEventListener("click", function () {
@@ -17,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Promo link
+  // If user wants to change promotion
   const promoLink = document.querySelector(".promo-link");
   if (promoLink) {
     promoLink.addEventListener("click", function () {
@@ -25,29 +24,34 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Payment form
+  // Handle payment form submission
   const paymentForm = document.querySelector(".payment-form");
 
   if (paymentForm) {
     paymentForm.addEventListener("submit", function (e) {
+
+      // Stop page from refreshing
       e.preventDefault();
 
       const cardNumber = document.querySelector("#card-number").value.trim();
       const expiry = document.querySelector("#expiry").value.trim();
       const cvc = document.querySelector("#cvc").value.trim();
 
+      // Basic validation patterns
       const cardRegex = /^\d{16}$/;
       const expiryRegex = /^\d{2}\/\d{2}$/;
       const cvcRegex = /^\d{3}$/;
 
+      // If input format is wrong, show error
       if (!cardRegex.test(cardNumber) ||
           !expiryRegex.test(expiry) ||
           !cvcRegex.test(cvc)) {
 
-        alert("Invalid payment details.");
+        alert("Invalid payment details. Please check again.");
         return;
       }
 
+      // If payment is valid, clear everything
       clearCart();
       clearOrder();
 
@@ -59,20 +63,20 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// ===============================
-// DISPLAY CHECKOUT
-// ===============================
+// This function displays everything inside the checkout page
 function displayCheckout() {
 
   const cartDiv = document.querySelector(".cart-list");
   const totalDiv = document.querySelector(".cart-total");
   const orderDiv = document.querySelector(".order-info");
 
+  // Safety check (in case HTML elements are missing)
   if (!cartDiv || !totalDiv || !orderDiv) {
-    console.log("Checkout elements missing in HTML");
+    console.log("Checkout section not found in HTML");
     return;
   }
 
+  // Get saved data from localStorage
   const store = JSON.parse(localStorage.getItem("store")) || {
     cart: [],
     order: { type: "now" }
@@ -81,11 +85,11 @@ function displayCheckout() {
   const cart = store.cart || [];
   const order = store.order || { type: "now" };
 
-  console.log("Cart data:", cart);
+  console.log("Current cart:", cart);
 
-  // ===============================
-  // ORDER INFO
-  // ===============================
+  // ------------------------------
+  // Show pickup type (ASAP or scheduled)
+  // ------------------------------
   if (order.type === "later" && order.pickupTime) {
     const d = new Date(order.pickupTime);
     orderDiv.innerHTML =
@@ -97,9 +101,9 @@ function displayCheckout() {
       "<p><strong>Pickup:</strong> ASAP</p>";
   }
 
-  // ===============================
-  // EMPTY CART
-  // ===============================
+  // ------------------------------
+  // If cart is empty
+  // ------------------------------
   if (cart.length === 0) {
     cartDiv.innerHTML = "<p>Your cart is empty.</p>";
     totalDiv.innerHTML = "";
@@ -110,9 +114,9 @@ function displayCheckout() {
 
   let subtotal = 0;
 
-  // ===============================
-  // DISPLAY ITEMS
-  // ===============================
+  // ------------------------------
+  // Display each item in the cart
+  // ------------------------------
   cart.forEach(function (item, index) {
 
     subtotal += Number(item.price) * item.qty;
@@ -120,6 +124,7 @@ function displayCheckout() {
     const itemDiv = document.createElement("div");
     itemDiv.classList.add("cart-item");
 
+    // Build customization details if available
     let customizationHTML = "";
 
     if (item.size) {
@@ -144,6 +149,7 @@ function displayCheckout() {
         "</p>";
     }
 
+    // Create the item layout
     itemDiv.innerHTML =
       "<div class='item-info'>" +
       "<h4>" + item.name + "</h4>" +
@@ -160,40 +166,52 @@ function displayCheckout() {
 
     cartDiv.appendChild(itemDiv);
 
-    // Remove button
+    // ------------------------------
+    // Remove button logic
+    // ------------------------------
     const removeBtn = itemDiv.querySelector(".delete-btn");
+
     removeBtn.addEventListener("click", function () {
 
       const store = JSON.parse(localStorage.getItem("store")) || { cart: [] };
       const currentCart = store.cart || [];
 
+      // If quantity more than 1, reduce by 1
       if (currentCart[index].qty > 1) {
         currentCart[index].qty -= 1;
       } else {
+        // If only 1 left, remove the item
         currentCart.splice(index, 1);
       }
 
       store.cart = currentCart;
 
+      // Save updated cart
       localStorage.setItem("store", JSON.stringify(store));
 
+      // Refresh display
       displayCheckout();
     });
 
-    // Customize button
+    // ------------------------------
+    // Customize button logic
+    // ------------------------------
     const customizeBtn = itemDiv.querySelector(".customize-btn");
+
     customizeBtn.addEventListener("click", function () {
 
+      // Save which item we want to edit
       localStorage.setItem("editingCartIndex", JSON.stringify(index));
 
+      // Go to customize page
       window.location.href = "customize.html";
     });
 
   });
 
-  // ===============================
-  // PROMO CALCULATION
-  // ===============================
+  // ------------------------------
+  // Apply promotion (if any)
+  // ------------------------------
   let discount = 0;
   let reason = "";
 
@@ -205,6 +223,7 @@ function displayCheckout() {
 
   const finalTotal = Math.max(0, subtotal - discount);
 
+  // Build total section
   let totalHTML =
     "<h3>Subtotal: $" + subtotal.toFixed(2) + "</h3>";
 
