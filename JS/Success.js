@@ -2,11 +2,11 @@
   // Get DOM elements
   const root = document.getElementById("root");
 
-  // Read storage
-  const store = JSON.parse(localStorage.getItem("store")) || { cart: [], order: null, selectedPromo: null };
-  const cart = store.cart || [];
-  const order = store.order || null;
-  const selectedPromo = store.selectedPromo || null;
+  // // Read storage
+  // const store = JSON.parse(localStorage.getItem("store")) || { cart: [], order: null, selectedPromo: null };
+  // const cart = store.cart || [];
+  // const order = store.order || null;
+  // const selectedPromo = store.selectedPromo || null;
 
   // Some CSS to align numbers on the receipt
   const style = document.createElement("style");
@@ -38,15 +38,28 @@
     return "$" + num.toFixed(2);
   }
 
+  function safeParse(key) {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // Read from store (supports lastReceipt snapshot if you add it later)
+  const storeObj = safeParse("store") || { cart: [], order: null, selectedPromo: null };
+  const receiptSrc = storeObj.lastReceipt
+    ? storeObj.lastReceipt
+    : storeObj;
+
+  const cart = Array.isArray(receiptSrc.cart) ? receiptSrc.cart : [];
+  const order = receiptSrc.order || null;
+  const selectedPromo = receiptSrc.selectedPromo || storeObj.selectedPromo || null;
+
   // Find a stall name for each cart item
   function getStallLabel(item) {
-    return (
-      item.stallName ||
-      item.stall ||
-      item.stallTitle ||
-      item.stallId ||
-      "Items"
-    );
+    return item.stallName || item.stall || item.stallTitle || item.stallId || "Items";
   }
 
   // Group cart items by stall
@@ -61,7 +74,7 @@
     return groups;
   }
 
-  // Discount (optional)
+  // Compute discount using promo.js if it exists
   function getDiscount(cartItems, subtotal) {
     if (typeof window.computeDiscount === "function") {
       const result = window.computeDiscount(cartItems, subtotal);
@@ -74,7 +87,6 @@
   }
 
   function renderReceipt() {
-    // Receipt body
     if (!cart.length) {
       root.innerHTML = `
         <h3>Receipt:</h3>
@@ -87,16 +99,20 @@
     let subtotal = 0;
     for (let i = 0; i < cart.length; i++) {
       const it = cart[i];
-      const lineTotal = (Number(it.price) || 0) * (Number(it.qty) || 0);
-      subtotal += lineTotal;
+      subtotal += (Number(it.price) || 0) * (Number(it.qty) || 0);
     }
 
     const grouped = groupByStall(cart);
 
+    // Discount + final total
+    const disc = getDiscount(cart, subtotal);
+    const discountAmt = Math.min(subtotal, Math.max(0, disc.discount));
+    const finalTotal = Math.max(0, subtotal - discountAmt);
+
     // Build receipt HTML
     let receiptHTML = `<h3>Receipt:</h3><section class="receipt-section">`;
 
-    // Pickup (opitonal)
+    // Pickup info
     if (order && order.type === "later" && order.pickupTime) {
       const d = new Date(order.pickupTime);
       receiptHTML += `<div class="receipt-meta"><strong>Pickup Time:</strong> ${d.toLocaleString()}</div>`;
@@ -104,12 +120,12 @@
       receiptHTML += `<div class="receipt-meta"><strong>Pickup:</strong> ASAP</div>`;
     }
 
-    // Promotion (optional)
+    // Promotion selected (show id; discount will show below)
     if (selectedPromo && selectedPromo.id) {
       receiptHTML += `<div class="receipt-meta"><strong>Promotion Selected:</strong> ${selectedPromo.id}</div>`;
     }
 
-    // Stall sections
+    // Items by stall
     const stallKeys = Object.keys(grouped);
     for (let s = 0; s < stallKeys.length; s++) {
       const stallKey = stallKeys[s];
@@ -124,7 +140,6 @@
         const price = Number(it.price) || 0;
         const lineTotal = price * qty;
 
-        // Build left text
         const leftText = `${it.name} (x${qty})`;
 
         receiptHTML += `
@@ -134,7 +149,6 @@
           </li>
         `;
 
-        // Customisation (optional)
         if (it.customisation) {
           receiptHTML += `
             <li class="receipt-line">
@@ -155,15 +169,18 @@
       receiptHTML += `</ul>`;
     }
 
-    // Discount (if has promo)
-    const disc = getDiscount(cart, subtotal);
-    const finalTotal = Math.max(0, subtotal - disc.discount);
-
+    // Totals
     receiptHTML += `<div class="receipt-total">Subtotal: ${money(subtotal)}</div>`;
 
-    if (disc.discount > 0) {
-      receiptHTML += `<div class="receipt-discount">Discount: -${money(disc.discount)}</div>`;
+    // Discount line + reason (if any)
+    if (discountAmt > 0) {
+      receiptHTML += `<div class="receipt-discount">Discount: -${money(discountAmt)}</div>`;
       if (disc.reason) {
+        receiptHTML += `<div class="receipt-meta">${disc.reason}</div>`;
+      }
+    } else {
+      // If promo selected but not eligible, still show reason if given
+      if (disc.reason && disc.reason !== "No promotion selected") {
         receiptHTML += `<div class="receipt-meta">${disc.reason}</div>`;
       }
     }
