@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     navOrderBtn.style.cursor = 'pointer';
     navOrderBtn.addEventListener('click', () => window.location.href = 'Order.html');
   }
-
+//order now btn leads to menu
   if (orderNowBtn) {
     orderNowBtn.style.cursor = "pointer";
     orderNowBtn.addEventListener('click', function() {
@@ -20,12 +20,12 @@ document.addEventListener('DOMContentLoaded', function () {
       window.location.href = "Menu.html";
     });
   }
-
+//order later btn leads to order later html
   if (orderLaterBtn) {
     orderLaterBtn.style.cursor = 'pointer';
     orderLaterBtn.addEventListener('click', () => window.location.href = 'order-later.html');
   }
-
+//promotion span leads to promotion page
   if (promo) {
     promo.style.cursor = "pointer";
     promo.addEventListener('click', () => window.location.href = 'Promotion.html');

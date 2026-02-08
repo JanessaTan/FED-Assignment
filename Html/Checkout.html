@@ -8,6 +8,7 @@
 
 </head>
 <body>
+  <!--top bar with contacts and social icons-->
 <header id = "site-header">
     <div class="top-bar">
       <div class="contact">
@@ -20,12 +21,13 @@
         <img src="https://static.vecteezy.com/system/resources/previews/016/716/480/original/whatsapp-icon-free-png.png" alt="WhatsApp">
       </div>
     </div>
-
+<!--nav bar with hawker icon order btn -->
     <div class="nav-bar">
       <div class="logo">
         <h1>🍽 HawkerHub</h1>
       </div>
       <nav class="nav-links">
+        <!--leads to respective pages-->
         <a href="Home.html">Home</a>
       <a href="About.html" class="active">About</a>
       <a href="Stalls.html">Stalls</a>
@@ -37,13 +39,14 @@
       </div>
     </div>
   </header>
+  <!--back btn to go back to menu page and checkout indicating checkout page-->
 <main class="checkout">
   <button class="back-btn"> Back to Menu</button>
   <h2>Checkout</h2>
   <div class="order-info" ></div>
   <div class="cart-list"></div>
   <div class="cart-total"></div>
-
+<!--payment form where customer key in card details-->
   <form class="payment-form">
     <h3>Payment</h3>
       <label>Card Number</label>
@@ -54,7 +57,7 @@
 
       <label>CVC</label>
       <input id="cvc" placeholder="123" required>
-
+<!--paynow btn that leads to history page when clicked-->
     <a href="History.html"><button class="payment-btn">Pay Now</button></a>
   </form>
   <p class="promo-link">Change or review selected promotion</p>
@@ -85,13 +88,13 @@
     <h2>Utility Pages</h2>
       <p>Start Here</p>
       <p>Register</p>
-      <p>Analytics</p>
+      <p>Ratings</p>
       <p>Password Protected</p>
       <p>Licenses</p>
       <p>View More</p>
   </div>
 </footer>
-
+<!--link js files-->
 <script src="../JS/card-and-orders.js"></script>
 <script src="../JS/promotion.js"></script>
 <script src="../JS/Auth.js"></script>
