@@ -1,3 +1,6 @@
+/* Student ID- S10274395 */
+/* Student Name: Than Thar Wint Htal */
+
 /* ===== Hawker Center - Rating JS ===== */
 
 // Demo menu items
