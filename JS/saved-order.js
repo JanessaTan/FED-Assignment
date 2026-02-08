@@ -7,15 +7,15 @@ document.addEventListener("DOMContentLoaded", function() {
       id: "demo1",
       name: "My Usual Chicken Rice",
       items: [
-        { name: "Hainanese Chicken Rice", qty: 1, notes: "Less rice, extra chilli" }
+        { name: "Hainanese Chicken Rice", qty: 1, price: 5.00, notes: "Less rice, extra chilli" }
       ]
     },
     {
       id: "demo2",
       name: "Friday Treat",
       items: [
-        { name: "Laksa", qty: 1, notes: "More sambal" },
-        { name: "Kopi O", qty: 1, notes: "Less sugar" }
+        { name: "Laksa", qty: 1, price: 5.50, notes: "More sambal" },
+        { name: "Kopi O", qty: 1, price: 1.50, notes: "Less sugar" }
       ]
     }
   ];
@@ -38,53 +38,77 @@ document.addEventListener("DOMContentLoaded", function() {
       return;
     }
 
-    container.innerHTML = savedOrders.map(order => `
-      <div class="saved-order-card">
-        <h3>${order.name}</h3>
+    container.innerHTML = savedOrders.map(order => {
 
-        <div id="view-${order.id}">
-          <ul>
-            ${order.items.map(item => `
-              <li>
-                ${item.name} (x${item.qty})<br/>
-                <small>${item.notes || ""}</small>
-              </li>
+      const totalPrice = order.items.reduce((sum, item) => {
+        const price = Number(item.price) || 0;
+        return sum + (price * item.qty);
+      }, 0);
+
+      return `
+        <div class="saved-order-card">
+          <h3>${order.name}</h3>
+
+          <div id="view-${order.id}">
+            <ul>
+              ${order.items.map(item => `
+                <li>
+                  ${item.name} (x${item.qty}) 
+                  - $${((Number(item.price) || 0) * item.qty).toFixed(2)}
+                  <br/>
+                  <small>${item.notes || ""}</small>
+                </li>
+              `).join("")}
+            </ul>
+
+            <p><strong>Total: $${totalPrice.toFixed(2)}</strong></p>
+          </div>
+
+          <div id="edit-${order.id}" style="display:none;">
+            ${order.items.map((item,i) => `
+              <div class="edit-item">
+                <strong>${item.name}</strong><br/>
+                Qty:
+                <input type="number" min="1" value="${item.qty}" id="qty-${order.id}-${i}">
+                <br/>
+                Notes:
+                <input type="text" value="${item.notes || ""}" id="notes-${order.id}-${i}">
+              </div>
             `).join("")}
-          </ul>
-        </div>
+            <button onclick="saveEdit('${order.id}')">Save Changes</button>
+          </div>
 
-        <div id="edit-${order.id}" style="display:none;">
-          ${order.items.map((item,i) => `
-            <div class="edit-item">
-              <strong>${item.name}</strong><br/>
-              Qty:
-              <input type="number" min="1" value="${item.qty}" id="qty-${order.id}-${i}">
-              <br/>
-              Notes:
-              <input type="text" value="${item.notes || ""}" id="notes-${order.id}-${i}">
-            </div>
-          `).join("")}
-          <button onclick="saveEdit('${order.id}')">Save Changes</button>
+          <button onclick="orderAgain('${order.id}')">Order Again</button>
+          <button onclick="toggleEdit('${order.id}')">Edit</button>
+          <button onclick="deleteOrder('${order.id}')">Delete</button>
         </div>
-
-        <button onclick="orderAgain('${order.id}')">Order Again</button>
-        <button onclick="toggleEdit('${order.id}')">Edit</button>
-        <button onclick="deleteOrder('${order.id}')">Delete</button>
-      </div>
-    `).join("");
+      `;
+    }).join("");
   }
 
   window.orderAgain = function(id) {
-    const savedOrders = JSON.parse(localStorage.getItem("hc.savedOrders")) || [];
-    const selected = savedOrders.find(o => o.id === id);
-    if (!selected) return;
 
-    let store = JSON.parse(localStorage.getItem("store")) || { cart: [], order: null };
-    store.cart = selected.items;
-    localStorage.setItem("store", JSON.stringify(store));
+  const savedOrders = JSON.parse(localStorage.getItem("hc.savedOrders")) || [];
+  const selected = savedOrders.find(o => o.id === id);
+  if (!selected) return;
 
-    window.location.href = "Checkout.html";
+  const cartItems = selected.items.map(item => ({
+    name: item.name,
+    qty: item.qty,
+    price: Number(item.price) || 0,
+    notes: item.notes
+  }));
+
+  // Checkout reads from "store"
+  let store = JSON.parse(localStorage.getItem("store")) || { cart: [], order: { type: "now" } };
+
+  store.cart = cartItems;
+
+  localStorage.setItem("store", JSON.stringify(store));
+
+  window.location.href = "Checkout.html";
   };
+
 
   window.toggleEdit = function(id) {
     const viewDiv = document.getElementById("view-" + id);
@@ -100,6 +124,7 @@ document.addEventListener("DOMContentLoaded", function() {
   };
 
   window.saveEdit = function(id) {
+
     let savedOrders = JSON.parse(localStorage.getItem("hc.savedOrders")) || [];
     const order = savedOrders.find(o => o.id === id);
     if (!order) return;
@@ -122,11 +147,10 @@ document.addEventListener("DOMContentLoaded", function() {
     savedOrders = savedOrders.filter(o => o.id !== id);
 
     if(savedOrders.length === 0){
-      localStorage.removeItem("hc.savedOrders");
-    } else {
-      localStorage.setItem("hc.savedOrders", JSON.stringify(savedOrders));
+      savedOrders = DEMO_ORDERS; 
     }
 
+    localStorage.setItem("hc.savedOrders", JSON.stringify(savedOrders));
     render();
   };
 
