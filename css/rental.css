@@ -106,7 +106,7 @@ input:focus{
 .pill{
   background:#cfd3df; 
   color:#01050b; 
-  border:1px;; 
+  border:1px;
   padding:8px 12px; 
   border-radius:999px; 
   font-size:.9rem; 
@@ -129,7 +129,7 @@ input:focus{
   color:#030915; 
   font-weight:700;
   display:inline-flex;
-  align-items:left; 
+  align-items:flex-start; 
   gap:8px;
 }
 
