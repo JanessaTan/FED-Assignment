@@ -1,13 +1,23 @@
 // assets/js/cart.js
-function getCart(){ return store.get(KEYS.cart, []); }
-function setCart(c){ store.set(KEYS.cart, c); }
+
+let store = JSON.parse(localStorage.getItem("store")) || {
+  cart: [],
+  order: null
+};
+function saveStore() {
+  localStorage.setItem("store", JSON.stringify(store));
+}
+function getCart(){ return store.cart }
+function setCart(c){ store.cart = c; saveStore();}
 function addToCart(item){ const c=getCart(); c.push(item); setCart(c); }
 function clearCart(){ setCart([]); }
 
 function cartTotals(){
   const cart=getCart();
-  const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
-  return { cart, subtotal };
+  const subtotal = cart.reduce(function(s,i) {
+    return s + i.price * i.qty
+  }, 0)
+  return { cart: cart, subtotal: subtotal };
 }
 
 function saveOrder(name='Saved Order'){
