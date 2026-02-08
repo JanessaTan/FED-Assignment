@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const orderLaterBtn = document.getElementById("order-later");
   const promo = document.querySelector(".Check-promo span");
   const navOrderBtn = document.querySelector(".order-btn button");
-  const savedBtn = document.querySelector('.saveOrder-btn'); 
+  const savedBtn = document.querySelector('.savedOrder-btn'); 
 
   // Nav buttons
   if (navOrderBtn) {
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
       // Navigate to Saved Orders page if have saved order
-      window.location.href = "Saved-Orders.html";
+      window.location.href = "saved-order.html";
     });
   }
 });

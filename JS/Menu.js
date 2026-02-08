@@ -128,28 +128,23 @@
       `;
 
       card.querySelector(".menu-btn").addEventListener("click", function(){
-        //create cart item
-        const cartItem = {
-          name: item.name,
-          price: item.price,
-          qty: 1
-        }
-        //add to cart using fucntion form c&o js
-        if (typeof getCart === "function" && typeof setCart === "function") {
-          let cart = getCart();
+        // Get existing cart or create new
+        let store = JSON.parse(localStorage.getItem("store")) || { cart: [], order: null };
 
-          let existing = cart.find(ci => ci.name === cartItem.name);
-          if (existing) {
-            existing.qty += 1;
-          } else {
-            cart.push(cartItem);
-          }
-
-          setCart(cart);
+        // Check if item already in cart
+        const existingItem = store.cart.find(i => i.name === item.name);
+        if(existingItem){
+          existingItem.qty += 1;
+        } else {
+          store.cart.push({...item, qty: 1}); 
         }
+
+        localStorage.setItem("store", JSON.stringify(store));
+
+        // Go to Checkout
         window.location.href = "Checkout.html";
       });
-    
+
       menuList.appendChild(card);
     });
   }
