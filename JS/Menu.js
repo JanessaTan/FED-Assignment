@@ -3,7 +3,7 @@
   const menuList = document.getElementById("menuList");
   const stallId = new URLSearchParams(window.location.search).get("stall");
 
-  // All menus stored in one object
+  // Store menus in one object
   const STALL_MENUS = {
 
     "golden-wok": [
@@ -104,7 +104,7 @@
   if (stallId && STALL_MENUS[stallId]) {
     menuItems = STALL_MENUS[stallId];
   } 
-  // Otherwise show ALL items
+  // Or show all items
   else {
     menuItems = Object.values(STALL_MENUS).flat();
   }
