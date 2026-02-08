@@ -75,9 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Order button
     makeClickable('.order-btn button', 'Order.html');
 
-    // =========================
-    // Order Later Form Section
-    // =========================
+   //order later form
 
     let orderForm = document.getElementById('ol');
     let pickupInput = document.getElementById('pickupTime');

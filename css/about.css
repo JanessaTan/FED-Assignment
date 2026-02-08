@@ -10,6 +10,7 @@ body {
     width: 100%;
     margin: auto;
 }
+/* top bar */
 #site-header {
     width: 100%;
     border-bottom: 1px solid white;
@@ -31,6 +32,7 @@ body {
     width: 20px;
     margin-left: 10px;
 }
+/*nav bar */
 .nav-bar h1 {
     color: white;
 }
@@ -60,6 +62,7 @@ body {
     padding-left: 25px;
     border-radius: 10px;
 }
+/*about section with explore box and about image*/
 .About {
     display: flex;
     align-items: center;
@@ -86,6 +89,7 @@ body {
     text-align: center;
     border: 1px solid black;
 }
+/* features section */
 .features{
     display: flex;
     justify-content: space-around;
@@ -106,6 +110,7 @@ body {
     margin-right: 10px;
     border: 1px solid black;
 }
+/* info section to style the boxes and image */
 .info {
     background-color: black;
     padding: 20px;
@@ -148,6 +153,7 @@ body {
     display: block;
     color:black;
 }
+/* feedback to style the customers respone in the box and more button*/
 .feedback {
     text-align: center;
     background-color: red;
@@ -179,6 +185,7 @@ body {
 .feedback-box {
     padding: 20px;
 }
+/* footer section */
 .footer {
     background-color: black;
     color: white;
