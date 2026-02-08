@@ -1,31 +1,48 @@
 // assets/js/cart.js
+let store = JSON.parse(localStorage.getItem("store")) || { cart: [], order: null };
 
-let store = JSON.parse(localStorage.getItem("store")) || {
-  cart: [],
-  order: null
-};
 function saveStore() {
-  localStorage.setItem("store", JSON.stringify(store));
+    localStorage.setItem("store", JSON.stringify(store));
 }
-function getCart(){ return store.cart }
-function setCart(cart){ store.cart = cart; saveStore();}
-function addToCart(item){ store.cart.push(item); saveStore(); }
-function clearCart(){ store.cart = []; saveStore(); }
 
-function cartTotals(){
-  let subtotal = store.cart.reduce(function(sum, item) {
-    return sum + item.price * item.qty
-  }, 0)
-  return { cart: store.cart, subtotal: subtotal };
+function getCart() { 
+    return store.cart || [];
 }
+
+function setCart(cart) { 
+    store.cart = cart; 
+    saveStore();
+}
+
+function clearCart() { 
+    store.cart = []; 
+    saveStore(); 
+}
+
+function cartTotals() {
+    const cart = getCart();
+    let subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+    return { cart, subtotal };
+}
+
 function getOrder() {
-  return store.order;
+    return store.order || { type: 'now' };
 }
+
 function setOrder(order) {
-  store.order = order;
-  saveStore();
+    store.order = order;
+    saveStore();
 }
+
 function clearOrder() {
-  store.order = null;
-  saveStore();
+    store.order = null;
+    saveStore();
+}
+function getPickedPromo() { return store.selectedPromo || null; }
+function pickPromo(id) { store.selectedPromo = { id }; saveStore(); }
+
+function cartTotals() {
+  const cart = getCart();
+  let subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  return { cart, subtotal };
 }

@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (typeof setOrder === "function") {
         setOrder({ type: "now", pickupTime: null });
       }
-      window.location.href = "Stalls.html";
+      window.location.href = "Menu.html";
     });
   }
 

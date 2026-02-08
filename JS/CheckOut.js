@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 function displayCheckout() {
+  console.log("Cart loaded in checkout:", getCart());
   const cartDiv = document.querySelector('.cart-list')
   const totalDiv = document.querySelector('.cart-total')
   const orderDiv = document.querySelector('.order-info')
