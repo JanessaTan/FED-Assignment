@@ -11,7 +11,8 @@
     <h2>Order History</h2>
   </section>
   <div class="container">
-    <div class="history-card">
+    <!-- ORIGINAL FORMAT FOR REFERENCE -->
+    <!-- <div class="history-card">
       <div class="info">
         <h3>Golden Wok</h3>
         <p>Order: Hainanese Chicken Rice (x1)</p>
@@ -46,20 +47,12 @@
         <h5>Ordered on: 8 Jan 2026</h5>
       </div>
       <a href="saved-order.html" class="btn" onclick="saveOrder()"><img src="../img/bookmark.png" style="width:30px;height:30px;"></img></a>
-    </div>
-
+    </div> -->
 
 </div>
 </main>
 
-<script src="script.js"></script>
+<script src="../JS/history.js"></script>
 
-<script>
-  const hist = store.get(KEYS.ordersHistory,[]);
-  $('#root').innerHTML = '<h2>Order History</h2>' + (hist.length? hist.map(o=>`
-    <div class="row" style="justify-content:space-between;border-bottom:1px solid #eee;padding:8px 0">
-      <div>#${o.id} • ${new Date(o.createdAt).toLocaleString()} • ${o.status}${o.scheduledAt? ' • Pickup: '+new Date(o.scheduledAt).toLocaleString():''}</div>
-      <div><strong>${fmt(o.total)}</strong></div>
-    </div>`).join('') : '<p>No orders yet.</p>');
-</script>
+<script></script>
 </body></html>
