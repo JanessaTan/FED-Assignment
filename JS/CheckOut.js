@@ -1,40 +1,35 @@
 /* assets/js/checkout.js */
 
 // ===============================
-// PAGE LOAD EVENTS
+// INITIAL LOAD
 // ===============================
-window.addEventListener("load", function() {
+document.addEventListener("DOMContentLoaded", function () {
 
+  console.log("Checkout page loaded");
+
+  displayCheckout();
+
+  // Back button
   const backBtn = document.querySelector(".back-btn");
   if (backBtn) {
-    backBtn.style.cursor = "pointer";
-    backBtn.addEventListener("click", function() {
+    backBtn.addEventListener("click", function () {
       window.location.href = "Menu.html";
     });
   }
 
+  // Promo link
   const promoLink = document.querySelector(".promo-link");
   if (promoLink) {
-    promoLink.style.cursor = "pointer";
-    promoLink.addEventListener("click", function() {
+    promoLink.addEventListener("click", function () {
       window.location.href = "Promotion.html";
     });
   }
 
-});
-
-
-// ===============================
-// DOM READY
-// ===============================
-document.addEventListener("DOMContentLoaded", function() {
-
-  displayCheckout();
-
+  // Payment form
   const paymentForm = document.querySelector(".payment-form");
 
   if (paymentForm) {
-    paymentForm.addEventListener("submit", function(e) {
+    paymentForm.addEventListener("submit", function (e) {
       e.preventDefault();
 
       const cardNumber = document.querySelector("#card-number").value.trim();
@@ -45,8 +40,11 @@ document.addEventListener("DOMContentLoaded", function() {
       const expiryRegex = /^\d{2}\/\d{2}$/;
       const cvcRegex = /^\d{3}$/;
 
-      if (!cardRegex.test(cardNumber) || !expiryRegex.test(expiry) || !cvcRegex.test(cvc)) {
-        alert("Invalid payment details. Please check your card number, expiry, and CVC.");
+      if (!cardRegex.test(cardNumber) ||
+          !expiryRegex.test(expiry) ||
+          !cvcRegex.test(cvc)) {
+
+        alert("Invalid payment details.");
         return;
       }
 
@@ -66,9 +64,14 @@ document.addEventListener("DOMContentLoaded", function() {
 // ===============================
 function displayCheckout() {
 
-  const cartDiv = document.querySelector('.cart-list');
-  const totalDiv = document.querySelector('.cart-total');
-  const orderDiv = document.querySelector('.order-info');
+  const cartDiv = document.querySelector(".cart-list");
+  const totalDiv = document.querySelector(".cart-total");
+  const orderDiv = document.querySelector(".order-info");
+
+  if (!cartDiv || !totalDiv || !orderDiv) {
+    console.log("Checkout elements missing in HTML");
+    return;
+  }
 
   const store = JSON.parse(localStorage.getItem("store")) || {
     cart: [],
@@ -78,17 +81,17 @@ function displayCheckout() {
   const cart = store.cart || [];
   const order = store.order || { type: "now" };
 
-  const subtotal = cart.reduce((sum, item) => {
-    return sum + (Number(item.price) * item.qty);
-  }, 0);
+  console.log("Cart data:", cart);
 
   // ===============================
   // ORDER INFO
   // ===============================
   if (order.type === "later" && order.pickupTime) {
-    let d = new Date(order.pickupTime);
+    const d = new Date(order.pickupTime);
     orderDiv.innerHTML =
-      "<p><strong>Pickup Time:</strong> " + d.toLocaleString() + "</p>";
+      "<p><strong>Pickup Time:</strong> " +
+      d.toLocaleString() +
+      "</p>";
   } else {
     orderDiv.innerHTML =
       "<p><strong>Pickup:</strong> ASAP</p>";
@@ -105,15 +108,18 @@ function displayCheckout() {
 
   cartDiv.innerHTML = "";
 
+  let subtotal = 0;
+
   // ===============================
   // DISPLAY ITEMS
   // ===============================
-  cart.forEach(function(item, index) {
+  cart.forEach(function (item, index) {
+
+    subtotal += Number(item.price) * item.qty;
 
     const itemDiv = document.createElement("div");
     itemDiv.classList.add("cart-item");
 
-    // Build customization section
     let customizationHTML = "";
 
     if (item.size) {
@@ -125,11 +131,17 @@ function displayCheckout() {
     }
 
     if (item.addons && item.addons.length > 0) {
-      customizationHTML += "<p><strong>Add-ons:</strong> " + item.addons.join(", ") + "</p>";
+      customizationHTML +=
+        "<p><strong>Add-ons:</strong> " +
+        item.addons.join(", ") +
+        "</p>";
     }
 
     if (item.notes) {
-      customizationHTML += "<p><strong>Notes:</strong> " + item.notes + "</p>";
+      customizationHTML +=
+        "<p><strong>Notes:</strong> " +
+        item.notes +
+        "</p>";
     }
 
     itemDiv.innerHTML =
@@ -139,31 +151,18 @@ function displayCheckout() {
       customizationHTML +
       "</div>" +
       "<div class='item-actions'>" +
-      "<span class='item-price'>$" + (item.price * item.qty).toFixed(2) + "</span>" +
+      "<span class='item-price'>$" +
+      (item.price * item.qty).toFixed(2) +
+      "</span>" +
       "<button class='delete-btn'>Remove</button>" +
       "<button class='customize-btn'>Customize</button>" +
       "</div>";
 
     cartDiv.appendChild(itemDiv);
 
-    // ===============================
-    // CUSTOMIZE BUTTON
-    // ===============================
-    const customizeBtn = itemDiv.querySelector(".customize-btn");
-    customizeBtn.style.cursor = "pointer";
-
-    customizeBtn.addEventListener("click", function () {
-      localStorage.setItem("editingCartIndex", JSON.stringify(index));
-      window.location.href = "../Html/customize.html";
-    });
-
-    // ===============================
-    // REMOVE BUTTON
-    // ===============================
+    // Remove button
     const removeBtn = itemDiv.querySelector(".delete-btn");
-    removeBtn.style.cursor = "pointer";
-
-    removeBtn.addEventListener("click", function() {
+    removeBtn.addEventListener("click", function () {
 
       const store = JSON.parse(localStorage.getItem("store")) || { cart: [] };
       const currentCart = store.cart || [];
@@ -175,53 +174,58 @@ function displayCheckout() {
       }
 
       store.cart = currentCart;
+
       localStorage.setItem("store", JSON.stringify(store));
 
       displayCheckout();
     });
 
+    // Customize button
+    const customizeBtn = itemDiv.querySelector(".customize-btn");
+    customizeBtn.addEventListener("click", function () {
+
+      localStorage.setItem("editingCartIndex", JSON.stringify(index));
+
+      window.location.href = "customize.html";
+    });
+
   });
 
   // ===============================
-  // TOTAL + PROMO
+  // PROMO CALCULATION
   // ===============================
-  const promoResult = computeDiscount(cart, subtotal);
-  const finalTotal = Math.max(0, subtotal - promoResult.discount);
+  let discount = 0;
+  let reason = "";
 
-  let totalHTML = "<h3>Subtotal: $" + subtotal.toFixed(2) + "</h3>";
+  if (typeof computeDiscount === "function") {
+    const promoResult = computeDiscount(cart, subtotal);
+    discount = promoResult.discount || 0;
+    reason = promoResult.reason || "";
+  }
 
-  if (promoResult.discount > 0) {
+  const finalTotal = Math.max(0, subtotal - discount);
+
+  let totalHTML =
+    "<h3>Subtotal: $" + subtotal.toFixed(2) + "</h3>";
+
+  if (discount > 0) {
     totalHTML +=
-      "<p style='color:green; font-weight:bold;'>Discount: -$" +
-      promoResult.discount.toFixed(2) +
-      "</p>" +
-      "<p style='font-size:0.9em; color:#666;'>" +
-      promoResult.reason +
+      "<p style='color:green;'>Discount: -$" +
+      discount.toFixed(2) +
       "</p>";
-  } else if (promoResult.reason !== "No promotion selected") {
+  }
+
+  if (reason) {
     totalHTML +=
-      "<p style='font-size:0.9em; color:#666;'>" +
-      promoResult.reason +
+      "<p style='font-size:0.9em;color:#666;'>" +
+      reason +
       "</p>";
   }
 
   totalHTML +=
-    "<h2 style='color:red; margin-top:10px;'>Final Total: $" +
+    "<h2 style='color:red;'>Final Total: $" +
     finalTotal.toFixed(2) +
     "</h2>";
 
   totalDiv.innerHTML = totalHTML;
 }
-
-
-// ===============================
-// PROMO CLICK HANDLER
-// ===============================
-document.querySelectorAll('.promo-card').forEach(card => {
-  card.addEventListener('click', function(e) {
-    e.preventDefault();
-    const id = card.dataset.id;
-    pickPromo(id);
-    window.location.href = "Checkout.html";
-  });
-});
