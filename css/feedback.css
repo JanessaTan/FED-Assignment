@@ -1,3 +1,5 @@
+/* feedback.css */
+
 form .row {
     align-items: flex-start;
 }
@@ -7,6 +9,8 @@ form textarea {
     resize: vertical;
     background: #fff;
 }
+
+/* Feedback Sections */
 .feedback-section {
     margin-bottom: 20px;
     padding-bottom: 16px;
@@ -23,6 +27,7 @@ form textarea {
     font-size: 1rem;
 }
 
+/* Feedback Type Cards */
 .feedback-type-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -35,13 +40,24 @@ form textarea {
     cursor: pointer;
 }
 
+/* Hide radio button completely */
 .feedback-type-card input[type="radio"] {
     position: absolute;
     opacity: 0;
     width: 0;
     height: 0;
+    pointer-events: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
+.feedback-type-card input[type="radio"]::before,
+.feedback-type-card input[type="radio"]::after {
+    display: none !important;
+}
+
+/* Card styling */
 .type-content {
     display: flex;
     flex-direction: column;
@@ -54,16 +70,35 @@ form textarea {
     transition: all 0.3s;
 }
 
+/* Hover state */
 .feedback-type-card:hover .type-content {
     border-color: var(--brand-2);
     background: #f8fafc;
 }
 
+/* Selected (checked) state - OVERRIDE BASE.CSS */
 .feedback-type-card input[type="radio"]:checked + .type-content {
-    border-color: var(--brand);
-    background: #e6f4f4;
+    border-color: var(--brand) !important;
+    background: #e6f4f4 !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
+/* Focus state - REMOVE RED OUTLINE */
+.feedback-type-card input[type="radio"]:focus + .type-content,
+.feedback-type-card input[type="radio"]:focus-visible + .type-content {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: var(--brand-2) !important;
+}
+
+/* Focus within - REMOVE RED OUTLINE */
+.feedback-type-card:focus-within .type-content {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Icon and label */
 .type-icon {
     font-size: 2rem;
 }
@@ -74,6 +109,7 @@ form textarea {
     color: var(--text);
 }
 
+/* Star Rating */
 .rating-stars {
     display: flex;
     gap: 8px;
@@ -89,7 +125,7 @@ form textarea {
 }
 
 .star:hover {
-    transform: scale(1.1);
+    transform: scale(1.2);
     color: #fbbf24;
 }
 
@@ -97,6 +133,7 @@ form textarea {
     transform: scale(1.1);
 }
 
+/* Character Counter */
 #feedbackCharCount {
     display: block;
     text-align: right;
@@ -104,10 +141,12 @@ form textarea {
     font-size: 0.85rem;
 }
 
+/* Required Indicator */
 .required {
     color: var(--danger);
 }
 
+/* Button Group */
 .button-group {
     display: flex;
     gap: 12px;
@@ -116,6 +155,7 @@ form textarea {
     flex-wrap: wrap;
 }
 
+/* Form Input Styling */
 form input,
 form select,
 form textarea {
@@ -132,6 +172,7 @@ form textarea:focus {
     box-shadow: 0 0 0 3px rgba(0, 109, 119, 0.1);
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
     .feedback-type-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -158,8 +199,8 @@ form textarea:focus {
     }
 }
 
+/* Accessibility */
 .feedback-type-card:focus-within .type-content {
     outline: 2px solid var(--brand);
     outline-offset: 2px;
 }
-
