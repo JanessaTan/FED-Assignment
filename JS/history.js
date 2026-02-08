@@ -4,12 +4,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const listContainer = root ? root.querySelector("div.container") : null;
   if (!listContainer) return;
 
-  // Parse the storage
-  function cartParse(key) {
+  // Parse storage
+  function safeParse(key) {
     try {
       const raw = localStorage.getItem(key);
       if (!raw) return null;
-      return JSON.parse(key);
+      return JSON.parse(raw);
     } catch (e) {
       return null;
     }
@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", function () {
     return "ord_" + Date.now() + "_" + Math.random().toString(16).slice(2);
   }
 
-  // Make data format consistent
   function normaliseItems(items) {
     const arr = Array.isArray(items) ? items : [];
     const out = [];
@@ -66,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function guessStallName(orderEntry) {
-    // If ordered from 1 stall only
+    // Prefer stallName if it exists
     if (orderEntry && orderEntry.stallName && String(orderEntry.stallName).trim() !== "") {
       return orderEntry.stallName;
     }
@@ -83,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function orderSignature(entry) {
-    // push items in list so that it doesn't save the save thing repeatedly
+    // Push cart contents so items are not added repeatedly
     const items = entry.items || [];
     const parts = [];
     for (let i = 0; i < items.length; i++) {
@@ -94,12 +93,12 @@ document.addEventListener("DOMContentLoaded", function () {
     return parts.join(";") + "||" + pickup;
   }
 
-  // Load existing order history
-  let history = cartParse("hc.orderHistory");
+  // Order history
+  let history = safeParse("hc.orderHistory");
   if (!Array.isArray(history)) history = [];
 
-  // Pull data from storage
-  const store = cartParse("store") || { cart: [], order: null };
+  // Get data from storage
+  const store = safeParse("store") || { cart: [], order: null };
   const cart = Array.isArray(store.cart) ? store.cart : [];
   const order = store.order || { type: "now" };
 
@@ -117,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
       items: items
     };
 
-    // remove copies against the last inserted entry
+    // Shift orders so that they do not get replaced or duplicated
     const sig = orderSignature(entry);
     const lastSig = localStorage.getItem("hc.lastOrderSig");
 
@@ -171,7 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   listContainer.innerHTML = html;
 
-  // Save order button (bookmark)
+  // Save orders using bookmark button
   window.saveOrderFromHistory = function (historyIndex) {
     const entry = history[historyIndex];
     if (!entry) return;
@@ -179,16 +178,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const items = normaliseItems(entry.items || []);
     if (items.length === 0) return;
 
-    let savedOrders = cartParse("hc.savedOrders");
+    let savedOrders = safeParse("hc.savedOrders");
     if (!Array.isArray(savedOrders)) savedOrders = [];
 
     const stallTitle = guessStallName(entry);
     const dateText = formatDate(entry.placedAt);
 
-    const defaultName = guessStallName(entry);
+    const defaultName = guessStallName(entry); // e.g. "Mixed Stalls"
     const userName = prompt("Name this saved order:", defaultName);
 
-    // If user presses cancel or leaves blank, use default name
+    // If user presses cancel or leaves blank, use default values
     const finalName = (userName && userName.trim() !== "") ? userName.trim() : defaultName;
 
     const savedObj = {
