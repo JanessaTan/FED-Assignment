@@ -16,7 +16,7 @@ const menuItems = [
   { id: "fried-carrot-cake", name: "Fried Carrot Cake",       img: "../img/carrot.jpg", rating: 4.0, bestseller: false, price: 3.5 },
   { id: "oyster-omelette",   name: "Oyster Omelette",         img: "../img/Omelette.jpg",   rating: 4.2, bestseller: false, price: 7.0 },
   { id: "popiah",            name: "Popiah",                  img: "../img/popiah.jpg",            rating: 4.0, bestseller: false, price: 2.0 },
-  { id: "kaya-toast",        name: "Kaya Toast",              img: "img/kaya-toast.jpg",        rating: 3.9, bestseller: false, price: 2.2 },
+  { id: "kaya-toast",        name: "Kaya Toast",              img: "../img/kaya-toast.jpg",        rating: 3.9, bestseller: false, price: 2.2 },
 ];
 
 /* ===== LocalStorage Cart ===== */
