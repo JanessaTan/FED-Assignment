@@ -81,6 +81,7 @@ function displayCheckout() {
       "<div class='item-actions'>" +
       "<span class='item-price'>$" + (item.price * item.qty).toFixed(2) + "</span>" +
       "<button class='delete-btn'>Remove</button>" +
+      "<button class='customize-btn'>Customize</button>" +
       "</div>";
 
     cartDiv.appendChild(itemDiv);
