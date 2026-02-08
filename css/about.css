@@ -61,7 +61,7 @@ body {
     display: flex;
     align-items: center;
     padding: 15px;
-    background-color: whitesmoke;
+    background-color: black;
 }
 .About img {
     width: 350px;
@@ -72,6 +72,7 @@ body {
 .About-text {
     margin: 10px;
     text-align: center;
+    color: white;
 }
 .About-explore {
     background-color: red;
