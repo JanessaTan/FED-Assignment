@@ -1,8 +1,9 @@
-/* customize.js - ZERO DEPENDENCY VERSION */
+/* Student ID - S10275480F 
+Student Name -Nicole Agnes Sim Hui En */
 
-// ==========================================
-// MENU DATA - EDIT YOUR ITEMS HERE
-// ==========================================
+// Customize Order Page - Lets customers add items to cart and adjust quantities, spice levels, and special requests
+
+//  Menu Data- All The Items Available At Each Stall Menu Data
 const MENU_DATA = {
   wok: [
     { id: '1', name: 'Chicken Fried Rice', price: 4.50 },
@@ -35,9 +36,7 @@ const MENU_DATA = {
   ]
 };
 
-// ==========================================
-// HANDLE CUSTOMIZE FROM CHECKOUT
-// ==========================================
+// When customer clicks "Customize" on an item already in their cart, save which item they're editing
 function handleCustomizeClick(cartIndex) {
   try {
     localStorage.setItem('editingCartIndex', cartIndex);
@@ -47,22 +46,25 @@ function handleCustomizeClick(cartIndex) {
   }
   window.location.href = 'customize.html';
 }
+// Make this function available globally so HTML buttons can call it
 window.handleCustomizeClick = handleCustomizeClick;
 
-// ==========================================
-// MAIN CUSTOMIZE LOGIC
-// ==========================================
+// MAIN CUSTOMIZE PAGE LOGIC
 (function(){
   
-  // Helper functions
+  // Helper function to get an element by ID (shorthand)
   function $(id) { return document.getElementById(id); }
+  
+  // Helper function to format numbers as currency (e.g., 5.5 becomes "$5.50")
   function fmt(num) { return '$' + parseFloat(num || 0).toFixed(2); }
   
+  // Helper to get URL parameters (e.g., ?stall=wok&item=1)
   function getUrlParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
   }
   
+  // Get the cart data from browser storage
   function getStore() {
     try {
       return JSON.parse(localStorage.getItem('store')) || { cart: [], order: { type: 'now' } };
@@ -71,6 +73,7 @@ window.handleCustomizeClick = handleCustomizeClick;
     }
   }
   
+  // Save the cart data back to browser storage
   function saveStore(store) {
     try {
       localStorage.setItem('store', JSON.stringify(store));
@@ -79,12 +82,14 @@ window.handleCustomizeClick = handleCustomizeClick;
     }
   }
   
+  // Add a new item to the cart
   function addToCart(item) {
     const store = getStore();
     store.cart.push(item);
     saveStore(store);
   }
   
+  // Update an existing item in the cart (for editing)
   function updateCartItem(index, item) {
     const store = getStore();
     if (index >= 0 && index < store.cart.length) {
@@ -93,16 +98,14 @@ window.handleCustomizeClick = handleCustomizeClick;
     }
   }
 
-  // ==========================================
-  // DETERMINE MODE & GET ITEM
-  // ==========================================
+  // ===== DETERMINE IF WE'RE ADDING A NEW ITEM OR EDITING AN EXISTING ONE =====
   
   let isEditMode = false;
   let editingIndex = null;
   let item = null;
-  let stallId = 'wok'; // default stall
+  let stallId = 'wok'; // default stall if none specified
 
-  // Check if editing from cart
+  // Check if we're in "edit mode" (customer is modifying something already in cart)
   try {
     const editIndexStr = localStorage.getItem('editingCartIndex');
     const mode = localStorage.getItem('customizeMode');
@@ -113,11 +116,11 @@ window.handleCustomizeClick = handleCustomizeClick;
       console.log('Edit mode - cart index:', editingIndex);
     }
   } catch(e) {
-    // localStorage not available, continue in add mode
+    // localStorage not available, continue in "add new" mode
   }
 
+  // If editing, load the item from the cart
   if (isEditMode) {
-    // EDIT MODE - Load from cart
     const store = getStore();
     const cartItem = store.cart[editingIndex];
     
@@ -135,16 +138,15 @@ window.handleCustomizeClick = handleCustomizeClick;
     }
   }
 
+  // If NOT editing (adding new item), figure out which stall and item to show
   if (!item) {
-    // ADD MODE - Get from URL or localStorage or use default
-    
-    // Try URL parameters first
+    // Try URL parameters first (e.g., ?stall=wok&item=1)
     stallId = getUrlParam('stall');
     let itemId = getUrlParam('item');
     
     console.log('URL params - stall:', stallId, 'item:', itemId);
     
-    // Try localStorage if no URL params
+    // If no URL params, try to get from browser storage
     if (!stallId || !itemId) {
       try {
         const storedStall = localStorage.getItem('selectedStall');
@@ -153,7 +155,7 @@ window.handleCustomizeClick = handleCustomizeClick;
         if (storedStall) stallId = storedStall;
         
         if (storedItemId) {
-          // Parse "wok_1" format
+          // Parse "wok_1" format (stall_itemId)
           const parts = storedItemId.split('_');
           if (parts.length === 2) {
             stallId = parts[0];
@@ -169,29 +171,29 @@ window.handleCustomizeClick = handleCustomizeClick;
       }
     }
 
-    // Default to wok if still no stall
+    // If still no stall, default to wok
     if (!stallId || !MENU_DATA[stallId]) {
       stallId = 'wok';
     }
     
-    // Find item in menu data
+    // Find the specific item in the menu
     if (MENU_DATA[stallId]) {
       const items = MENU_DATA[stallId];
       
       if (itemId) {
-        // Try to find specific item
+        // Try to find item with the given ID
         item = items.find(i => i.id === itemId);
         console.log('Looking for item ID', itemId, '- Found:', item ? item.name : 'not found');
       }
       
-      // If not found or no itemId specified, use first item
+      // If item not found or no ID specified, use the first item as default
       if (!item && items.length > 0) {
         item = items[0];
         console.log('Using default item:', item.name);
       }
     }
     
-    // Last resort: use first item from any stall
+    // Last resort: grab the first item from any stall that has items
     if (!item) {
       for (const sid in MENU_DATA) {
         if (MENU_DATA[sid].length > 0) {
@@ -204,7 +206,7 @@ window.handleCustomizeClick = handleCustomizeClick;
     }
   }
 
-  // If STILL no item (shouldn't happen with built-in data)
+  // Safety check - if STILL no item, something went wrong
   if (!item) {
     alert('Error: No menu items available. Please contact support.');
     console.error('CRITICAL: No items found in MENU_DATA');
@@ -213,9 +215,7 @@ window.handleCustomizeClick = handleCustomizeClick;
 
   console.log('Final item:', item.name, 'from stall:', stallId);
 
-  // ==========================================
-  // POPULATE FORM
-  // ==========================================
+  // ===== FILL IN THE FORM WITH ITEM DETAILS =====
   
   const itemNameEl = $('itemName');
   const itemPriceEl = $('itemPrice');
@@ -224,26 +224,27 @@ window.handleCustomizeClick = handleCustomizeClick;
   const notesEl = $('notes');
   const spiceLevelEl = $('spiceLevel');
 
+  // Make sure all form fields exist
   if (!itemNameEl || !qtyEl) {
     console.error('Form elements not found! Check HTML has id="itemName" and id="qty"');
     alert('Form error. Please refresh the page.');
     return;
   }
 
-  // Set item details
+  // Display the item name and price
   itemNameEl.value = item.name;
   if (itemPriceEl) itemPriceEl.value = fmt(item.price);
 
-  // Load existing customization if editing
+  // If we're editing an existing item, load its current settings
   if (isEditMode) {
     const store = getStore();
     const cartItem = store.cart[editingIndex];
     
     if (cartItem) {
-      // Set quantity
+      // Set the quantity they had before
       if (qtyEl) qtyEl.value = cartItem.qty || 1;
       
-      // Parse and restore customization
+      // Parse the notes and restore spice level and special instructions
       if (cartItem.notes) {
         const noteParts = cartItem.notes.split('; ');
         let specialNotes = [];
@@ -260,12 +261,13 @@ window.handleCustomizeClick = handleCustomizeClick;
           }
         });
         
+        // Show the special instructions they typed before
         if (notesEl && specialNotes.length > 0) {
           notesEl.value = specialNotes.join('; ');
         }
       }
       
-      // Add edit mode banner
+      // Add a banner to show they're editing
       const form = $('cf');
       if (form && !document.getElementById('editModeBanner')) {
         const banner = document.createElement('div');
@@ -274,19 +276,17 @@ window.handleCustomizeClick = handleCustomizeClick;
         banner.textContent = '✏️ Editing Order';
         form.insertBefore(banner, form.firstChild);
         
-        // Update button text
+        // Change the submit button text to "Save Changes"
         const submitBtn = form.querySelector('button[type="submit"]');
         if (submitBtn) submitBtn.textContent = 'Save Changes';
       }
     }
   } else {
-    // Add mode - default quantity
+    // Adding a new item - start with quantity of 1
     if (qtyEl) qtyEl.value = 1;
   }
 
-  // ==========================================
-  // UPDATE TOTAL PRICE
-  // ==========================================
+  // ===== CALCULATE AND UPDATE THE TOTAL PRICE =====
   
   function updateTotalPrice() {
     const qty = Math.max(1, parseInt(qtyEl.value || '1', 10));
@@ -296,16 +296,16 @@ window.handleCustomizeClick = handleCustomizeClick;
     }
   }
 
+  // Calculate total immediately when page loads
   updateTotalPrice();
   
+  // Recalculate when quantity changes
   if (qtyEl) {
     qtyEl.addEventListener('change', updateTotalPrice);
     qtyEl.addEventListener('input', updateTotalPrice);
   }
 
-  // ==========================================
-  // FORM SUBMISSION
-  // ==========================================
+  // ===== HANDLE FORM SUBMISSION (SAVE OR ADD TO CART) =====
   
   const form = $('cf');
   if (!form) {
@@ -316,10 +316,11 @@ window.handleCustomizeClick = handleCustomizeClick;
   form.addEventListener('submit', function(e) {
     e.preventDefault();
     
+    // Get the quantity and build the customization notes
     const qty = Math.max(1, parseInt(qtyEl.value || '1', 10));
     const customizations = [];
     
-    // Get spice level
+    // Add spice level preference if they picked one
     if (spiceLevelEl) {
       const spiceLevel = spiceLevelEl.value;
       if (spiceLevel !== 'normal') {
@@ -332,14 +333,15 @@ window.handleCustomizeClick = handleCustomizeClick;
       }
     }
     
-    // Get special notes
+    // Add any special instructions they typed
     if (notesEl && notesEl.value.trim()) {
       customizations.push(notesEl.value.trim());
     }
     
+    // Combine all notes into one string
     const notes = customizations.join('; ');
     
-    // Create order item
+    // Create the order item with all details
     const orderItem = {
       stallId: stallId,
       itemId: item.id,
@@ -351,10 +353,12 @@ window.handleCustomizeClick = handleCustomizeClick;
     
     console.log('Order item:', orderItem);
     
+    // Either update the existing cart item or add a new one
     if (isEditMode) {
-      // Update existing cart item
+      // Update the item in cart
       updateCartItem(editingIndex, orderItem);
       
+      // Clean up temporary storage
       try {
         localStorage.removeItem('editingCartIndex');
         localStorage.removeItem('customizeMode');
@@ -366,6 +370,7 @@ window.handleCustomizeClick = handleCustomizeClick;
       // Add new item to cart
       addToCart(orderItem);
       
+      // Clean up temporary storage
       try {
         localStorage.removeItem('selectedItemId');
         localStorage.removeItem('customizeMode');

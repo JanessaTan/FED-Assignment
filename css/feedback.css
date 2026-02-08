@@ -1,33 +1,42 @@
-/* feedback.css */
+/*  Student ID - S10275480F 
+Student Name -Nicole Agnes Sim Hui En   */
 
+/* Feedback Form Page Styles - Layout and styling for the feedback form */
+
+/* Rows in the feedback form align items to the top */
 form .row {
     align-items: flex-start;
 }
 
+/* Text area for feedback message is taller and can be resized */
 form textarea {
     min-height: 120px;
     resize: vertical;
     background: #fff;
 }
 
-/* Feedback Sections */
+/* FEEDBACK SECTIONS - Each section has a border line between them */
+
 .feedback-section {
     margin-bottom: 20px;
     padding-bottom: 16px;
     border-bottom: 1px solid #e5e7eb;
 }
 
+/* The last section doesn't have a line at the bottom */
 .feedback-section:last-of-type {
     border-bottom: none;
 }
 
+/* Heading for each feedback section */
 .feedback-section h3 {
     margin: 0 0 12px 0;
     color: var(--brand);
     font-size: 1rem;
 }
 
-/* Feedback Type Cards */
+/* FEEDBACK TYPE CARDS - Grid of emoji options (Compliment, Suggestion, etc.) */
+
 .feedback-type-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -35,12 +44,13 @@ form textarea {
     margin-top: 10px;
 }
 
+/* Container for each feedback type card */
 .feedback-type-card {
     position: relative;
     cursor: pointer;
 }
 
-/* Hide radio button completely */
+/* Hide the radio button completely (the card itself acts as the button) */
 .feedback-type-card input[type="radio"] {
     position: absolute;
     opacity: 0;
@@ -52,12 +62,14 @@ form textarea {
     -moz-appearance: none;
 }
 
+/* Don't show any pseudo-elements on hidden radio buttons */
 .feedback-type-card input[type="radio"]::before,
 .feedback-type-card input[type="radio"]::after {
     display: none !important;
 }
 
-/* Card styling */
+/* CARD STYLING - The visible card that customers click on */
+
 .type-content {
     display: flex;
     flex-direction: column;
@@ -70,13 +82,13 @@ form textarea {
     transition: all 0.3s;
 }
 
-/* Hover state */
+/* Highlight the card when hovering over it */
 .feedback-type-card:hover .type-content {
     border-color: var(--brand-2);
     background: #f8fafc;
 }
 
-/* Selected (checked) state - OVERRIDE BASE.CSS */
+/* When a card is selected (checked), change colors to indicate selection */
 .feedback-type-card input[type="radio"]:checked + .type-content {
     border-color: var(--brand) !important;
     background: #e6f4f4 !important;
@@ -84,7 +96,7 @@ form textarea {
     box-shadow: none !important;
 }
 
-/* Focus state - REMOVE RED OUTLINE */
+/* Focus state - remove red outline when tabbing through with keyboard */
 .feedback-type-card input[type="radio"]:focus + .type-content,
 .feedback-type-card input[type="radio"]:focus-visible + .type-content {
     outline: none !important;
@@ -92,24 +104,26 @@ form textarea {
     border-color: var(--brand-2) !important;
 }
 
-/* Focus within - REMOVE RED OUTLINE */
+/* Focus within the card - remove default outlines */
 .feedback-type-card:focus-within .type-content {
     outline: none !important;
     box-shadow: none !important;
 }
 
-/* Icon and label */
+/* Large emoji icon in the center of the card */
 .type-icon {
     font-size: 2rem;
 }
 
+/* Label text below the emoji (Compliment, Suggestion, etc.) */
 .type-label {
     font-size: 0.9rem;
     font-weight: 600;
     color: var(--text);
 }
 
-/* Star Rating */
+/* STAR RATING - If star rating was used (commented out in some versions) */
+
 .rating-stars {
     display: flex;
     gap: 8px;
@@ -117,6 +131,7 @@ form textarea {
     margin-top: 8px;
 }
 
+/* Each individual star */
 .star {
     cursor: pointer;
     transition: all 0.2s;
@@ -124,16 +139,19 @@ form textarea {
     user-select: none;
 }
 
+/* Stars light up on hover */
 .star:hover {
     transform: scale(1.2);
     color: #fbbf24;
 }
 
+/* Stars shrink slightly when clicked */
 .star:active {
     transform: scale(1.1);
 }
 
-/* Character Counter */
+/* CHARACTER COUNTER - Shows how many characters the customer has typed */
+
 #feedbackCharCount {
     display: block;
     text-align: right;
@@ -141,12 +159,13 @@ form textarea {
     font-size: 0.85rem;
 }
 
-/* Required Indicator */
+/* RED ASTERISK (*) for required fields */
 .required {
     color: var(--danger);
 }
 
-/* Button Group */
+/* BUTTON GROUP - Container for form buttons at the bottom */
+
 .button-group {
     display: flex;
     gap: 12px;
@@ -155,7 +174,8 @@ form textarea {
     flex-wrap: wrap;
 }
 
-/* Form Input Styling */
+/* FORM INPUT STYLING - All form fields have consistent styling */
+
 form input,
 form select,
 form textarea {
@@ -164,6 +184,7 @@ form textarea {
     transition: all 0.3s;
 }
 
+/* When form fields are focused, highlight them with brand color */
 form input:focus,
 form select:focus,
 form textarea:focus {
@@ -172,34 +193,42 @@ form textarea:focus {
     box-shadow: 0 0 0 3px rgba(0, 109, 119, 0.1);
 }
 
-/* Responsive Design */
+/* RESPONSIVE DESIGN - Mobile-friendly adjustments */
+
 @media (max-width: 768px) {
+    /* Show feedback type cards in 2 columns on mobile */
     .feedback-type-grid {
         grid-template-columns: repeat(2, 1fr);
     }
     
+    /* Stack buttons vertically on mobile */
     .button-group {
         flex-direction: column;
     }
     
+    /* Make buttons full width on mobile */
     .button-group .btn {
         width: 100%;
     }
     
+    /* Stack form row items vertically on mobile */
     form .row {
         flex-direction: column;
     }
     
+    /* Make items in rows full width on mobile */
     form .row > div {
         width: 100%;
     }
     
+    /* Smaller star sizes on mobile */
     .rating-stars {
         font-size: 1.5rem;
     }
 }
 
-/* Accessibility */
+/* ACCESSIBILITY - Add outline when tabbing through with keyboard */
+
 .feedback-type-card:focus-within .type-content {
     outline: 2px solid var(--brand);
     outline-offset: 2px;

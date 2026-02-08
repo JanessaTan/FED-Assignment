@@ -1,39 +1,59 @@
+<!-- Student ID - S10275480F 
+Student Name -Nicole Agnes Sim Hui En -->
+
+<!-- Customize Order Page - Let customers add items to their cart and customize them -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <!-- Page title in browser tab -->
   <title>Customize – HawkerHub</title>
+  <!-- Base styles (buttons, colors, fonts) -->
   <link rel="stylesheet" href="../css/base.css">
+  <!-- Customize page specific styles (form layout, checkboxes) -->
   <link rel="stylesheet" href="../css/customize.css">
 </head>
 <body>
 
+<!-- Check if user is logged in -->
 <script src="../JS/Auth.js"></script>
 
+<!-- Main content area -->
 <main class="container">
+  <!-- White card to hold the form -->
   <div class="card">
+    <!-- Page heading -->
     <h2>Customize Your Order</h2>
+    <!-- Short description of what this page does -->
     <p class="muted">Make your dish exactly how you like it!</p>
 
+    <!-- The customize form -->
     <form id="cf">
+      <!-- First section: Item details (name, price, quantity) -->
       <div class="customize-section">
+        <!-- Row with item name and quantity -->
         <div class="row">
+          <!-- Item name field (not editable) -->
           <div style="flex:1">
             <label>Selected Item</label>
             <input id="itemName" readonly>
           </div>
+          <!-- How many of this item they want -->
           <div>
             <label>Quantity</label>
             <input id="qty" type="number" min="1" value="1" max="10">
           </div>
         </div>
 
+        <!-- Row with item price and total price -->
         <div class="row">
+          <!-- Price per one item (not editable) -->
           <div style="flex:1">
             <label>Price per item</label>
             <input id="itemPrice" readonly>
           </div>
+          <!-- Total cost (not editable, updates automatically) -->
           <div style="flex:1">
             <label>Total Price</label>
             <input id="totalprice" readonly>
@@ -41,9 +61,11 @@
         </div>
       </div>
 
+      <!-- Second section: Customization options -->
       <div class="customize-section">
         <h3>Customization Options</h3>
 
+        <!-- Spice level dropdown -->
         <div class="row">
           <div style="flex:1">
             <label>Spice Level</label>
@@ -56,39 +78,50 @@
           </div>
         </div>
 
+        <!-- Special instructions text area -->
         <div class="row">
           <div style="flex:1">
             <label>Special Instructions (Optional)</label>
+            <!-- Textarea for things like "no onions" or "extra sauce" -->
             <textarea id="notes" rows="3" maxlength="200"></textarea>
           </div>
         </div>
       </div>
 
+      <!-- Buttons at bottom -->
       <div class="button-group">
+        <!-- Save the customizations and add to cart -->
         <button type="submit" class="btn">Save</button>
+        <!-- Go back to checkout page -->
         <a class="btn secondary" href="Checkout.html">Back</a>
       </div>
     </form>
   </div>
 </main>
 
+<!-- JavaScript to handle the customize page logic -->
 <script>
 (function(){
 
+  // Helper function to get element by ID (shorthand)
   function $(id){ return document.getElementById(id); }
+  
+  // Helper to format numbers as currency (5 becomes $5.00)
   function fmt(num){ return '$' + parseFloat(num).toFixed(2); }
 
+  // Get the cart data from browser storage
   function getStore(){
     return JSON.parse(localStorage.getItem('store')) || { cart: [] };
   }
 
+  // Save the updated cart back to browser storage
   function saveStore(store){
     localStorage.setItem('store', JSON.stringify(store));
   }
 
-  // ==========================
-  // EDIT MODE DETECTION
-  // ==========================
+  // ===== CHECK IF WE'RE EDITING AN ITEM OR ADDING A NEW ONE =====
+  
+  // Get the index of the item we're editing (if editing)
   let editingIndex = localStorage.getItem('editingCartIndex');
   let isEditMode = editingIndex !== null;
 
@@ -96,17 +129,22 @@
     editingIndex = parseInt(editingIndex);
   }
 
+  // Get the store and check if the item exists
   const store = getStore();
   let item = null;
 
   if (isEditMode && store.cart[editingIndex]) {
+    // We're editing - get the item from the cart
     item = store.cart[editingIndex];
   } else {
+    // Item doesn't exist or we're not editing
     alert("No item selected.");
     window.location.href = "Checkout.html";
     return;
   }
 
+  // ===== FILL IN THE FORM WITH ITEM DETAILS =====
+  
   const itemNameEl = $('itemName');
   const itemPriceEl = $('itemPrice');
   const totalPriceEl = $('totalprice');
@@ -114,62 +152,79 @@
   const notesEl = $('notes');
   const spiceLevelEl = $('spiceLevel');
 
-  // ==========================
-  // LOAD DATA INTO FORM
-  // ==========================
+  // Show the item name
   itemNameEl.value = item.name;
+  // Show the price per item
   itemPriceEl.value = fmt(item.price);
+  // Set quantity to what they had before
   qtyEl.value = item.qty;
 
+  // If they had special notes before, restore them
   if (item.notes) {
+    // Check what spice level they picked
     if (item.notes.includes("Less Spicy")) spiceLevelEl.value = "mild";
     else if (item.notes.includes("Extra Spicy")) spiceLevelEl.value = "extra";
     else if (item.notes.includes("No Spice")) spiceLevelEl.value = "none";
     else spiceLevelEl.value = "normal";
 
+    // Show any other notes they typed
     notesEl.value = item.notes;
   }
 
+  // ===== UPDATE TOTAL PRICE WHEN QUANTITY CHANGES =====
+  
   function updateTotal(){
+    // Make sure quantity is at least 1
     let qty = Math.max(1, parseInt(qtyEl.value));
+    // Calculate new total and show it
     totalPriceEl.value = fmt(item.price * qty);
   }
 
+  // Calculate total when page loads
   updateTotal();
+  // Recalculate when they change the quantity
   qtyEl.addEventListener("input", updateTotal);
 
-  // ==========================
-  // FORM SUBMIT
-  // ==========================
+  // ===== HANDLE FORM SUBMISSION (SAVE CHANGES) =====
+  
   $('cf').addEventListener("submit", function(e){
     e.preventDefault();
 
+    // Get the quantity they selected
     let qty = Math.max(1, parseInt(qtyEl.value));
     let customNotes = [];
 
+    // Map spice level codes to readable text
     const spiceMap = {
       mild: "Less Spicy",
       extra: "Extra Spicy",
       none: "No Spice"
     };
 
+    // If they picked a spice level, add it to notes
     if (spiceLevelEl.value !== "normal") {
       customNotes.push(spiceMap[spiceLevelEl.value]);
     }
 
+    // If they typed any special instructions, add them too
     if (notesEl.value.trim()) {
       customNotes.push(notesEl.value.trim());
     }
 
+    // Combine all notes into one string separated by semicolons
     item.qty = qty;
     item.notes = customNotes.join("; ");
 
+    // Update the item in the cart
     store.cart[editingIndex] = item;
     saveStore(store);
 
+    // Clean up temporary storage
     localStorage.removeItem('editingCartIndex');
 
+    // Tell them it worked
     alert("✅ Item updated!");
+    // Go back to checkout page
     window.location.href = "Checkout.html";
   });
 

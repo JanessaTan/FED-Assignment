@@ -1,3 +1,6 @@
+/* Student ID - S10275480F 
+Student Name -Nicole Agnes Sim Hui En */
+
 /* assets/js/feedback.js */
 (function() {
   // Populate stall dropdown
