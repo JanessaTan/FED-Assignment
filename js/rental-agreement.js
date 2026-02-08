@@ -1,7 +1,8 @@
 /* Student ID- S10274395 */
 /* Student Name: Than Thar Wint Htal */
 
-document.addEventListener("DOMContentLoaded", () => {
+
+document.addEventListener("DOMContentLoaded", function() {
 
 const CUISINES = {
 Chinese:{
@@ -42,7 +43,7 @@ loadCuisine();
 
 
 // ---------- Signature ----------
-const ctx = signature.getContext("2d");
+const ctx = signature ? signature.getContext("2d") : null;
 let drawing=false;
 
 signature.addEventListener("mousedown",()=>{
