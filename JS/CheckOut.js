@@ -150,8 +150,16 @@ function displayCheckout() {
 
     // Remove button
     const removeBtn = itemDiv.querySelector(".delete-btn");
+     removeBtn.style.cursor = "pointer";
+      removeBtn.style.backgroundColor = "white";
+      removeBtn.style.color = "red";
+      removeBtn.style.border = "1px solid blue";
+      removeBtn.style.borderRadius = "5px";
+      removeBtn.style.padding = "3px 6px";
+      removeBtn.style.marginLeft = "10px";
+      removeBtn.style.fontWeight = "bold";
     removeBtn.addEventListener("click", function () {
-
+      
       const store = JSON.parse(localStorage.getItem("store")) || { cart: [] };
       const currentCart = store.cart || [];
 
@@ -170,7 +178,15 @@ function displayCheckout() {
 
     // Customize button
     const customizeBtn = itemDiv.querySelector(".customize-btn");
-    customizeBtn.addEventListener("click", function () {
+      customizeBtn.style.cursor = "pointer";
+      customizeBtn.style.backgroundColor = "white";
+      customizeBtn.style.color = "red";
+      customizeBtn.style.border = "1px solid blue";
+      customizeBtn.style.borderRadius = "5px";
+      customizeBtn.style.padding = "3px 6px";
+      customizeBtn.style.marginLeft = "10px";
+      customizeBtn.style.fontWeight = "bold";
+      customizeBtn.addEventListener("click", function () {
 
       localStorage.setItem("editingCartIndex", JSON.stringify(index));
 
