@@ -1,6 +1,47 @@
 body {
     background: black;
     color: white;
+    margin: 0;
+}
+
+.top-banner {
+    background: #e60000;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 20px;
+    font-size: 14px;
+}
+
+.banner-left {
+    display: flex;
+    gap: 20px;
+}
+
+.banner-link {
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.banner-link:hover {
+    text-decoration: underline;
+}
+
+.banner-right {
+    display: flex;
+    gap: 12px;
+}
+
+.banner-right img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.banner-right img:hover {
+    transform: scale(1.1);
 }
 
 /* ---------- HERO ---------- */
@@ -48,7 +89,6 @@ body {
     border: 2px solid #1e5cc8;
 }
 
-/* Leaflet map container */
 #map {
     width: 100%;
     height: 300px;
