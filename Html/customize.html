@@ -1,82 +1,180 @@
-<!-- customize.html -->
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <title>Customize – HawkerHub</title>
-    <link rel="stylesheet" href="../css/base.css">
-    <link rel="stylesheet" href="../css/customize.css">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Customize – HawkerHub</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/customize.css">
 </head>
 <body>
-  <script src="../JS/CheckOut.js"></script>
-  <script src="../JS/Auth.js"></script>
-  <script src="../JS/customize.js"></script>
-  <script>renderHeader('customize');</script>
+
+<script src="../JS/Auth.js"></script>
 
 <main class="container">
   <div class="card">
     <h2>Customize Your Order</h2>
     <p class="muted">Make your dish exactly how you like it!</p>
 
-  <form id="cf">
-    <div class="customize-section">
-      <div class="row">
-        <div style="flex:1">
-          <label>Selected Item</label>
-          <input id="itemName" readonly>
+    <form id="cf">
+      <div class="customize-section">
+        <div class="row">
+          <div style="flex:1">
+            <label>Selected Item</label>
+            <input id="itemName" readonly>
+          </div>
+          <div>
+            <label>Quantity</label>
+            <input id="qty" type="number" min="1" value="1" max="10">
+          </div>
         </div>
-      <div>
-        <label>Quantity</label>
-        <input id="qty" type="number" min="1" value="1" max="10">
+
+        <div class="row">
+          <div style="flex:1">
+            <label>Price per item</label>
+            <input id="itemPrice" readonly>
+          </div>
+          <div style="flex:1">
+            <label>Total Price</label>
+            <input id="totalprice" readonly>
+          </div>
+        </div>
       </div>
-    </div>
-      
-      <div class="row">
-      <div style="flex:1">
-        <label>Price per item</label>
-        <input id="itemPrice" readonly>
+
+      <div class="customize-section">
+        <h3>Customization Options</h3>
+
+        <div class="row">
+          <div style="flex:1">
+            <label>Spice Level</label>
+            <select id="spiceLevel">
+              <option value="normal">Normal</option>
+              <option value="mild">Less Spicy</option>
+              <option value="extra">Extra Spicy</option>
+              <option value="none">No Spice</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div style="flex:1">
+            <label>Special Instructions (Optional)</label>
+            <textarea id="notes" rows="3" maxlength="200"></textarea>
+          </div>
+        </div>
       </div>
-      <div style="flex:1">
-        <label>Total Price</label>
-        <input id="totalprice" readonly>
+
+      <div class="button-group">
+        <button type="submit" class="btn">Save</button>
+        <a class="btn secondary" href="Checkout.html">Back</a>
       </div>
-    </div>
-  </div> 
-
-  <div class="customize-section">
-    <h3>Customization Options</h3>
-
-    <div class="row">
-      <div style="flex:1">
-        <label>Spice Level</label>
-        <select id="spiceLevel">
-          <option value="normal">Normal</option>
-          <option value="mild">Mild (Less Spicy)</option>
-          <option value="extra">Extra Spicy</option>
-          <option value="none">No Spicy</option>
-        </select>
-      </div>
-    </div>
-
-
-    <div class="row">
-      <div style="flex:1">
-        <label>Special Instructions (Optional)</label>
-        <textarea 
-        id="notes"
-        rows="3" 
-        placeholder="e.g., extra vegetables, less spicy, extra sauce, separate sauce, etc."
-        maxlength="200"></textarea>
-                   </div>
-                </div>
-            </div>
-
-            <div class="button-group">
-                <button type="submit" class="btn">Add to Cart</button>
-                <a class="btn secondary" href="..\Html\Menu.html">Back to Menu</a>
-            </div>
-        </form>
-    </div>
+    </form>
+  </div>
 </main>
 
-</body></html>
+<script>
+(function(){
+
+  function $(id){ return document.getElementById(id); }
+  function fmt(num){ return '$' + parseFloat(num).toFixed(2); }
+
+  function getStore(){
+    return JSON.parse(localStorage.getItem('store')) || { cart: [] };
+  }
+
+  function saveStore(store){
+    localStorage.setItem('store', JSON.stringify(store));
+  }
+
+  // ==========================
+  // EDIT MODE DETECTION
+  // ==========================
+  let editingIndex = localStorage.getItem('editingCartIndex');
+  let isEditMode = editingIndex !== null;
+
+  if (isEditMode) {
+    editingIndex = parseInt(editingIndex);
+  }
+
+  const store = getStore();
+  let item = null;
+
+  if (isEditMode && store.cart[editingIndex]) {
+    item = store.cart[editingIndex];
+  } else {
+    alert("No item selected.");
+    window.location.href = "Checkout.html";
+    return;
+  }
+
+  const itemNameEl = $('itemName');
+  const itemPriceEl = $('itemPrice');
+  const totalPriceEl = $('totalprice');
+  const qtyEl = $('qty');
+  const notesEl = $('notes');
+  const spiceLevelEl = $('spiceLevel');
+
+  // ==========================
+  // LOAD DATA INTO FORM
+  // ==========================
+  itemNameEl.value = item.name;
+  itemPriceEl.value = fmt(item.price);
+  qtyEl.value = item.qty;
+
+  if (item.notes) {
+    if (item.notes.includes("Less Spicy")) spiceLevelEl.value = "mild";
+    else if (item.notes.includes("Extra Spicy")) spiceLevelEl.value = "extra";
+    else if (item.notes.includes("No Spice")) spiceLevelEl.value = "none";
+    else spiceLevelEl.value = "normal";
+
+    notesEl.value = item.notes;
+  }
+
+  function updateTotal(){
+    let qty = Math.max(1, parseInt(qtyEl.value));
+    totalPriceEl.value = fmt(item.price * qty);
+  }
+
+  updateTotal();
+  qtyEl.addEventListener("input", updateTotal);
+
+  // ==========================
+  // FORM SUBMIT
+  // ==========================
+  $('cf').addEventListener("submit", function(e){
+    e.preventDefault();
+
+    let qty = Math.max(1, parseInt(qtyEl.value));
+    let customNotes = [];
+
+    const spiceMap = {
+      mild: "Less Spicy",
+      extra: "Extra Spicy",
+      none: "No Spice"
+    };
+
+    if (spiceLevelEl.value !== "normal") {
+      customNotes.push(spiceMap[spiceLevelEl.value]);
+    }
+
+    if (notesEl.value.trim()) {
+      customNotes.push(notesEl.value.trim());
+    }
+
+    item.qty = qty;
+    item.notes = customNotes.join("; ");
+
+    store.cart[editingIndex] = item;
+    saveStore(store);
+
+    localStorage.removeItem('editingCartIndex');
+
+    alert("✅ Item updated!");
+    window.location.href = "Checkout.html";
+  });
+
+})();
+</script>
+
+</body>
+</html>
