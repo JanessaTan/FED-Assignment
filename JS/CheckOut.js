@@ -1,10 +1,7 @@
 /* assets/js/checkout.js */
 
-// ===============================
-// PAGE LOAD EVENTS
-// ===============================
 window.addEventListener("load", function() {
-
+//back btn lead to menu
   const backBtn = document.querySelector(".back-btn");
   if (backBtn) {
     backBtn.style.cursor = "pointer";
@@ -12,7 +9,6 @@ window.addEventListener("load", function() {
       window.location.href = "Menu.html";
     });
   }
-
   const promoLink = document.querySelector(".promo-link");
   if (promoLink) {
     promoLink.style.cursor = "pointer";
@@ -23,10 +19,6 @@ window.addEventListener("load", function() {
 
 });
 
-
-// ===============================
-// DOM READY
-// ===============================
 document.addEventListener("DOMContentLoaded", function() {
 
   displayCheckout();
@@ -61,9 +53,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-// ===============================
-// DISPLAY CHECKOUT
-// ===============================
+//display checkout
 function displayCheckout() {
 
   const cartDiv = document.querySelector('.cart-list');
@@ -82,9 +72,7 @@ function displayCheckout() {
     return sum + (Number(item.price) * item.qty);
   }, 0);
 
-  // ===============================
-  // ORDER INFO
-  // ===============================
+ //order info
   if (order.type === "later" && order.pickupTime) {
     let d = new Date(order.pickupTime);
     orderDiv.innerHTML =
@@ -94,9 +82,7 @@ function displayCheckout() {
       "<p><strong>Pickup:</strong> ASAP</p>";
   }
 
-  // ===============================
-  // EMPTY CART
-  // ===============================
+  //empty cart
   if (cart.length === 0) {
     cartDiv.innerHTML = "<p>Your cart is empty.</p>";
     totalDiv.innerHTML = "";
@@ -105,9 +91,7 @@ function displayCheckout() {
 
   cartDiv.innerHTML = "";
 
-  // ===============================
-  // DISPLAY ITEMS
-  // ===============================
+  //display items
   cart.forEach(function(item, index) {
 
     const itemDiv = document.createElement("div");
@@ -146,9 +130,7 @@ function displayCheckout() {
 
     cartDiv.appendChild(itemDiv);
 
-    // ===============================
-    // CUSTOMIZE BUTTON
-    // ===============================
+   //customize btn
     const customizeBtn = itemDiv.querySelector(".customize-btn");
     customizeBtn.style.cursor = "pointer";
 
@@ -157,9 +139,7 @@ function displayCheckout() {
       window.location.href = "../Html/customize.html";
     });
 
-    // ===============================
-    // REMOVE BUTTON
-    // ===============================
+   //remove btn
     const removeBtn = itemDiv.querySelector(".delete-btn");
     removeBtn.style.cursor = "pointer";
      removeBtn.style.backgroundColor = "white";
@@ -188,9 +168,7 @@ function displayCheckout() {
 
   });
 
-  // ===============================
-  // TOTAL + PROMO
-  // ===============================
+  //total + promo
   const promoResult = computeDiscount(cart, subtotal);
   const finalTotal = Math.max(0, subtotal - promoResult.discount);
 
@@ -220,9 +198,7 @@ function displayCheckout() {
 }
 
 
-// ===============================
-// PROMO CLICK HANDLER
-// ===============================
+//promo click handler
 document.querySelectorAll('.promo-card').forEach(card => {
   card.addEventListener('click', function(e) {
     e.preventDefault();
