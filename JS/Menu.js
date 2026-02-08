@@ -1,14 +1,12 @@
 (function(){
 
   const menuList = document.getElementById("menuList");
-
   const stallId = new URLSearchParams(window.location.search).get("stall");
 
-  let menuItems = [];
+  // All menus stored in one object
+  const STALL_MENUS = {
 
-  // Golden Wok
-  if (stallId === "golden-wok") {
-    menuItems = [
+    "golden-wok": [
       {
         name: "Egg Fried Rice",
         description: "Classic wok fried rice with egg.",
@@ -21,12 +19,9 @@
         price: 5.50,
         img: "../img/charkwayteow.jpg"
       }
-    ];
-  }
+    ],
 
-  // Mak Cik Delights
-  else if (stallId === "mak-cik-delights") {
-    menuItems = [
+    "mak-cik-delights": [
       {
         name: "Nasi Lemak",
         description: "Coconut rice with sambal and egg.",
@@ -39,12 +34,9 @@
         price: 6.00,
         img: "../img/sambal.jpg"
       }
-    ];
-  }
+    ],
 
-  // Little India Express
-  else if (stallId === "little-india-express") {
-    menuItems = [
+    "little-india-express": [
       {
         name: "Chicken Biryani",
         description: "Fragrant basmati rice with chicken.",
@@ -57,12 +49,9 @@
         price: 2.00,
         img: "../img/roti.jpg"
       }
-    ];
-  }
+    ],
 
-  // Tom Yum House
-  else if (stallId === "tom-yum-house") {
-    menuItems = [
+    "tom-yum-house": [
       {
         name: "Tom Yum Soup",
         description: "Spicy and sour Thai soup.",
@@ -75,12 +64,9 @@
         price: 5.50,
         img: "../img/thai.jpg"
       }
-    ];
-  }
+    ],
 
-  // Western Bites
-  else if (stallId === "western-bites") {
-    menuItems = [
+    "western-bites": [
       {
         name: "Grilled Chicken Chop",
         description: "Juicy grilled chicken with fries.",
@@ -93,12 +79,9 @@
         price: 7.50,
         img: "../img/western.jpg"
       }
-    ];
-  }
+    ],
 
-  // Kopi & Teh Corner
-  else if (stallId === "kopi-teh-corner") {
-    menuItems = [
+    "kopi-teh-corner": [
       {
         name: "Kopi O",
         description: "Traditional black coffee.",
@@ -111,10 +94,21 @@
         price: 1.80,
         img: "../img/drink.jpg"
       }
-    ];
+    ]
+
+  };
+
+  let menuItems = [];
+
+  // If a specific stall is selected
+  if (stallId && STALL_MENUS[stallId]) {
+    menuItems = STALL_MENUS[stallId];
+  } 
+  // Otherwise show ALL items
+  else {
+    menuItems = Object.values(STALL_MENUS).flat();
   }
 
-  // Render
   function renderMenu(){
     menuList.innerHTML = "";
 
