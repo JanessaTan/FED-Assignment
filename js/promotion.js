@@ -1,17 +1,6 @@
-/**
- * promotion.js - Complete Promotion System
- * Handles promotion selection, discount calculation, and integration with cart/checkout
- */
-
 (function() {
   'use strict';
-
-  // ==========================================
-  // CONFIGURATION & DATA
-  // ==========================================
-
-  // Define promotions available in the system
-  // Stalls from Menu.js: golden-wok, mak-cik-delights, little-india-express, tom-yum-house, western-bites, kopi-teh-corner
+  // Define promotions
   window.PROMOTIONS = [
     {
       id: "Promo_1",
@@ -39,7 +28,7 @@
       type: "daySpecific",
       stallId: "little-india-express",
       itemId: "rotiprata",
-      allowedDay: 2, // 0=Sunday, 1=Monday, 2=Tuesday, etc.
+      allowedDay: 2,
       amount: 2
     },
     {
@@ -143,29 +132,19 @@
     store: "store"
   };
 
-  // ==========================================
-  // UTILITY FUNCTIONS
-  // ==========================================
-
-  /**
-   * Format currency
-   */
+  // Format currency
   window.fmt = function(amount) {
     return "$" + Number(amount || 0).toFixed(2);
   };
 
-  /**
-   * Safe HTML escape
-   */
+  // Create a div to get out of the HTML
   function escapeHtml(str) {
     const div = document.createElement('div');
     div.textContent = str || '';
     return div.innerHTML;
   }
 
-  /**
-   * Get current store object from localStorage
-   */
+  // Get from storage
   function getStoreObject() {
     try {
       const raw = localStorage.getItem(KEYS.store);
@@ -176,9 +155,7 @@
     }
   }
 
-  /**
-   * Save store object to localStorage
-   */
+  // Save to storage
   function saveStoreObject(storeObj) {
     try {
       localStorage.setItem(KEYS.store, JSON.stringify(storeObj));
@@ -187,27 +164,19 @@
     }
   }
 
-  // ==========================================
-  // PROMOTION SELECTION FUNCTIONS
-  // ==========================================
-
-  /**
-   * Select a promotion and save to localStorage
-   */
+  // Select promotion then save to storage
   window.pickPromo = function(id) {
     const storeObj = getStoreObject();
     storeObj.selectedPromo = { id: id };
     saveStoreObject(storeObj);
     
-    // Also save to separate key for backward compatibility
+    // Save to separate key to make it more compatible
     localStorage.setItem(KEYS.selectedPromo, JSON.stringify({ id: id }));
   };
 
-  /**
-   * Get currently selected promotion
-   */
+  // Get currently selected promotion
   window.getPickedPromo = function() {
-    // Try store object first
+    // Try store object
     const storeObj = getStoreObject();
     if (storeObj.selectedPromo && storeObj.selectedPromo.id) {
       return storeObj.selectedPromo;
@@ -227,9 +196,7 @@
     return null;
   };
 
-  /**
-   * Clear selected promotion
-   */
+  // Clear selected promotion
   window.clearPromo = function() {
     const storeObj = getStoreObject();
     storeObj.selectedPromo = null;
@@ -237,14 +204,7 @@
     localStorage.removeItem(KEYS.selectedPromo);
   };
 
-  // ==========================================
-  // DISCOUNT CALCULATION FUNCTIONS
-  // ==========================================
-
-  /**
-   * Main discount calculation function
-   * Returns: { discount: number, applied: object|null, reason: string }
-   */
+  // Discount calculation
   window.computeDiscount = function(cart, subtotal) {
     const picked = getPickedPromo();
     
@@ -312,7 +272,6 @@
         reason = "Unknown promotion type";
     }
 
-    // Cap discount at subtotal
     if (discount > subtotal) {
       discount = subtotal;
     }
@@ -324,9 +283,7 @@
     };
   };
 
-  /**
-   * Calculate order-wide discount (minimum spend)
-   */
+  // Calculate minimum spend needed for order-wide discount (doesn't work if order doens't meet minSpend)
   function calculateOrderDiscount(promo, cart, subtotal) {
     const minSpend = promo.minSpend || 0;
     
@@ -346,9 +303,7 @@
     }
   }
 
-  /**
-   * Calculate stall-specific percentage discount
-   */
+  // Calculate stall-specific % discount
   function calculateStallDiscount(promo, cart, subtotal) {
     let stallTotal = 0;
     
@@ -378,13 +333,11 @@
     }
   }
 
-  /**
-   * Calculate bundle discount (buy X of item Y)
-   */
+  // Calculate bundle discount (buy X no. of item Y)
   function calculateBundleDiscount(promo, cart, subtotal) {
     let totalQty = 0;
     
-    // Count qualifying items
+    // Counted items
     cart.forEach(item => {
       const itemStallId = getStallIdFromItem(item);
       const promoStallId = normalizeStallId(promo.stallId);
@@ -413,9 +366,7 @@
     }
   }
 
-  /**
-   * Calculate day-specific discount (e.g., Tuesday only)
-   */
+  // Calculate discounts active on specific days
   function calculateDaySpecificDiscount(promo, cart, subtotal) {
     const today = new Date().getDay(); // 0=Sunday, 1=Monday, etc.
     const allowedDay = promo.allowedDay;
@@ -429,7 +380,7 @@
       };
     }
 
-    // Check if cart has qualifying items
+    // Check if cart has eligible items
     let hasItem = false;
     cart.forEach(item => {
       const itemStallId = getStallIdFromItem(item);
@@ -455,9 +406,7 @@
     }
   }
 
-  /**
-   * Calculate time-specific discount (e.g., happy hour)
-   */
+  // Calculate time-specific discount
   function calculateTimeSpecificDiscount(promo, cart, subtotal) {
     const now = new Date();
     const currentHour = now.getHours();
@@ -500,23 +449,17 @@
     }
   }
 
-  /**
-   * Normalize stall ID for comparison
-   */
+  // Give stall IDs consistent format for comparison
   function normalizeStallId(id) {
     return String(id || '').toLowerCase().replace(/[^a-z0-9]/g, '');
   }
 
-  /**
-   * Normalize item ID for comparison
-   */
+  // Format item ID for comparison
   function normalizeItemId(id) {
     return String(id || '').toLowerCase().replace(/[^a-z0-9]/g, '');
   }
 
-  /**
-   * Map item names to normalized IDs for matching
-   */
+  // Match item names to IDs
   const ITEM_NAME_MAP = {
     'eggfriedrice': 'egg fried rice',
     'charkwayteow': 'char kway teow',
@@ -533,9 +476,7 @@
     'tehtarik': 'teh tarik'
   };
 
-  /**
-   * Check if cart item matches promo item
-   */
+  // Check if cart item matches promo item
   function itemMatches(cartItem, promoItemId, promoStallId) {
     // Normalize cart item name
     const cartItemName = normalizeItemId(cartItem.name || cartItem.itemId || '');
@@ -546,13 +487,13 @@
       return true;
     }
     
-    // Check name mapping
+    // Check name matching
     const mappedName = ITEM_NAME_MAP[normalizedPromoItemId];
     if (mappedName && normalizeItemId(mappedName) === cartItemName) {
       return true;
     }
     
-    // Reverse mapping check
+    // Reverse match check
     const reverseMappedName = ITEM_NAME_MAP[cartItemName];
     if (reverseMappedName && normalizeItemId(reverseMappedName) === normalizedPromoItemId) {
       return true;
@@ -561,10 +502,7 @@
     return false;
   }
 
-  /**
-   * Get stall ID from cart item
-   * Since Menu.js doesn't add stallId to cart items, we need to infer from item name
-   */
+  // Get stall ID from cart item
   function getStallIdFromItem(item) {
     // If item already has stallId
     if (item.stallId) {
@@ -613,13 +551,7 @@
     return '';
   }
 
-  // ==========================================
-  // UI RENDERING FUNCTIONS
-  // ==========================================
-
-  /**
-   * Render promotion list on Promotion.html
-   */
+  // render promo list on HTML
   function renderPromotionList() {
     const promoList = document.getElementById('promoList');
     if (!promoList) return;
@@ -658,9 +590,7 @@
     promoList.innerHTML = html;
   }
 
-  /**
-   * Inject styles for promotion cards
-   */
+  // Some styles for the promo cards
   function injectPromotionStyles() {
     if (document.getElementById('promo-dynamic-styles')) return;
 
@@ -743,13 +673,7 @@
     document.head.appendChild(style);
   }
 
-  // ==========================================
-  // INITIALIZATION
-  // ==========================================
-
-  /**
-   * Initialize on page load
-   */
+  // Start on page load
   document.addEventListener('DOMContentLoaded', function() {
     // Render promotion list if on Promotion.html
     if (document.getElementById('promoList')) {
@@ -757,8 +681,5 @@
       renderPromotionList();
     }
   });
-
-  // Log initialization
-  console.log('Promotion system initialized with', PROMOTIONS.length, 'promotions');
 
 })();

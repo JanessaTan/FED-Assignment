@@ -5,7 +5,7 @@
   // Read stall from URL query string
   const stallId = new URLSearchParams(window.location.search).get("stall");
 
-  // 3) Store all data in one object for easy display
+  // Store all data in one object (for easy display)
   const hygieneData = {
     "golden-wok": {
       name: "Golden Wok",
@@ -109,7 +109,7 @@
     `;
   }
 
-  // Render all or selected stall tables into Hygiene.html
+  // Render all / selected stall tables into Hygiene.html
   function renderHygiene() {
     let html = "";
 

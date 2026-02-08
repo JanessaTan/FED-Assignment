@@ -2,12 +2,6 @@
   // Get DOM elements
   const root = document.getElementById("root");
 
-  // // Read storage
-  // const store = JSON.parse(localStorage.getItem("store")) || { cart: [], order: null, selectedPromo: null };
-  // const cart = store.cart || [];
-  // const order = store.order || null;
-  // const selectedPromo = store.selectedPromo || null;
-
   // Some CSS to align numbers on the receipt
   const style = document.createElement("style");
   style.textContent = `
@@ -47,7 +41,7 @@
     }
   }
 
-  // Read from store (supports lastReceipt snapshot if you add it later)
+  // Read from storage
   const storeObj = safeParse("store") || { cart: [], order: null, selectedPromo: null };
   const receiptSrc = storeObj.lastReceipt
     ? storeObj.lastReceipt
@@ -172,14 +166,14 @@
     // Totals
     receiptHTML += `<div class="receipt-total">Subtotal: ${money(subtotal)}</div>`;
 
-    // Discount line + reason (if any)
+    // Discount line + reason
     if (discountAmt > 0) {
       receiptHTML += `<div class="receipt-discount">Discount: -${money(discountAmt)}</div>`;
       if (disc.reason) {
         receiptHTML += `<div class="receipt-meta">${disc.reason}</div>`;
       }
     } else {
-      // If promo selected but not eligible, still show reason if given
+      // If promo selected but not valid, show reason
       if (disc.reason && disc.reason !== "No promotion selected") {
         receiptHTML += `<div class="receipt-meta">${disc.reason}</div>`;
       }
