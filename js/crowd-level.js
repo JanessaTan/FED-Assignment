@@ -1,4 +1,7 @@
-/ Hawkwe Center - Crowd Level Chart JS//
+/* Student ID- S10274395 */
+/* Student Name: Than Thar Wint Htal */
+
+// Hawkwe Center - Crowd Level Chart JS//
 
 (function(){
 

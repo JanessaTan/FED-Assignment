@@ -1,3 +1,6 @@
+/* Student ID- S10274395 */
+/* Student Name: Than Thar Wint Htal */
+
 document.addEventListener("DOMContentLoaded", () => {
 
 const CUISINES = {
