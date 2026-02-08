@@ -36,8 +36,8 @@ function displayCheckout() {
   const totalDiv = document.querySelector('.cart-total')
   const orderDiv = document.querySelector('.order-info')
 
-  const { cart, subtotal } = cartTotals ? cartTotals() : {cart: [], subtotal: 0};
-  const order = getOrder ? getOrder() : { type: "now" };
+  const { cart, subtotal } = typeof cartTotals === "function" ? cartTotals() : {cart: [], subtotal: 0};
+  const order = typeof getOrder === "function" ? getOrder() : { type: "now" };
 
 //order info
 if (order.type === "later" && order.pickupTime) {
