@@ -84,6 +84,46 @@ body {
   color: white;
 }
 
+.saved-order-card {
+  background: #ffffff;
+  color: #000;
+  border-radius: 18px;
+  padding: 25px;
+  margin: 25px auto;
+  max-width: 800px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+.saved-order-card h3 {
+  color: #1f5fbf;
+  margin-bottom: 12px;
+}
+
+.saved-order-card button {
+  margin-right: 8px;
+  margin-top: 10px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.saved-order-card button:nth-of-type(1) {
+  background: #8b0000;
+  color: white;
+}
+
+.saved-order-card button:nth-of-type(2) {
+  background: #1f5fbf;
+  color: white;
+}
+
+.saved-order-card button:nth-of-type(3) {
+  background: #555;
+  color: white;
+}
+
+
 @media (max-width: 768px) {
   .saved-actions {
     flex-direction: column;
