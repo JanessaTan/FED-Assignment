@@ -59,12 +59,13 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     })
     //rating page
-    document.querySelector('.rating').forEach(r => {
-        r.style.cursor = 'pointer'
-        r.addEventListener('click', function() {
+    let ratingLink = document.querySelector('.FooterUtility .rating')
+    if (ratingLink) {
+        ratingLink.style.cursor = 'pointer'
+        ratingLink.addEventListener('click', function() {
             window.location.href = 'rating.html'
         })
-    })
+    }
     //nav bar
     let navLinks = document.querySelectorAll('.nav-links a')
     let pages = ["Home.html", "About.html", "Stalls.html", "Promotion.html", "Contact.html"]
