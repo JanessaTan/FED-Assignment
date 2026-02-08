@@ -54,8 +54,15 @@ document.addEventListener('DOMContentLoaded', function () {
     //utility
     document.querySelectorAll('.FooterUtility p').forEach(p => {
         p.style.cursor = 'pointer'
-        p.addEventListener('click', () => {
+        p.addEventListener('click', function() {
             window.location.href = 'Dummy.html'
+        })
+    })
+    //rating page
+    document.querySelector('.rating').forEach(r => {
+        r.style.cursor = 'pointer'
+        r.addEventListener('click', function() {
+            window.location.href = 'rating.html'
         })
     })
     //nav bar

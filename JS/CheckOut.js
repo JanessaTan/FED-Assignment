@@ -36,16 +36,20 @@ function displayCheckout() {
   const totalDiv = document.querySelector('.cart-total')
   const orderDiv = document.querySelector('.order-info')
 
-  const { cart, subtotal } = typeof cartTotals === "function" ? cartTotals() : {cart: [], subtotal: 0};
-  const order = typeof getOrder === "function" ? getOrder() : { type: "now" };
+   // Read cart from store
+  const store = JSON.parse(localStorage.getItem("store")) || { cart: [], order: { type: "now" } };
+  const cart = store.cart || [];
+  const order = store.order || { type: "now" };
 
-//order info
-if (order.type === "later" && order.pickupTime) {
-  let d = new Date(order.pickupTime);
-  orderDiv.innerHTML =  "<p><strong>Pickup Time:</strong> " + d.toLocaleString() + "</p>"
-} else {
-  orderDiv.innerHTML = "<p><strong>Pickup:</strong> ASAP</p>"
-}
+  // subtotal
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+// order info
+  if (order.type === "later" && order.pickupTime) {
+    let d = new Date(order.pickupTime);
+    orderDiv.innerHTML =  "<p><strong>Pickup Time:</strong> " + d.toLocaleString() + "</p>";
+  } else {
+    orderDiv.innerHTML = "<p><strong>Pickup:</strong> ASAP</p>";
+  }
 //cart is empty
 if (cart.length ===0) {
   cartDiv.innerHTML ="<p>Your cart is empty.</p>"
@@ -81,6 +85,28 @@ cartDiv.innerHTML = "";
         displayCheckout();
       })
 })
-
-totalDiv.innerHTML ="<h3>Total: $" + subtotal.toFixed(2) + "</h3>"
+//promotion discount
+const promoResult = computeDiscount(cart, subtotal);
+const finalTotal = Math.max(0, subtotal - promoResult.discount);
+const totalHTML = "<h3>Subtotal: $" + subtotal.toFixed(2) + "</h3>";
+if (promoResult.discount > 0) {
+  totalHTML += "<p style='color:green; font-weight:bold;'>Discount: -$" + promoResult.discount.toFixed(2) + "</p>";
+  totalHTML += "<p style='font-size:0.9em; color:#666;'>" + promoResult.reason + "</p>";
+} else if (promoResult.reason !== "No promotion selected") {
+  totalHTML += "<p style='font-size:0.9em; color:#666;'>" + promoResult.reason + "</p>";
 }
+
+totalHTML += "<h2 style='color:red; margin-top:10px;'>Final Total: $" + finalTotal.toFixed(2) + "</h2>";
+
+totalDiv.innerHTML = totalHTML;
+}
+
+//saves promo to store.selectedPromo
+document.querySelectorAll('.promo-card').forEach(card => {
+  card.addEventListener('click', function(e) {
+    e.preventDefault();
+    const id = card.dataset.id;
+    pickPromo(id);
+    window.location.href = "Checkout.html";
+  });
+});
