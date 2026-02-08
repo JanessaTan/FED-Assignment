@@ -1,186 +1,764 @@
-// Get DOM elements
-document.addEventListener("DOMContentLoaded", function () {
-  var promoList = document.getElementById("promoList");
-  if (!promoList) return;
+/**
+ * promotion.js - Complete Promotion System
+ * Handles promotion selection, discount calculation, and integration with cart/checkout
+ */
 
-  // Define KEYS
-  if (typeof window.KEYS === "undefined") {
-    window.KEYS = {
-      selectedPromo: "selectedPromo"
-    };
-  }
+(function() {
+  'use strict';
 
-  // Simple store wrapper for localStorage if missing
-  if (typeof window.store === "undefined") {
-    window.store = {
-      set: function (key, value) {
-        localStorage.setItem(key, JSON.stringify(value));
-      },
-      get: function (key, defaultValue) {
-        var val = localStorage.getItem(key);
-        return val ? JSON.parse(val) : defaultValue;
-      }
-    };
-  }
+  // ==========================================
+  // CONFIGURATION & DATA
+  // ==========================================
 
-  // Format helper if missing
-  if (typeof window.fmt === "undefined") {
-    window.fmt = function (amount) {
-      return "$" + Number(amount).toFixed(2);
-    };
-  }
+  // Define promotions available in the system
+  // Stalls from Menu.js: golden-wok, mak-cik-delights, little-india-express, tom-yum-house, western-bites, kopi-teh-corner
+  window.PROMOTIONS = [
+    {
+      id: "Promo_1",
+      title: "$2 Discount Lunch Set",
+      description: "Get $2 off every lunch set purchased from Golden Wok.",
+      stallName: "Golden Wok",
+      type: "order",
+      minSpend: 10,
+      amount: 2
+    },
+    {
+      id: "Promo_2",
+      title: "Free Kueh Kueh with Lunch Saver Meal",
+      description: "Get 10% off all items from Mak Cik Delights.",
+      stallName: "Mak Cik Delights",
+      type: "stall",
+      stallId: "mak-cik-delights",
+      percent: 10
+    },
+    {
+      id: "Promo_3",
+      title: "Thosai Tuesday",
+      description: "Enjoy $2 discount off Roti Prata every Tuesday.",
+      stallName: "Little India Express",
+      type: "daySpecific",
+      stallId: "little-india-express",
+      itemId: "rotiprata",
+      allowedDay: 2, // 0=Sunday, 1=Monday, 2=Tuesday, etc.
+      amount: 2
+    },
+    {
+      id: "Promo_4",
+      title: "Free Thai Milk Tea with Signature Set",
+      description: "Buy Tom Yum Soup and get $3 off your order.",
+      stallName: "Tom Yum House",
+      type: "bundle",
+      stallId: "tom-yum-house",
+      itemId: "tomyumsoup",
+      thresholdQty: 1,
+      amount: 3
+    },
+    {
+      id: "Promo_5",
+      title: "Happy Hour",
+      description: "From 12pm-3pm, enjoy 50% off all drinks.",
+      stallName: "Kopi & Teh Corner",
+      type: "timeSpecific",
+      stallId: "kopi-teh-corner",
+      startHour: 12,
+      endHour: 15,
+      percent: 50
+    },
+    {
+      id: "promo6",
+      title: "Spend $20, Get $5 Off",
+      description: "Spend at least $20 on your order and get $5 off total.",
+      stallName: "All Stalls",
+      type: "order",
+      minSpend: 20,
+      amount: 5
+    },
+    {
+      id: "promo7",
+      title: "Western Special: 15% Off",
+      description: "Get 15% off all items from Western Bites.",
+      stallName: "Western Bites",
+      type: "stall",
+      stallId: "western-bites",
+      percent: 15
+    },
+    {
+      id: "promo8",
+      title: "Buy 2 Fried Rice, Get $3 Off",
+      description: "Get $3 off when you buy 2 Egg Fried Rice from Golden Wok.",
+      stallName: "Golden Wok",
+      type: "bundle",
+      stallId: "golden-wok",
+      itemId: "eggfriedrice",
+      thresholdQty: 2,
+      amount: 3
+    },
+    {
+      id: "promo9",
+      title: "Nasi Lemak Lover's Deal",
+      description: "Buy 2 Nasi Lemak and save $2.",
+      stallName: "Mak Cik Delights",
+      type: "bundle",
+      stallId: "mak-cik-delights",
+      itemId: "nasilemak",
+      thresholdQty: 2,
+      amount: 2
+    },
+    {
+      id: "promo10",
+      title: "Indian Feast Discount",
+      description: "Get 12% off all orders from Little India Express.",
+      stallName: "Little India Express",
+      type: "stall",
+      stallId: "little-india-express",
+      percent: 12
+    },
+    {
+      id: "promo11",
+      title: "Char Kway Teow Special",
+      description: "Buy Char Kway Teow and get $1.50 off.",
+      stallName: "Golden Wok",
+      type: "bundle",
+      stallId: "golden-wok",
+      itemId: "charkwayteow",
+      thresholdQty: 1,
+      amount: 1.5
+    },
+    {
+      id: "promo12",
+      title: "Thai Combo Savings",
+      description: "Buy both Tom Yum Soup and Pad Thai for $2 off.",
+      stallName: "Tom Yum House",
+      type: "bundle",
+      stallId: "tom-yum-house",
+      itemId: "padthai",
+      thresholdQty: 1,
+      amount: 2
+    }
+  ];
 
-  // Promotions list
-  if (typeof window.PROMOTIONS === "undefined") {
-    window.PROMOTIONS = [
-      { id: "promo1", title: "Spend $20, get $5 off", description: "Applies $5 discount when subtotal is at least $20.", type: "order", minSpend: 20, amount: 5 },
-      { id: "promo2", title: "10% off Stall A", description: "10% off items from Stall A.", type: "stall", stallId: "stallA", percent: 10 },
-      { id: "promo3", title: "Buy 2 Laksa, get $3 off", description: "Get $3 off when you buy 2 Laksa from Stall B.", type: "bundle", stallId: "stallB", itemId: "laksa", thresholdQty: 2, amount: 3 }
-    ];
-  }
+  // Storage keys
+  window.KEYS = {
+    selectedPromo: "selectedPromo",
+    store: "store"
+  };
 
-  // pickPromo/getPickedPromo
-  if (typeof window.pickPromo === "undefined") {
-    window.pickPromo = function (id) {
-      window.store.set(window.KEYS.selectedPromo, { id: id });
+  // ==========================================
+  // UTILITY FUNCTIONS
+  // ==========================================
 
-      // Store into localStorage["store"]
-      var storeObj = JSON.parse(localStorage.getItem("store")) || { cart: [], order: { type: "now" } };
-      storeObj.selectedPromo = { id: id };
-      localStorage.setItem("store", JSON.stringify(storeObj));
-    };
-  }
+  /**
+   * Format currency
+   */
+  window.fmt = function(amount) {
+    return "$" + Number(amount || 0).toFixed(2);
+  };
 
-  if (typeof window.getPickedPromo === "undefined") {
-    window.getPickedPromo = function () {
-      // Prefer KEYS storage
-      var picked = window.store.get(window.KEYS.selectedPromo, null);
-      if (picked && picked.id) return picked;
-
-      // Fallback to localStorage["store"].selectedPromo if anything goes wrong
-      var storeObj = JSON.parse(localStorage.getItem("store")) || {};
-      if (storeObj.selectedPromo && storeObj.selectedPromo.id) return storeObj.selectedPromo;
-
-      return null;
-    };
-  }
-
-  // computeDiscount
-  if (typeof window.computeDiscount === "undefined") {
-    window.computeDiscount = function (cart, subtotal) {
-      var chosen = window.getPickedPromo();
-      if (!chosen) return { discount: 0, applied: null, reason: "No promotion selected" };
-
-      var promo = null;
-      for (var i = 0; i < window.PROMOTIONS.length; i++) {
-        if (window.PROMOTIONS[i].id === chosen.id) {
-          promo = window.PROMOTIONS[i];
-          break;
-        }
-      }
-      if (!promo) return { discount: 0, applied: null, reason: "Invalid promotion" };
-
-      var discount = 0;
-      var reason = "";
-
-      if (promo.type === "order") {
-        var minSpend = (typeof promo.minSpend === "number") ? promo.minSpend : 0;
-        if (subtotal >= minSpend) {
-          discount = promo.amount || 0;
-          reason = "Applied: " + promo.title;
-        } else {
-          reason = "Needs min spend " + window.fmt(minSpend);
-        }
-      }
-
-      if (promo.type === "stall") {
-        var stallSum = 0;
-        for (var s = 0; s < cart.length; s++) {
-          var it = cart[s];
-          if (it.stallId === promo.stallId) {
-            stallSum += (Number(it.price) * Number(it.qty));
-          }
-        }
-        if (stallSum > 0) {
-          discount = stallSum * ((promo.percent || 0) / 100);
-          reason = "Applied: " + promo.title;
-        } else {
-          reason = "Buy from target stall to apply";
-        }
-      }
-
-      if (promo.type === "bundle") {
-        var qty = 0;
-        for (var b = 0; b < cart.length; b++) {
-          var bi = cart[b];
-          if (bi.stallId === promo.stallId && bi.itemId === promo.itemId) {
-            qty += Number(bi.qty);
-          }
-        }
-        if (qty >= (promo.thresholdQty || 0)) {
-          discount = promo.amount || 0;
-          reason = "Applied: " + promo.title;
-        } else {
-          reason = "Add " + promo.thresholdQty + " of the bundle item";
-        }
-      }
-
-      if (discount > subtotal) discount = subtotal;
-      return { discount: discount, applied: promo, reason: reason };
-    };
-  }
-
-  // UI cards
-  function getSelectedId() {
-    var picked = window.getPickedPromo();
-    return picked && picked.id ? picked.id : null;
-  }
-
+  /**
+   * Safe HTML escape
+   */
   function escapeHtml(str) {
-    return String(str)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
+    const div = document.createElement('div');
+    div.textContent = str || '';
+    return div.innerHTML;
   }
 
-  function renderPromotions() {
-    var selectedId = getSelectedId();
-    var html = "";
+  /**
+   * Get current store object from localStorage
+   */
+  function getStoreObject() {
+    try {
+      const raw = localStorage.getItem(KEYS.store);
+      return raw ? JSON.parse(raw) : { cart: [], order: { type: 'now' }, selectedPromo: null };
+    } catch (e) {
+      console.error('Error parsing store:', e);
+      return { cart: [], order: { type: 'now' }, selectedPromo: null };
+    }
+  }
 
-    for (var i = 0; i < window.PROMOTIONS.length; i++) {
-      var p = window.PROMOTIONS[i];
-      var isSelected = selectedId === p.id;
+  /**
+   * Save store object to localStorage
+   */
+  function saveStoreObject(storeObj) {
+    try {
+      localStorage.setItem(KEYS.store, JSON.stringify(storeObj));
+    } catch (e) {
+      console.error('Error saving store:', e);
+    }
+  }
 
-      // Simple label to show which stall it targets (or "All Stalls")
-      var target = "All Stalls";
-      if (p.type === "stall" || p.type === "bundle") target = p.stallId || "Target Stall";
+  // ==========================================
+  // PROMOTION SELECTION FUNCTIONS
+  // ==========================================
 
-      html +=
-        "<div class='promo-card" + (isSelected ? " promo-selected" : "") + "' data-id='" + escapeHtml(p.id) + "'>" +
-          "<h3>" + escapeHtml(p.title) + "</h3>" +
-          "<p>" + escapeHtml(p.description || "") + "</p>" +
-          "<p style='font-size:0.9em; color:#666; margin-top:8px;'>" + escapeHtml(target) + "</p>" +
-          (isSelected ? "<p style='color:green; font-weight:bold; margin-top:10px;'>Selected</p>" : "") +
-        "</div>";
+  /**
+   * Select a promotion and save to localStorage
+   */
+  window.pickPromo = function(id) {
+    const storeObj = getStoreObject();
+    storeObj.selectedPromo = { id: id };
+    saveStoreObject(storeObj);
+    
+    // Also save to separate key for backward compatibility
+    localStorage.setItem(KEYS.selectedPromo, JSON.stringify({ id: id }));
+  };
+
+  /**
+   * Get currently selected promotion
+   */
+  window.getPickedPromo = function() {
+    // Try store object first
+    const storeObj = getStoreObject();
+    if (storeObj.selectedPromo && storeObj.selectedPromo.id) {
+      return storeObj.selectedPromo;
+    }
+    
+    // Try separate key
+    try {
+      const raw = localStorage.getItem(KEYS.selectedPromo);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && parsed.id) return parsed;
+      }
+    } catch (e) {
+      console.error('Error getting picked promo:', e);
+    }
+    
+    return null;
+  };
+
+  /**
+   * Clear selected promotion
+   */
+  window.clearPromo = function() {
+    const storeObj = getStoreObject();
+    storeObj.selectedPromo = null;
+    saveStoreObject(storeObj);
+    localStorage.removeItem(KEYS.selectedPromo);
+  };
+
+  // ==========================================
+  // DISCOUNT CALCULATION FUNCTIONS
+  // ==========================================
+
+  /**
+   * Main discount calculation function
+   * Returns: { discount: number, applied: object|null, reason: string }
+   */
+  window.computeDiscount = function(cart, subtotal) {
+    const picked = getPickedPromo();
+    
+    if (!picked || !picked.id) {
+      return {
+        discount: 0,
+        applied: null,
+        reason: "No promotion selected"
+      };
     }
 
+    // Find the promotion
+    const promo = PROMOTIONS.find(p => p.id === picked.id);
+    
+    if (!promo) {
+      return {
+        discount: 0,
+        applied: null,
+        reason: "Invalid promotion"
+      };
+    }
+
+    // Calculate discount based on promotion type
+    let discount = 0;
+    let reason = "";
+    let isEligible = false;
+
+    switch (promo.type) {
+      case "order":
+        const result = calculateOrderDiscount(promo, cart, subtotal);
+        discount = result.discount;
+        reason = result.reason;
+        isEligible = result.isEligible;
+        break;
+
+      case "stall":
+        const stallResult = calculateStallDiscount(promo, cart, subtotal);
+        discount = stallResult.discount;
+        reason = stallResult.reason;
+        isEligible = stallResult.isEligible;
+        break;
+
+      case "bundle":
+        const bundleResult = calculateBundleDiscount(promo, cart, subtotal);
+        discount = bundleResult.discount;
+        reason = bundleResult.reason;
+        isEligible = bundleResult.isEligible;
+        break;
+
+      case "daySpecific":
+        const dayResult = calculateDaySpecificDiscount(promo, cart, subtotal);
+        discount = dayResult.discount;
+        reason = dayResult.reason;
+        isEligible = dayResult.isEligible;
+        break;
+
+      case "timeSpecific":
+        const timeResult = calculateTimeSpecificDiscount(promo, cart, subtotal);
+        discount = timeResult.discount;
+        reason = timeResult.reason;
+        isEligible = timeResult.isEligible;
+        break;
+
+      default:
+        reason = "Unknown promotion type";
+    }
+
+    // Cap discount at subtotal
+    if (discount > subtotal) {
+      discount = subtotal;
+    }
+
+    return {
+      discount: discount,
+      applied: isEligible ? promo : null,
+      reason: reason
+    };
+  };
+
+  /**
+   * Calculate order-wide discount (minimum spend)
+   */
+  function calculateOrderDiscount(promo, cart, subtotal) {
+    const minSpend = promo.minSpend || 0;
+    
+    if (subtotal >= minSpend) {
+      return {
+        discount: promo.amount || 0,
+        isEligible: true,
+        reason: `Applied: ${promo.title}`
+      };
+    } else {
+      const needed = minSpend - subtotal;
+      return {
+        discount: 0,
+        isEligible: false,
+        reason: `Add ${fmt(needed)} more to reach minimum spend of ${fmt(minSpend)}`
+      };
+    }
+  }
+
+  /**
+   * Calculate stall-specific percentage discount
+   */
+  function calculateStallDiscount(promo, cart, subtotal) {
+    let stallTotal = 0;
+    
+    // Sum up items from the target stall
+    cart.forEach(item => {
+      const itemStallId = getStallIdFromItem(item);
+      const promoStallId = normalizeStallId(promo.stallId);
+      
+      if (itemStallId === promoStallId) {
+        stallTotal += (Number(item.price) || 0) * (Number(item.qty) || 0);
+      }
+    });
+
+    if (stallTotal > 0) {
+      const discount = stallTotal * ((promo.percent || 0) / 100);
+      return {
+        discount: discount,
+        isEligible: true,
+        reason: `Applied: ${promo.title} (${promo.percent}% off ${fmt(stallTotal)})`
+      };
+    } else {
+      return {
+        discount: 0,
+        isEligible: false,
+        reason: `Add items from ${promo.stallName || promo.stallId} to apply this promotion`
+      };
+    }
+  }
+
+  /**
+   * Calculate bundle discount (buy X of item Y)
+   */
+  function calculateBundleDiscount(promo, cart, subtotal) {
+    let totalQty = 0;
+    
+    // Count qualifying items
+    cart.forEach(item => {
+      const itemStallId = getStallIdFromItem(item);
+      const promoStallId = normalizeStallId(promo.stallId);
+      
+      // Check if stall matches and item matches
+      if (itemStallId === promoStallId && itemMatches(item, promo.itemId, promo.stallId)) {
+        totalQty += Number(item.qty) || 0;
+      }
+    });
+
+    const threshold = promo.thresholdQty || 1;
+    
+    if (totalQty >= threshold) {
+      return {
+        discount: promo.amount || 0,
+        isEligible: true,
+        reason: `Applied: ${promo.title}`
+      };
+    } else {
+      const needed = threshold - totalQty;
+      return {
+        discount: 0,
+        isEligible: false,
+        reason: `Add ${needed} more qualifying item(s) to apply this promotion`
+      };
+    }
+  }
+
+  /**
+   * Calculate day-specific discount (e.g., Tuesday only)
+   */
+  function calculateDaySpecificDiscount(promo, cart, subtotal) {
+    const today = new Date().getDay(); // 0=Sunday, 1=Monday, etc.
+    const allowedDay = promo.allowedDay;
+    
+    if (today !== allowedDay) {
+      const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      return {
+        discount: 0,
+        isEligible: false,
+        reason: `This promotion is only valid on ${dayNames[allowedDay]}`
+      };
+    }
+
+    // Check if cart has qualifying items
+    let hasItem = false;
+    cart.forEach(item => {
+      const itemStallId = getStallIdFromItem(item);
+      const promoStallId = normalizeStallId(promo.stallId);
+      
+      if (itemStallId === promoStallId && itemMatches(item, promo.itemId, promo.stallId)) {
+        hasItem = true;
+      }
+    });
+
+    if (hasItem) {
+      return {
+        discount: promo.amount || 0,
+        isEligible: true,
+        reason: `Applied: ${promo.title}`
+      };
+    } else {
+      return {
+        discount: 0,
+        isEligible: false,
+        reason: `Add qualifying items from ${promo.stallName || promo.stallId} to apply`
+      };
+    }
+  }
+
+  /**
+   * Calculate time-specific discount (e.g., happy hour)
+   */
+  function calculateTimeSpecificDiscount(promo, cart, subtotal) {
+    const now = new Date();
+    const currentHour = now.getHours();
+    
+    const startHour = promo.startHour || 0;
+    const endHour = promo.endHour || 24;
+    
+    if (currentHour < startHour || currentHour >= endHour) {
+      return {
+        discount: 0,
+        isEligible: false,
+        reason: `This promotion is only valid from ${startHour}:00 to ${endHour}:00`
+      };
+    }
+
+    // Calculate discount on stall items
+    let stallTotal = 0;
+    cart.forEach(item => {
+      const itemStallId = getStallIdFromItem(item);
+      const promoStallId = normalizeStallId(promo.stallId);
+      
+      if (itemStallId === promoStallId) {
+        stallTotal += (Number(item.price) || 0) * (Number(item.qty) || 0);
+      }
+    });
+
+    if (stallTotal > 0) {
+      const discount = stallTotal * ((promo.percent || 0) / 100);
+      return {
+        discount: discount,
+        isEligible: true,
+        reason: `Applied: ${promo.title} (${promo.percent}% off)`
+      };
+    } else {
+      return {
+        discount: 0,
+        isEligible: false,
+        reason: `Add items from ${promo.stallName || promo.stallId} during happy hour`
+      };
+    }
+  }
+
+  /**
+   * Normalize stall ID for comparison
+   */
+  function normalizeStallId(id) {
+    return String(id || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  }
+
+  /**
+   * Normalize item ID for comparison
+   */
+  function normalizeItemId(id) {
+    return String(id || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  }
+
+  /**
+   * Map item names to normalized IDs for matching
+   */
+  const ITEM_NAME_MAP = {
+    'eggfriedrice': 'egg fried rice',
+    'charkwayteow': 'char kway teow',
+    'nasilemak': 'nasi lemak',
+    'beefrendang': 'beef rendang',
+    'chickenbiryani': 'chicken biryani',
+    'rotiprata': 'roti prata',
+    'tomyumsoup': 'tom yum soup',
+    'padthai': 'pad thai',
+    'grilledchickenchop': 'grilled chicken chop',
+    'fishandchips': 'fish & chips',
+    'fish&chips': 'fish & chips',
+    'kopio': 'kopi o',
+    'tehtarik': 'teh tarik'
+  };
+
+  /**
+   * Check if cart item matches promo item
+   */
+  function itemMatches(cartItem, promoItemId, promoStallId) {
+    // Normalize cart item name
+    const cartItemName = normalizeItemId(cartItem.name || cartItem.itemId || '');
+    const normalizedPromoItemId = normalizeItemId(promoItemId);
+    
+    // Direct ID match
+    if (cartItemName === normalizedPromoItemId) {
+      return true;
+    }
+    
+    // Check name mapping
+    const mappedName = ITEM_NAME_MAP[normalizedPromoItemId];
+    if (mappedName && normalizeItemId(mappedName) === cartItemName) {
+      return true;
+    }
+    
+    // Reverse mapping check
+    const reverseMappedName = ITEM_NAME_MAP[cartItemName];
+    if (reverseMappedName && normalizeItemId(reverseMappedName) === normalizedPromoItemId) {
+      return true;
+    }
+    
+    return false;
+  }
+
+  /**
+   * Get stall ID from cart item
+   * Since Menu.js doesn't add stallId to cart items, we need to infer from item name
+   */
+  function getStallIdFromItem(item) {
+    // If item already has stallId
+    if (item.stallId) {
+      return normalizeStallId(item.stallId);
+    }
+    
+    // Infer from item name
+    const itemName = normalizeItemId(item.name || '');
+    
+    // Golden Wok items
+    if (itemName === normalizeItemId('Egg Fried Rice') || 
+        itemName === normalizeItemId('Char Kway Teow')) {
+      return 'goldenwok';
+    }
+    
+    // Mak Cik Delights items
+    if (itemName === normalizeItemId('Nasi Lemak') || 
+        itemName === normalizeItemId('Beef Rendang')) {
+      return 'makcikdelights';
+    }
+    
+    // Little India Express items
+    if (itemName === normalizeItemId('Chicken Biryani') || 
+        itemName === normalizeItemId('Roti Prata')) {
+      return 'littleindiaexpress';
+    }
+    
+    // Tom Yum House items
+    if (itemName === normalizeItemId('Tom Yum Soup') || 
+        itemName === normalizeItemId('Pad Thai')) {
+      return 'tomyumhouse';
+    }
+    
+    // Western Bites items
+    if (itemName === normalizeItemId('Grilled Chicken Chop') || 
+        itemName === normalizeItemId('Fish & Chips')) {
+      return 'westernbites';
+    }
+    
+    // Kopi & Teh Corner items
+    if (itemName === normalizeItemId('Kopi O') || 
+        itemName === normalizeItemId('Teh Tarik')) {
+      return 'kopitehcorner';
+    }
+    
+    return '';
+  }
+
+  // ==========================================
+  // UI RENDERING FUNCTIONS
+  // ==========================================
+
+  /**
+   * Render promotion list on Promotion.html
+   */
+  function renderPromotionList() {
+    const promoList = document.getElementById('promoList');
+    if (!promoList) return;
+
+    const picked = getPickedPromo();
+    const selectedId = picked ? picked.id : null;
+
+    let html = '<div class="promo-grid">';
+
+    PROMOTIONS.forEach(promo => {
+      const isSelected = selectedId === promo.id;
+      const stallLabel = promo.stallName || promo.stallId || 'All Stalls';
+      
+      html += `
+        <a href="auto-promo.html" 
+           class="promo-card ${isSelected ? 'selected' : ''}" 
+           data-id="${escapeHtml(promo.id)}"
+           onclick="window.pickPromo('${escapeHtml(promo.id)}'); return true;">
+          
+          <div class="promo-stall">${escapeHtml(stallLabel)}</div>
+          
+          <h3 class="promo-title">
+            ${escapeHtml(promo.title)}
+          </h3>
+          
+          <p class="promo-desc">
+            ${escapeHtml(promo.description)}
+          </p>
+          
+          ${isSelected ? '<div class="promo-selected-badge">✓ Selected</div>' : ''}
+        </a>
+      `;
+    });
+
+    html += '</div>';
     promoList.innerHTML = html;
-
-    // Add event listeners to the buttons and bind to function
-    var cards = promoList.querySelectorAll(".promo-card");
-    for (var c = 0; c < cards.length; c++) {
-      cards[c].style.cursor = "pointer";
-      cards[c].addEventListener("click", function () {
-        var id = this.getAttribute("data-id");
-        window.pickPromo(id);
-
-        // After choosing a promo, go back to Checkout so it applies there
-        window.location.href = "Checkout.html";
-      });
-    }
   }
 
-  renderPromotions();
-});
+  /**
+   * Inject styles for promotion cards
+   */
+  function injectPromotionStyles() {
+    if (document.getElementById('promo-dynamic-styles')) return;
+
+    const style = document.createElement('style');
+    style.id = 'promo-dynamic-styles';
+    style.textContent = `
+      .promo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .promo-card {
+        position: relative;
+        display: block;
+        background: #fff;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 20px;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .promo-card:hover {
+        border-color: #ff9800;
+        box-shadow: 0 4px 12px rgba(255, 152, 0, 0.2);
+        transform: translateY(-2px);
+      }
+
+      .promo-card.selected {
+        border-color: #ff9800;
+        background: #fff7ed;
+        box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+      }
+
+      .promo-stall {
+        font-size: 0.85rem;
+        color: #666;
+        font-weight: 500;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .promo-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 8px 0;
+        color: #333;
+      }
+
+      .promo-desc {
+        font-size: 0.95rem;
+        color: #555;
+        line-height: 1.5;
+        margin: 8px 0 0 0;
+      }
+
+      .promo-selected-badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: #4caf50;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      @media (max-width: 768px) {
+        .promo-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  // ==========================================
+  // INITIALIZATION
+  // ==========================================
+
+  /**
+   * Initialize on page load
+   */
+  document.addEventListener('DOMContentLoaded', function() {
+    // Render promotion list if on Promotion.html
+    if (document.getElementById('promoList')) {
+      injectPromotionStyles();
+      renderPromotionList();
+    }
+  });
+
+  // Log initialization
+  console.log('Promotion system initialized with', PROMOTIONS.length, 'promotions');
+
+})();
