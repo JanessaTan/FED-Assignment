@@ -13,7 +13,8 @@
 
 <main class="receipt" id="root">
   <h3>Receipt:</h3>
-  <section class="receipt-items">
+  <!-- ORIGINAL FORMAT FOR REFERENCE -->
+  <!-- <section class="receipt-items">
     <strong>Little India Express:</strong>
     <ul>
       <li>Butter Chicken (x1) - - - - - - - - - $5.00</li>
@@ -33,7 +34,7 @@
     </ul>
 
     <p class="price">Total: $17.40</p>
-  </section>
+  </section> -->
 </main>
 
 <section class="buttons">
@@ -41,10 +42,5 @@
     <a class="btn" href="History.html">View Order History</a>
   </section>
 
-<script>
-  const ok = qs('ok')==='1'; const total = qs('total');
-  $('#root').innerHTML = ok
-    ? `<h2 style="color:var(--success)">Payment Success</h2><p>Amount: ${total? '$'+total:''}</p><a class="btn" href="history.html">View Order History</a>`
-    : `<h2 style="color:var(--danger)">Payment Failed</h2><p>Please try again.</p><a class="btn" href="checkout.html">Back to Checkout</a>`;
-</script>
+<script src="../JS/Success.js"></script>
 </body></html>
