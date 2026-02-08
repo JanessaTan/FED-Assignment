@@ -9,7 +9,7 @@ window.addEventListener("load", function() {
         });
     }
 
-    const promoLink = document.querySelector(".checkout p");
+    const promoLink = document.querySelector(".promo-link");
     if (promoLink) {
         promoLink.style.cursor = "pointer";
         promoLink.addEventListener("click", function() {
