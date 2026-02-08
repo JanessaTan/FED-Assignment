@@ -28,10 +28,22 @@ document.addEventListener("DOMContentLoaded", function() {
   if (paymentForm) {
     paymentForm.addEventListener("submit", function(e) {
       e.preventDefault();
+      const cardNumber = document.querySelector("#card-number").value.trim();
+      const expiry = document.querySelector("#expiry").value.trim();
+      const cvc = document.querySelector("#cvc").value.trim();
+
+      const cardRegex = /^\d{16}$/;
+      const expiryRegex = /^\d{2}\/\d{2}$/;
+      const cvcRegex = /^\d{3}$/;
+
+      if (!cardRegex.test(cardNumber) || !expiryRegex.test(expiry) || !cvcRegex.test(cvc)) {
+        alert("Invalid payment details. Please check your card number, expiry, and CVC.");
+        return;
+      }
       clearCart();
       clearOrder();
       alert("Payment successful!");
-      window.location.href = "Home.html";
+      window.location.href = "Success.html";
     });
   }
 
