@@ -142,7 +142,7 @@ body {
     border-radius: 15px;
     flex: 1;
     min-width: 150px;
-    border: 1px solid black;
+    border: 1px solid red;
 } 
 .info-link {
     display: block;
