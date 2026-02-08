@@ -1,21 +1,21 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Hygiene History – HawkerHub</title>
-<link rel="stylesheet" href="../css/base.css">
-<link rel="stylesheet" href="../css/hygiene.css"></head><body>
-<script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script><script src="assets/js/auth.js"></script>
-<script>renderHeader('hygiene');</script>
-<main class="container card" id="root">
-  <h2>Hygiene History</h2>
-  
-</main>
+<!doctype html><html lang="en">
+<head>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Hygiene History – HawkerHub</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/hygiene.css">
+</head>
 
-<script>
-  const stallId = qs('stall') || STALLS[0].id;
-  const stall = STALLS.find(s=>s.id===stallId);
-  const list = HYGIENE.filter(h=>h.stallId===stallId);
-  $('#root').innerHTML = `<h2>Hygiene – ${stall.name}</h2>` + (list.length?`
-    <table><thead><tr><th>Date</th><th>Grade</th><th>Remarks</th></tr></thead>
-    <tbody>${list.map(h=>`<tr><td>${h.date}</td><td>${h.grade}</td><td>${h.remarks}</td></tr>`).join('')}</tbody></table>
-  `:'<p>No records.</p>');
-</script>
-</body></html>
+<body>
+  <script src="../JS/Auth.js"></script>
+  <script>renderHeader('hygiene');</script>
+  <a href="Stalls.html">&lt; Back to Stalls</a>
+    <h2>Hygiene History</h2>
+  <main class="container card" id="root">
+    <div id="hygieneContent"></div>
+  </main>
+
+<script src="../JS/hygiene.js"></script>
+
+</body>
+</html>
