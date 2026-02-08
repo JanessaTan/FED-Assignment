@@ -1,12 +1,22 @@
-/* assets/js/autopromo.js */
+/*  Student ID - S10275480F 
+Student Name -Nicole Agnes Sim Hui En */
+
+// Auto-apply Promotion - Shows the discount when customer checks out with a promotion selected
 (function() {
+  // Fetch the customer's cart items and total price from the cart module
   const {cart, subtotal} = cartTotals();
+  
+  // Get the promotion that the customer picked earlier
   const picked = getPickedPromo();
+  
+  // Calculate how much discount the customer gets with this promotion
   const result = computeDiscount(cart, subtotal);
   
+  // Get the HTML elements where we'll display the promo info and details
   const rootEl = $('#root');
   const detailsEl = $('#promoDetails');
   
+  // If customer's cart is empty, show a message and button to browse menu
   if (cart.length === 0) {
     rootEl.innerHTML = `
       <div class="promo-status warning">
@@ -20,16 +30,21 @@
     return;
   }
   
+  // Get the name of the selected promotion (or "None" if they didn't pick one)
   const promoName = picked 
     ? PROMOTIONS.find(x => x.id === picked.id).title 
     : 'None';
   
+  // Check if the promotion was actually applied to their cart
   const isApplied = result.discount > 0;
+  // Calculate the new total after subtracting the discount
   const newTotal = Math.max(0, subtotal - result.discount);
   
+  // Change the display colors based on whether the discount worked
   let statusClass = isApplied ? 'success' : 'info';
   let statusIcon = isApplied ? '✓' : 'ℹ️';
   
+  // Display the promotion summary with prices breakdown
   rootEl.innerHTML = `
     <div class="promo-summary">
       <div class="promo-item">
@@ -69,6 +84,7 @@
     </div>
   `;
   
+  // If a promotion was actually selected, show more details about it
   if (picked) {
     const promo = PROMOTIONS.find(x => x.id === picked.id);
     detailsEl.classList.remove('hidden');
@@ -83,14 +99,17 @@
         }</p>
     `;
     
+    // Add minimum spend requirement if the promo has one
     if (promo.minSpend) {
       detailsHTML += `<p><strong>Minimum Spend:</strong> ${fmt(promo.minSpend)}</p>`;
     }
     
+    // Show percentage discount if it's a percent-based promotion
     if (promo.percent) {
       detailsHTML += `<p><strong>Discount:</strong> ${promo.percent}% off</p>`;
     }
     
+    // Show fixed amount discount if it's a flat amount promotion
     if (promo.amount) {
       detailsHTML += `<p><strong>Discount:</strong> ${fmt(promo.amount)} off</p>`;
     }
