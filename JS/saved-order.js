@@ -75,7 +75,7 @@ function orderAgain(id){
   const selected = savedOrders.find(o => o.id === id);
   if(!selected) return;
 
-  // Use store object
+  // Use store object same as checkout
   let store = JSON.parse(localStorage.getItem("store")) || { cart: [], order: null };
   store.cart = selected.items;
   localStorage.setItem("store", JSON.stringify(store));
