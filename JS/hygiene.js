@@ -8,7 +8,7 @@
   // 3) Store all data in one object for easy display
   const hygieneData = {
     "golden-wok": {
-      name: "Chinese Cuisine",
+      name: "Golden Wok",
       records: [
         { validFrom: "01.01.2024", validTo: "31.12.2024", grade: "B", remarks: "-" },
         { validFrom: "01.01.2025", validTo: "31.12.2026", grade: "B", remarks: "-" },
@@ -17,7 +17,7 @@
     },
 
     "mak-cik-delights": {
-      name: "Malay Cuisine",
+      name: "Mak Cik Delights",
       records: [
         { validFrom: "01.01.2024", validTo: "31.12.2024", grade: "A", remarks: "-" },
         { validFrom: "01.01.2025", validTo: "31.12.2026", grade: "B", remarks: "Minor storage issue" },
@@ -26,7 +26,7 @@
     },
 
     "little-india-express": {
-      name: "Indian Cuisine",
+      name: "Little India Express",
       records: [
         { validFrom: "01.01.2024", validTo: "31.12.2024", grade: "A", remarks: "-" },
         { validFrom: "01.01.2025", validTo: "31.12.2026", grade: "A", remarks: "Consistently clean" },
@@ -35,7 +35,7 @@
     },
 
     "tom-yum-house": {
-      name: "Thai Cuisine",
+      name: "Tom Yum House",
       records: [
         { validFrom: "01.01.2024", validTo: "31.12.2024", grade: "B", remarks: "-" },
         { validFrom: "01.01.2025", validTo: "31.12.2026", grade: "C", remarks: "Improvement required" },
@@ -52,7 +52,7 @@
     },
 
     "kopi-teh-corner": {
-      name: "Drinks Stall",
+      name: "Kopi & Teh Corner",
       records: [
         { validFrom: "01.01.2024", validTo: "31.12.2024", grade: "B", remarks: "Ice machine cleaning reminder" },
         { validFrom: "01.01.2025", validTo: "31.12.2026", grade: "A", remarks: "All issues resolved" },
