@@ -2,8 +2,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   const container = document.getElementById("savedList");
 
-  let savedOrders = JSON.parse(localStorage.getItem("savedOrders")) || [];
-
+  let savedOrders = JSON.parse(localStorage.getItem("hc.savedOrders")) || [];
   if(savedOrders.length === 0){
     savedOrders = [
       {
@@ -23,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function(){
       }
     ];
 
-    localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
+    localStorage.setItem("hc.savedOrders", JSON.stringify(savedOrders));
   }
 
   render();
@@ -72,11 +71,15 @@ document.addEventListener("DOMContentLoaded", function(){
 
 // edit function
 function orderAgain(id){
-
-  let savedOrders = JSON.parse(localStorage.getItem("savedOrders")) || [];
+  let savedOrders = JSON.parse(localStorage.getItem("hc.savedOrders")) || [];
   const selected = savedOrders.find(o => o.id === id);
   if(!selected) return;
-  localStorage.setItem("cart", JSON.stringify(selected.items));
+
+  // Use store object
+  let store = JSON.parse(localStorage.getItem("store")) || { cart: [], order: null };
+  store.cart = selected.items;
+  localStorage.setItem("store", JSON.stringify(store));
+
   window.location.href = "Checkout.html";
 }
 
