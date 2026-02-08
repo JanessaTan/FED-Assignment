@@ -1,15 +1,14 @@
 (function () {
-  // Main receipt container in Success.html
+  // Get DOM elements
   const root = document.getElementById("root");
 
-  // Read the same store shape used by cart-and-orders.js (localStorage key: "store")
-  // store = { cart: [], order: null, selectedPromo: { id } }
+  // Read storage
   const store = JSON.parse(localStorage.getItem("store")) || { cart: [], order: null, selectedPromo: null };
   const cart = store.cart || [];
   const order = store.order || null;
   const selectedPromo = store.selectedPromo || null;
 
-  // Inject small CSS for receipt alignment (items left, prices right)
+  // Some CSS to align numbers on the receipt
   const style = document.createElement("style");
   style.textContent = `
     .receipt-section { margin-top: 12px; }
@@ -39,7 +38,7 @@
     return "$" + num.toFixed(2);
   }
 
-  // Find a stall name on each cart item
+  // Find a stall name for each cart item
   function getStallLabel(item) {
     return (
       item.stallName ||
