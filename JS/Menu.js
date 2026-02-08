@@ -128,9 +128,28 @@
       `;
 
       card.querySelector(".menu-btn").addEventListener("click", function(){
+        //create cart item
+        const cartItem = {
+          name: item.name,
+          price: item.price,
+          qty: 1
+        }
+        //add to cart using fucntion form c&o js
+        if (typeof getCart === "function" && typeof setCart === "function") {
+          let cart = getCart();
+
+          let existing = cart.find(ci => ci.name === cartItem.name);
+          if (existing) {
+            existing.qty += 1;
+          } else {
+            cart.push(cartItem);
+          }
+
+          setCart(cart);
+        }
         window.location.href = "Checkout.html";
       });
-
+    
       menuList.appendChild(card);
     });
   }

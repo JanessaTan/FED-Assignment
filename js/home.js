@@ -16,3 +16,13 @@ document.addEventListener("DOMContentLoaded", function(){
     .openPopup();
 
 });
+
+/* Banner Navigation */
+
+function goContact(){
+  window.location.href = "Contact.html";
+}
+
+function goDummy(){
+  window.location.href = "Dummy.html";
+}
