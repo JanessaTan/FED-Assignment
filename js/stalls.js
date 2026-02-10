@@ -35,7 +35,7 @@
         </div>
 
         <div class="stall-actions">
-          <a class="btn primary" href="Menu.html?stall=${s.id}">
+          <a class="btn primary" href="menu.html?stall=${s.id}">
             View Menu
           </a>
 
@@ -43,7 +43,7 @@
             Ratings
           </a>
 
-          <a class="btn muted" href="Hygiene.html?stall=${s.id}">
+          <a class="btn muted" href="hygiene.html?stall=${s.id}">
             Hygiene
           </a>
         </div>
