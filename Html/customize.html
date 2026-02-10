@@ -73,7 +73,7 @@ Student Name -Nicole Agnes Sim Hui En -->
               <option value="normal">Normal</option>
               <option value="mild">Less Spicy</option>
               <option value="extra">Extra Spicy</option>
-              <option value="none">No Spice</option>
+              <option value="none">No Spicy</option>
             </select>
           </div>
         </div>
@@ -216,9 +216,9 @@ document.addEventListener("DOMContentLoaded", function() {
         spiceLevelEl.value = 'mild';
       } else if (part === 'Extra Spicy' && spiceLevelEl) {
         spiceLevelEl.value = 'extra';
-      } else if (part === 'No Spice' && spiceLevelEl) {
+      } else if (part === 'No Spicy' && spiceLevelEl) {
         spiceLevelEl.value = 'none';
-      } else if (notesEl && part && part !== 'Less Spicy' && part !== 'Extra Spicy' && part !== 'No Spice') {
+      } else if (notesEl && part && part !== 'Less Spicy' && part !== 'Extra Spicy' && part !== 'No Spicy') {
         notesEl.value = part;
       }
     });
@@ -258,7 +258,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const spiceMap = {
           'mild': 'Less Spicy',
           'extra': 'Extra Spicy',
-          'none': 'No Spice'
+          'none': 'No Spicy'
         };
         if (spiceMap[spiceLevelEl.value]) {
           customizations.push(spiceMap[spiceLevelEl.value]);
