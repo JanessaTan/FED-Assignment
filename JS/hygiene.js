@@ -3,7 +3,7 @@
   const hygieneContent = document.getElementById("hygieneContent");
 
   // Read stall from URL query string
-  const stallId = new URLSearchParams(window.location.search).get("Stall");
+  const stallId = new URLSearchParams(window.location.search).get("stall");
 
   // Store all data in one object (for easy display)
   const hygieneData = {
