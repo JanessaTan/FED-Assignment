@@ -1,7 +1,7 @@
 (function(){
 
   const menuList = document.getElementById("menuList");
-  const stallId = new URLSearchParams(window.location.search).get("stall");
+  const stallId = new URLSearchParams(window.location.search).get("Stall");
 
   // Store menus in one object
   const STALL_MENUS = {
