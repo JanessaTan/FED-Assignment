@@ -101,134 +101,206 @@ Student Name -Nicole Agnes Sim Hui En -->
 
 <!-- JavaScript to handle the customize page logic -->
 <script>
-(function(){
+document.addEventListener("DOMContentLoaded", function() {
+  'use strict';
 
-  // Helper function to get element by ID (shorthand)
-  function $(id){ return document.getElementById(id); }
+  // Helper function to get element by ID
+  function $(id) { 
+    const el = document.getElementById(id);
+    if (!el) {
+      console.error('Element not found:', id);
+    }
+    return el;
+  }
   
-  // Helper to format numbers as currency (5 becomes $5.00)
-  function fmt(num){ return '$' + parseFloat(num).toFixed(2); }
+  // Helper to format numbers as currency
+  function fmt(num) { 
+    return '$' + parseFloat(num || 0).toFixed(2); 
+  }
 
   // Get the cart data from browser storage
-  function getStore(){
-    return JSON.parse(localStorage.getItem('store')) || { cart: [] };
+  function getStore() {
+    try {
+      return JSON.parse(localStorage.getItem('store')) || { cart: [] };
+    } catch (e) {
+      console.error('Error parsing store:', e);
+      return { cart: [] };
+    }
   }
 
   // Save the updated cart back to browser storage
-  function saveStore(store){
-    localStorage.setItem('store', JSON.stringify(store));
+  function saveStore(store) {
+    try {
+      localStorage.setItem('store', JSON.stringify(store));
+    } catch (e) {
+      console.error('Error saving store:', e);
+    }
   }
 
-  // ===== CHECK IF WE'RE EDITING AN ITEM OR ADDING A NEW ONE =====
-  
-  // Get the index of the item we're editing (if editing)
-  let editingIndex = localStorage.getItem('editingCartIndex');
-  let isEditMode = editingIndex !== null;
-
-  if (isEditMode) {
-    editingIndex = parseInt(editingIndex);
-  }
-
-  // Get the store and check if the item exists
-  const store = getStore();
-  let item = null;
-
-  if (isEditMode && store.cart[editingIndex]) {
-    // We're editing - get the item from the cart
-    item = store.cart[editingIndex];
-  } else {
-    // Item doesn't exist or we're not editing
-    alert("No item selected.");
-    window.location.href = "Checkout.html";
-    return;
-  }
-
-  // ===== FILL IN THE FORM WITH ITEM DETAILS =====
-  
+  // Get form elements - with safety checks
   const itemNameEl = $('itemName');
   const itemPriceEl = $('itemPrice');
   const totalPriceEl = $('totalprice');
   const qtyEl = $('qty');
   const notesEl = $('notes');
   const spiceLevelEl = $('spiceLevel');
+  const form = $('cf');
 
-  // Show the item name
-  itemNameEl.value = item.name;
-  // Show the price per item
-  itemPriceEl.value = fmt(item.price);
-  // Set quantity to what they had before
-  qtyEl.value = item.qty;
-
-  // If they had special notes before, restore them
-  if (item.notes) {
-    // Check what spice level they picked
-    if (item.notes.includes("Less Spicy")) spiceLevelEl.value = "mild";
-    else if (item.notes.includes("Extra Spicy")) spiceLevelEl.value = "extra";
-    else if (item.notes.includes("No Spice")) spiceLevelEl.value = "none";
-    else spiceLevelEl.value = "normal";
-
-    // Show any other notes they typed
-    notesEl.value = item.notes;
+  // Safety check - all required fields must exist
+  if (!itemNameEl || !qtyEl || !form) {
+    console.error('Critical form elements missing!');
+    console.error('itemNameEl:', itemNameEl, 'qtyEl:', qtyEl, 'form:', form);
+    alert('Form error. Please refresh the page.');
+    return;
   }
 
-  // ===== UPDATE TOTAL PRICE WHEN QUANTITY CHANGES =====
-  
-  function updateTotal(){
-    // Make sure quantity is at least 1
-    let qty = Math.max(1, parseInt(qtyEl.value));
-    // Calculate new total and show it
-    totalPriceEl.value = fmt(item.price * qty);
+  // Check if we're in EDIT mode (customer editing existing cart item)
+  let isEditMode = false;
+  let editingIndex = null;
+  let item = null;
+
+  try {
+    const editIndexStr = localStorage.getItem('editingCartIndex');
+    if (editIndexStr !== null && editIndexStr !== '') {
+      isEditMode = true;
+      editingIndex = parseInt(editIndexStr, 10);
+      console.log('Edit mode active - cart index:', editingIndex);
+    }
+  } catch (e) {
+    console.error('Error checking edit mode:', e);
   }
 
-  // Calculate total when page loads
-  updateTotal();
-  // Recalculate when they change the quantity
-  qtyEl.addEventListener("input", updateTotal);
+  // Get the store and the item to customize
+  const store = getStore();
 
-  // ===== HANDLE FORM SUBMISSION (SAVE CHANGES) =====
-  
-  $('cf').addEventListener("submit", function(e){
-    e.preventDefault();
+  if (isEditMode && store.cart && store.cart[editingIndex]) {
+    // We're editing - load the existing item
+    item = store.cart[editingIndex];
+    console.log('Loaded item from cart:', item.name);
+  } else if (isEditMode) {
+    // Edit mode but item not found
+    console.error('Cart item not found at index:', editingIndex);
+    console.error('Cart contents:', store.cart);
+    alert('Error: Item not found in cart. Redirecting to checkout...');
+    window.location.href = 'Checkout.html';
+    return;
+  } else {
+    // Not in edit mode - should have received item data some other way
+    console.warn('Not in edit mode and no item provided');
+    alert('Error: No item selected. Redirecting to checkout...');
+    window.location.href = 'Checkout.html';
+    return;
+  }
 
-    // Get the quantity they selected
-    let qty = Math.max(1, parseInt(qtyEl.value));
-    let customNotes = [];
+  // Safely set form field values
+  if (item && item.name) {
+    itemNameEl.value = item.name;
+  }
 
-    // Map spice level codes to readable text
-    const spiceMap = {
-      mild: "Less Spicy",
-      extra: "Extra Spicy",
-      none: "No Spice"
-    };
+  if (item && item.price && itemPriceEl) {
+    itemPriceEl.value = fmt(item.price);
+  }
 
-    // If they picked a spice level, add it to notes
-    if (spiceLevelEl.value !== "normal") {
-      customNotes.push(spiceMap[spiceLevelEl.value]);
-    }
+  if (item && item.qty && qtyEl) {
+    qtyEl.value = item.qty;
+  } else if (qtyEl) {
+    qtyEl.value = 1;
+  }
 
-    // If they typed any special instructions, add them too
-    if (notesEl.value.trim()) {
-      customNotes.push(notesEl.value.trim());
-    }
+  // Restore spice level and notes if they were set before
+  if (item && item.notes) {
+    const noteParts = item.notes.split('; ');
+    
+    noteParts.forEach(part => {
+      if (part === 'Less Spicy' && spiceLevelEl) {
+        spiceLevelEl.value = 'mild';
+      } else if (part === 'Extra Spicy' && spiceLevelEl) {
+        spiceLevelEl.value = 'extra';
+      } else if (part === 'No Spice' && spiceLevelEl) {
+        spiceLevelEl.value = 'none';
+      } else if (notesEl && part && part !== 'Less Spicy' && part !== 'Extra Spicy' && part !== 'No Spice') {
+        notesEl.value = part;
+      }
+    });
+  }
 
-    // Combine all notes into one string separated by semicolons
-    item.qty = qty;
-    item.notes = customNotes.join("; ");
+  // Function to update total price when quantity changes
+  function updateTotalPrice() {
+    if (!qtyEl || !totalPriceEl || !item) return;
+    
+    const qty = Math.max(1, parseInt(qtyEl.value || 1, 10));
+    const total = item.price * qty;
+    totalPriceEl.value = fmt(total);
+  }
 
-    // Update the item in the cart
-    store.cart[editingIndex] = item;
-    saveStore(store);
+  // Calculate total on page load
+  updateTotalPrice();
 
-    // Clean up temporary storage
-    localStorage.removeItem('editingCartIndex');
+  // Recalculate when quantity changes
+  if (qtyEl) {
+    qtyEl.addEventListener('change', updateTotalPrice);
+    qtyEl.addEventListener('input', updateTotalPrice);
+  }
 
-    // Tell them it worked
-    alert("✅ Item updated!");
-    // Go back to checkout page
-    window.location.href = "Checkout.html";
-  });
+  // Handle form submission
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
 
-})();
+      // Get the updated quantity
+      const qty = Math.max(1, parseInt(qtyEl.value || 1, 10));
+      
+      // Collect customization notes
+      const customizations = [];
+
+      // Add spice level if selected
+      if (spiceLevelEl && spiceLevelEl.value !== 'normal') {
+        const spiceMap = {
+          'mild': 'Less Spicy',
+          'extra': 'Extra Spicy',
+          'none': 'No Spice'
+        };
+        if (spiceMap[spiceLevelEl.value]) {
+          customizations.push(spiceMap[spiceLevelEl.value]);
+        }
+      }
+
+      // Add special instructions if provided
+      if (notesEl && notesEl.value.trim()) {
+        customizations.push(notesEl.value.trim());
+      }
+
+      // Combine all notes
+      const notes = customizations.join('; ');
+
+      // Update the item in the cart
+      if (isEditMode && editingIndex !== null && store.cart && store.cart[editingIndex]) {
+        store.cart[editingIndex].qty = qty;
+        store.cart[editingIndex].notes = notes;
+        saveStore(store);
+
+        // Clean up edit mode flags
+        try {
+          localStorage.removeItem('editingCartIndex');
+        } catch (e) {
+          console.error('Error removing editingCartIndex:', e);
+        }
+
+        console.log('✅ Item updated:', store.cart[editingIndex].name);
+        alert('✅ Item updated!');
+      } else {
+        console.error('Cannot save - not in proper edit mode');
+        alert('Error saving item. Please try again.');
+        return;
+      }
+
+      // Redirect to checkout
+      window.location.href = 'Checkout.html';
+    });
+  }
+
+  console.log('✅ Customize page loaded successfully');
+});
 </script>
 
 </body>
