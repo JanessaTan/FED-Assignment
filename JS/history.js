@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return d.toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" });
   }
 
-  // Create a
+  // Create an order ID with randomly generated ID number
   function makeId() {
     return "ord_" + Date.now() + "_" + Math.random().toString(16).slice(2);
   }
