@@ -93,10 +93,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             // Save to localStorage
-            localStorage.setItem('orderData', JSON.stringify({
-                type: "later",
-                pickupTime: time
-            }));
+            setOrder({
+            type: "later",
+            pickupTime: time
+        });
 
             window.location.href = 'Stalls.html';
         });
