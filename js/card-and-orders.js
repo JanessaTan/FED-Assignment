@@ -1,4 +1,6 @@
 // assets/js/cart.js
+
+//initialize store from local storage / create empty structure
 let store = JSON.parse(localStorage.getItem("store")) || { cart: [], order: null };
 
 function saveStore() {
@@ -40,9 +42,3 @@ function clearOrder() {
 }
 function getPickedPromo() { return store.selectedPromo || null; }
 function pickPromo(id) { store.selectedPromo = { id }; saveStore(); }
-
-function cartTotals() {
-  const cart = getCart();
-  let subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-  return { cart, subtotal };
-}

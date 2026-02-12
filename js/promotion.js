@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  // Define promotions
+  // Define promotions and store them
   window.PROMOTIONS = [
     {
       id: "Promo_1",

@@ -15,10 +15,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Save JSON items when history is modified (like when a new order is added to history, for example)
   function saveJSON(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
   }
 
+  // Format dates
   function formatDate(dateValue) {
     if (!dateValue) return "Unknown date";
     const d = new Date(dateValue);
@@ -26,14 +28,17 @@ document.addEventListener("DOMContentLoaded", function () {
     return d.toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" });
   }
 
+  // Create an order ID with randomly generated ID number
   function makeId() {
     return "ord_" + Date.now() + "_" + Math.random().toString(16).slice(2);
   }
 
+  // Format items as an array
   function normaliseItems(items) {
     const arr = Array.isArray(items) ? items : [];
     const out = [];
 
+    // Combine the details into the array
     for (let i = 0; i < arr.length; i++) {
       const it = arr[i] || {};
       out.push({
@@ -48,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return out;
   }
 
+  // Build the line that shows items ordered (comma separated)
   function buildOrderLine(items) {
     const parts = [];
     for (let i = 0; i < items.length; i++) {
@@ -56,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return parts.join(", ");
   }
 
+  // Building for items that are customised
   function buildCustomisedLine(items) {
     for (let i = 0; i < items.length; i++) {
       const n = items[i].notes;
@@ -203,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
   })
 };
 
-
+    // Update the saved orders
     savedOrders.push(savedObj);
     saveJSON("hc.savedOrders", savedOrders);
   };

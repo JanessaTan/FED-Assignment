@@ -25,13 +25,15 @@
     .receipt-final { text-align: right; color: red; font-weight: 800; margin-top: 8px; }
     .receipt-empty { padding: 12px 0; }
   `;
-  document.head.appendChild(style);
+  document.head.appendChild(style); // Insert the CSS into the html
 
+  // Format money numbers to have 2 decimal places
   function money(n) {
     const num = Number(n) || 0;
     return "$" + num.toFixed(2);
   }
 
+  // Parse the keys from storage
   function safeParse(key) {
     try {
       const raw = localStorage.getItem(key);
@@ -47,6 +49,7 @@
     ? storeObj.lastReceipt
     : storeObj;
 
+  // Define cart, orders and selected promo from the parsed JSON
   const cart = Array.isArray(receiptSrc.cart) ? receiptSrc.cart : [];
   const order = receiptSrc.order || null;
   const selectedPromo = receiptSrc.selectedPromo || storeObj.selectedPromo || null;
@@ -80,7 +83,9 @@
     return { discount: 0, reason: "" };
   }
 
+  // Render the receipt by injecting HTML into the Success page, based on data
   function renderReceipt() {
+    // Show an error message for blank receipt with no items
     if (!cart.length) {
       root.innerHTML = `
         <h3>Receipt:</h3>
@@ -128,6 +133,7 @@
       receiptHTML += `<strong class="receipt-stall">${stallKey}:</strong>`;
       receiptHTML += `<ul class="receipt-list">`;
 
+      // Order details (item, quantity, price, total)
       for (let i = 0; i < items.length; i++) {
         const it = items[i];
         const qty = Number(it.qty) || 0;
@@ -136,6 +142,7 @@
 
         const leftText = `${it.name} (x${qty})`;
 
+        // Render the order details and dotted line for each item into Success.html
         receiptHTML += `
           <li class="receipt-line">
             <span class="receipt-left">${leftText}</span>
@@ -179,6 +186,7 @@
       }
     }
 
+    // Show overall total
     receiptHTML += `<div class="receipt-final">Total: ${money(finalTotal)}</div>`;
     receiptHTML += `</section>`;
 

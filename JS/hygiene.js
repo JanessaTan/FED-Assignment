@@ -5,7 +5,7 @@
   // Read stall from URL query string
   const stallId = new URLSearchParams(window.location.search).get("stall");
 
-  // Store all data in one object (for easy display)
+  // Store all data as JSON in one object (for easy display)
   const hygieneData = {
     "golden-wok": {
       name: "Golden Wok",
@@ -88,6 +88,7 @@
       `;
     }
 
+    // Build the table
     return `
       <section class="hygiene-section">
         <h3 class="hygiene-stall-title">${stallName}</h3>
@@ -115,11 +116,13 @@
 
     const keys = Object.keys(stallsToRender);
 
+    // If there are no records, display an error message
     if (keys.length === 0) {
       hygieneContent.innerHTML = "<p>No hygiene records available.</p>";
       return;
     }
 
+    // Define stall info and load the HTML
     for (let k = 0; k < keys.length; k++) {
       const id = keys[k];
       const stall = stallsToRender[id];
